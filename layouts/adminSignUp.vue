@@ -35,7 +35,7 @@ header {
   }
 }
 .page_container {
-  padding: 40px;
+  padding: 5% 15%;
 }
 .footer {
   width: 100%;
