@@ -22,6 +22,10 @@ export default {
 </script>
 <style scoped>
 h1 {
-  color: red;
+  font-family: 'GothamMedium', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 150%;
 }
 </style>
