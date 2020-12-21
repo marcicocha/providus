@@ -18,6 +18,9 @@
           placeholder="Enter Your Password"
         />
       </div>
+      <div class="column is-full">
+        <AppButton title="Sign In" style="padding: 30px" />
+      </div>
     </div>
   </div>
 </template>
@@ -25,11 +28,13 @@
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppInput from '@/components/UI/AppInput.vue'
+import AppButton from '@/components/UI/AppButton.vue'
 export default {
   layout: 'adminSignUp',
   components: {
     AppTitleComponent,
     AppInput,
+    AppButton,
   },
   data() {
     return {

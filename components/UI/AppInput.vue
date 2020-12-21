@@ -81,5 +81,6 @@ input {
   line-height: 150%;
   color: #2e434e;
   padding: 2px 1px;
+  width: 100%;
 }
 </style>
