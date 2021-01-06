@@ -1,9 +1,12 @@
 <template>
-  <div>hi moffo</div>
+  <div>
+    <div>hi moffo</div>
+    <AppTable />
+  </div>
 </template>
 
 <script>
-// import AppTitleComponent from '@/components/UI/AppTitleComponent'
+import AppTable from '@/components/UI/AppTable.vue'
 // import AppInput from '@/components/UI/AppInput.vue'
 // import AppButton from '@/components/UI/AppButton.vue'
 export default {
@@ -11,7 +14,7 @@ export default {
   components: {
     // AppTitleComponent,
     // AppInput,
-    // AppButton,
+    AppTable,
   },
   data() {
     return {}

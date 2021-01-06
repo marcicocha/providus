@@ -12,7 +12,9 @@
       </li>
     </ul>
     <ul class="menu-list log-out">
-      <li><a>Logout</a></li>
+      <li>
+        <a>Logout</a>
+      </li>
     </ul>
   </aside>
 </template>
