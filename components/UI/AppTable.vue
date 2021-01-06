@@ -3,16 +3,24 @@
     <table class="table">
       <thead>
         <tr>
-          <th v-for="header in dataIndex" :key="header">{{ header.name }}</th>
+          <th v-for="column in columns" :key="column" :name="column.dataindex">
+            {{ column.name }}
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="record in students" :key="record">
-          <td v-for="header in dataIndex" :key="header">
-            <span v-if="header.dataIndex !== 'actions'">{{
-              record[header.dataIndex]
-            }}</span>
-            <span v-else></span>
+        <tr v-for="record in dataSource" :key="record">
+          <td v-for="column in columns" :key="column">
+            <slot
+              :name="column.dataIndex"
+              :record="record"
+              v-if="column.dataIndex !== 'actions'"
+            >
+              <span>{{ record[column.dataIndex] }}</span>
+            </slot>
+            <span v-else>
+              <slot name="actions" :record="record"> </slot>
+            </span>
           </td>
         </tr>
       </tbody>
@@ -24,53 +32,37 @@
 export default {
   name: 'AppTable',
   components: {},
-  props: {},
+  props: {
+    dataSource: {
+      type: Array,
+      default: () => [],
+    },
+    columns: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
-    return {
-      students: [
-        {
-          id: 1,
-          name: 'Wasif',
-          age: 21,
-          email: 'wasif@email.com',
-        },
-        { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-        { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-        { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' },
-      ],
-      dataIndex: [
-        {
-          name: 'their Names',
-          dataIndex: 'name',
-        },
-        {
-          name: 'their ages',
-          dataIndex: 'age',
-        },
-      ],
-    }
+    return {}
   },
   computed: {},
   watch: {},
-  methods: {
-    renderTableData() {
-      return this.students.map((student, index) => {
-        const { id, name, age, email } = student // destructuring
-        return (
-          <tr key={id}>
-            <td>{id}</td>
-            <td>{name}</td>
-            <td>{age}</td>
-            <td>{email}</td>
-          </tr>
-        )
-      })
-    },
-  },
+  methods: {},
 }
 </script>
 <style lang="scss" scoped>
 .table {
   width: 100%;
+  th {
+    font-family: GothamMedium;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 100%;
+    color: #2e434e;
+    opacity: 0.5;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 }
 </style>
