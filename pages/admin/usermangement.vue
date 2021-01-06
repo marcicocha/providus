@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>User Management</h1>
+    <div class="page_header">
+      <h1>User Management</h1>
+    </div>
     <AppTable :columns="columns" :dataSource="dataSource">
       <template slot="userId" slot-scope="{ record }">
         <span style="background: red">{{ record.userId }}</span>
@@ -31,13 +33,9 @@
 </template>
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
-// import AppInput from '@/components/UI/AppInput.vue'
-// import AppButton from '@/components/UI/AppButton.vue'
 export default {
   layout: 'dashboard',
   components: {
-    // AppTitleComponent,
-    // AppInput,
     AppTable,
   },
   data() {
@@ -116,12 +114,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.page_header {
+  margin-bottom: 25px;
+  h1 {
+    font-family: GothamLight;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 150%;
+    color: #2e434e;
+  }
+}
 .custom-table-btn {
   margin: 0px 21px;
   color: #c4c4c4;
   opacity: 0.8;
 }
-
 .dropdown-content {
   padding: 0px;
   a {
