@@ -53,6 +53,10 @@ export default {
 <style lang="scss" scoped>
 .table {
   width: 100%;
+  padding: 100px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(130, 130, 130, 0.671);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(130, 130, 130, 0.671);
+  box-shadow: 0px 0px 5px 0px rgba(130, 130, 130, 0.671);
   th {
     font-family: GothamMedium;
     font-style: normal;
@@ -63,6 +67,24 @@ export default {
     opacity: 0.5;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-bottom: 1px solid #f8f8f8;
+    &:first-child {
+      padding-left: 30px;
+    }
+  }
+  td {
+    font-family: GothamLight;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: #2e434e;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f8f8f8;
+    &:first-child {
+      padding-left: 30px;
+    }
   }
 }
 </style>
