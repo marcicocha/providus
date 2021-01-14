@@ -20,7 +20,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 h1 {
   font-family: 'GothamMedium', sans-serif;
   font-style: normal;
@@ -36,6 +36,5 @@ p {
   font-size: 20px;
   line-height: 150%;
   color: #2e434e;
-  opacity: 0.5;
 }
 </style>

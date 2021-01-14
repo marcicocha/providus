@@ -12,9 +12,9 @@
         <tr v-for="record in dataSource" :key="record">
           <td v-for="column in columns" :key="column">
             <slot
+              v-if="column.dataIndex !== 'actions'"
               :name="column.dataIndex"
               :record="record"
-              v-if="column.dataIndex !== 'actions'"
             >
               <span>{{ record[column.dataIndex] }}</span>
             </slot>

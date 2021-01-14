@@ -24,13 +24,13 @@
 header {
   text-align: right;
   max-height: 200px;
-  padding: 30px;
+  padding: 25px 30px;
   img {
     height: 100%;
   }
 }
 .page_container {
-  padding: 40px;
+  padding: 0 100px;
 }
 .isRetailBackground {
   background-image: url('../assets/images/background-image-individual.png');
@@ -54,7 +54,7 @@ footer {
 
 .wrapper_container {
   display: grid;
-  grid-template-rows: 15% auto 13%;
+  grid-template-rows: 13% auto 13%;
   position: absolute;
   top: 0;
   bottom: 0;

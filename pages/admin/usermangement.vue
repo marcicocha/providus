@@ -3,7 +3,7 @@
     <div class="page_header">
       <h1>User Management</h1>
     </div>
-    <AppTable :columns="columns" :dataSource="dataSource">
+    <AppTable :columns="columns" :data-source="dataSource">
       <template slot="userId" slot-scope="{ record }">
         <span style="background: red">{{ record.userId }}</span>
       </template>
