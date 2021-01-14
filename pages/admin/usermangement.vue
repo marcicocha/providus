@@ -2,6 +2,14 @@
   <div>
     <div class="page_header">
       <h1>User Management</h1>
+      <div class="wrapper">
+        <div class="search-bar">
+          <AppSearchInput placeholder="Search Users" />
+        </div>
+        <div class="add-button-wrapper">
+          <AppButton class="add-button" title="Add New User" color="#282828" />
+        </div>
+      </div>
     </div>
     <AppTable :columns="columns" :dataSource="dataSource">
       <template slot="userId" slot-scope="{ record }">
@@ -33,10 +41,14 @@
 </template>
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
+import AppSearchInput from '@/components/UI/AppSearchInput.vue'
+import AppButton from '@/components/UI/AppButton.vue'
 export default {
   layout: 'dashboard',
   components: {
     AppTable,
+    AppSearchInput,
+    AppButton,
   },
   data() {
     return {
@@ -123,6 +135,22 @@ export default {
     font-size: 30px;
     line-height: 150%;
     color: #2e434e;
+  }
+  .wrapper {
+    margin-top: 10px;
+    div {
+      display: inline-block;
+    }
+    .search-bar {
+      width: 350px;
+    }
+    .add-button-wrapper {
+      width: 250px;
+      float: right;
+      .add-button {
+        height: auto;
+      }
+    }
   }
 }
 .custom-table-btn {
