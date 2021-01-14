@@ -1,5 +1,8 @@
 @import './styles/base/lib';
 @import './styles/base/base';
+// font awesome
+@import './font-awesome/scss/fontawesome.scss';
+@import './font-awesome/scss/solid.scss';
 
 @font-face {
   font-family: GothamMedium;
@@ -8,6 +11,10 @@
 @font-face {
   font-family: GothamLight;
   src: url('./fonts/GothamLight.ttf');
+}
+@font-face {
+  font-family: GothamThin;
+  src: url('./fonts/Gotham-Thin.otf');
 }
 label {
   display: block;
