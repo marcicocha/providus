@@ -12,7 +12,7 @@
             title="Add New User"
             color="#282828"
             icon="fa fa-plus"
-            @click="toggleModal('CREATE')"
+            @click="toggleModal('CREATE_MODE')"
           />
         </div>
       </div>
@@ -32,10 +32,16 @@
           </div>
           <div id="dropdown-menu" class="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a class="dropdown-item" @click="toggleModal('EDIT', record)">
+              <a
+                class="dropdown-item"
+                @click="toggleModal('UPDATE_MODE', record)"
+              >
                 <i class="fas fa-pencil-alt" /> Edit User
               </a>
-              <a class="dropdown-item" @click="toggleModal('Delete', record)">
+              <a
+                class="dropdown-item"
+                @click="toggleModal('DELETE_MODE', record)"
+              >
                 <i class="fa fa-trash-alt" /> Delete User
               </a>
             </div>
@@ -44,7 +50,58 @@
       </template>
     </AppTable>
     <!-- add modal -->
-    <AppModal :is-visible="isModalVisible" @closeModal="closeModal"></AppModal>
+    <AppModal :is-visible="isModalVisible" @closeModal="closeModal">
+      <template slot="modal-title"
+        ><h1>
+          {{
+            this.mode === 'CREATE_MODE'
+              ? 'Add New'
+              : this.mode === 'UPDATE_MODE'
+              ? 'Edit'
+              : this.mode === 'DELETE_MODE'
+              ? 'DELETE'
+              : ''
+          }}
+          User
+        </h1></template
+      >
+      <template slot="content">
+        <div class="columns is-multiline">
+          <div class="column">
+            <AppInput
+              v-model="userObject.firstName"
+              label="First Name"
+              placeholder="Enter User’s First Name"
+              @blur="daf"
+            />
+          </div>
+          <div class="column">
+            <AppInput
+              v-model="userObject.lastName"
+              label="Last Name"
+              placeholder="Enter User’s Last Name"
+            />
+          </div>
+          <div class="column is-full">
+            <AppInput
+              v-model="userObject.email"
+              label="Email Address"
+              placeholder="Enter User’s company email address"
+            />
+          </div>
+          <div class="column is-full">
+            <AppInput
+              v-model="userObject.role"
+              label="Role"
+              placeholder="Select a role to promote user to"
+            />
+          </div>
+          <div class="column is-full">
+            <AppButton title="Submit" style="padding: 30px" />
+          </div>
+        </div>
+      </template>
+    </AppModal>
   </div>
 </template>
 <script>
@@ -52,6 +109,8 @@ import AppTable from '@/components/UI/AppTable.vue'
 import AppSearchInput from '@/components/UI/AppSearchInput.vue'
 import AppButton from '@/components/UI/AppButton.vue'
 import AppModal from '@/components/UI/AppModal.vue'
+import AppInput from '@/components/UI/AppInput.vue'
+
 export default {
   layout: 'dashboard',
   components: {
@@ -59,10 +118,13 @@ export default {
     AppSearchInput,
     AppButton,
     AppModal,
+    AppInput,
   },
   data() {
     return {
       isModalVisible: false,
+      mode: 'CREATE_MODE',
+      userObject: {},
       dataSource: [
         {
           id: '01.',
@@ -132,6 +194,7 @@ export default {
   methods: {
     toggleModal(mode) {
       if (mode) {
+        this.mode = mode
         this.isModalVisible = true
       }
     },

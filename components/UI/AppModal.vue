@@ -16,7 +16,8 @@
         </button>
       </header>
       <section class="modal-card-body">
-        <p class="modal-card-title">Modal title</p>
+        <h1 class="modal-card-title"><slot name="modal-title"></slot></h1>
+        <hr />
         <slot name="content"></slot>
       </section>
       <!-- <footer class="modal-card-foot">
@@ -69,5 +70,18 @@ export default {
       font-size: 16px;
     }
   }
+}
+.modal-card-body {
+  padding: 40px 50px;
+}
+.modal-card-title {
+  font-family: GothamBold;
+  font-style: normal;
+  font-size: 25px;
+  color: #2e434e;
+  margin: 0px;
+}
+hr {
+  margin: 10px 0px 25px 0px;
 }
 </style>
