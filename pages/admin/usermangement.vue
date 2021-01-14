@@ -59,14 +59,14 @@
               : this.mode === 'UPDATE_MODE'
               ? 'Edit'
               : this.mode === 'DELETE_MODE'
-              ? 'DELETE'
+              ? 'Delete'
               : ''
           }}
           User
         </h1></template
       >
       <template slot="content">
-        <div class="columns is-multiline">
+        <div v-if="this.mode !== 'DELETE_MODE'" class="columns is-multiline">
           <div class="column">
             <AppInput
               v-model="userObject.firstName"
@@ -98,6 +98,20 @@
           </div>
           <div class="column is-full">
             <AppButton title="Submit" style="padding: 30px" />
+          </div>
+        </div>
+        <div class="columns is-multiline">
+          <div class="column is-full">
+            <p class="delete-message">
+              Are you sure you want to delete this user? This action is
+              irreversible.
+            </p>
+          </div>
+          <div class="column">
+            <AppButton class="custom-btn" title="No" style="padding: 20px" />
+          </div>
+          <div class="column">
+            <AppButton class="custom-btn" title="Yes" style="padding: 20px" />
           </div>
         </div>
       </template>
@@ -236,6 +250,16 @@ export default {
       }
     }
   }
+}
+.custom-btn {
+  width: 100%;
+}
+.delete-message {
+  font-family: GothamThin;
+  font-weight: 600;
+  font-size: 20px;
+  color: #2e434e;
+  opacity: 0.7;
 }
 .custom-table-btn {
   margin: 0px 21px;

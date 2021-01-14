@@ -57,6 +57,9 @@ export default {
 <style lang="scss">
 .modal-card-head {
   justify-content: flex-end;
+  background: #fff;
+  border: none;
+  border-radius: 0px;
   .custom-close-btn {
     border: none;
     background: transparent;
@@ -72,7 +75,7 @@ export default {
   }
 }
 .modal-card-body {
-  padding: 40px 50px;
+  padding: 40px 60px 100px;
 }
 .modal-card-title {
   font-family: GothamBold;
