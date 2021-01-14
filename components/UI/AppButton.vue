@@ -10,6 +10,7 @@
     }"
     :disabled="disabled"
     :style="btnStyle"
+    @click="$emit('click', $event)"
   >
     <span v-if="icon" class="icon">
       <i :class="icon"></i>
@@ -89,7 +90,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  width: 100%;
+  width: inherit;
+  height: inherit;
   border-radius: 0;
   font-size: 20px;
   font-family: 'GothamMedium', sans-serif;

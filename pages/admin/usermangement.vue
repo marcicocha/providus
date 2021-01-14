@@ -7,11 +7,17 @@
           <AppSearchInput placeholder="Search Users" />
         </div>
         <div class="add-button-wrapper">
-          <AppButton class="add-button" title="Add New User" color="#282828" />
+          <AppButton
+            class="add-button"
+            title="Add New User"
+            color="#282828"
+            icon="fa fa-plus"
+            @click="toggleModal('CREATE')"
+          />
         </div>
       </div>
     </div>
-    <AppTable :columns="columns" :dataSource="dataSource">
+    <AppTable :columns="columns" :data-source="dataSource">
       <template slot="userId" slot-scope="{ record }">
         <span style="background: red">{{ record.userId }}</span>
       </template>
@@ -26,35 +32,40 @@
           </div>
           <div id="dropdown-menu" class="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a class="dropdown-item" @click="getName(record)">
+              <a class="dropdown-item" @click="toggleModal('EDIT', record)">
                 <i class="fas fa-pencil-alt" /> Edit User
               </a>
-              <a class="dropdown-item"
-                ><i class="fa fa-trash-alt" /> Delete User
+              <a class="dropdown-item" @click="toggleModal('Delete', record)">
+                <i class="fa fa-trash-alt" /> Delete User
               </a>
             </div>
           </div>
         </div>
       </template>
     </AppTable>
+    <!-- add modal -->
+    <AppModal :is-visible="isModalVisible" @closeModal="closeModal"></AppModal>
   </div>
 </template>
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
 import AppSearchInput from '@/components/UI/AppSearchInput.vue'
 import AppButton from '@/components/UI/AppButton.vue'
+import AppModal from '@/components/UI/AppModal.vue'
 export default {
   layout: 'dashboard',
   components: {
     AppTable,
     AppSearchInput,
     AppButton,
+    AppModal,
   },
   data() {
     return {
+      isModalVisible: false,
       dataSource: [
         {
-          id: 1,
+          id: '01.',
           name: 'Wasif',
           userId: '#2894021',
           email: 'wasif@email.com',
@@ -62,7 +73,7 @@ export default {
           date: '10-10-2019',
         },
         {
-          id: 2,
+          id: '02.',
           name: 'Ali',
           userId: '#3234324',
           email: 'ali@email.com',
@@ -70,7 +81,7 @@ export default {
           date: '10-10-2019',
         },
         {
-          id: 3,
+          id: '03.',
           name: 'Saad',
           userId: '#4982304',
           email: 'saad@email.com',
@@ -78,7 +89,7 @@ export default {
           date: '10-10-2019',
         },
         {
-          id: 4,
+          id: '04.',
           name: 'Asad',
           userId: '#53436',
           email: 'asad@email.com',
@@ -119,8 +130,17 @@ export default {
     }
   },
   methods: {
-    getName(record) {
-      console.log(record, ':::record:::')
+    toggleModal(mode) {
+      if (mode) {
+        this.isModalVisible = true
+      }
+    },
+    closeModal() {
+      console.log('close hiii')
+      if (this.isModalVisible) {
+        this.isModalVisible = false
+        console.log(this.isModalVisible, 'close 233')
+      }
     },
   },
 }
@@ -137,7 +157,7 @@ export default {
     color: #2e434e;
   }
   .wrapper {
-    margin-top: 10px;
+    margin-top: 15px;
     div {
       display: inline-block;
     }
@@ -145,10 +165,11 @@ export default {
       width: 350px;
     }
     .add-button-wrapper {
-      width: 250px;
+      width: auto;
+      height: auto;
       float: right;
       .add-button {
-        height: auto;
+        width: auto;
       }
     }
   }

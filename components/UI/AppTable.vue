@@ -3,7 +3,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column" :name="column.dataindex">
+          <th
+            v-for="(column, index) in columns"
+            :key="index"
+            :name="column.dataindex"
+          >
             {{ column.name }}
           </th>
         </tr>
@@ -12,9 +16,9 @@
         <tr v-for="record in dataSource" :key="record">
           <td v-for="column in columns" :key="column">
             <slot
+              v-if="column.dataIndex !== 'actions'"
               :name="column.dataIndex"
               :record="record"
-              v-if="column.dataIndex !== 'actions'"
             >
               <span>{{ record[column.dataIndex] }}</span>
             </slot>

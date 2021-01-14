@@ -11,8 +11,8 @@
       @blur="blurHandler"
     /> -->
     <input
-      class="input is-medium"
       v-model="innerValue"
+      class="input is-medium"
       type="text"
       name="name"
       :placeholder="placeholder"
