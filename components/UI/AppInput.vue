@@ -68,6 +68,7 @@ export default {
   display: inline-block;
   padding: 10px 20px;
   border: 1px solid #eaeaea;
+  margin: 15px 0;
   width: 100%;
 }
 input {
@@ -76,7 +77,7 @@ input {
   display: block;
   font-family: 'GothamMedium', sans-serif;
   font-style: normal;
-  font-weight: inherit;
+  font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: #2e434e;
