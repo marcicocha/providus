@@ -100,7 +100,7 @@
             <AppButton title="Submit" style="padding: 30px" />
           </div>
         </div>
-        <div class="columns is-multiline">
+        <div v-if="this.mode === 'DELETE_MODE'" class="columns is-multiline">
           <div class="column is-full">
             <p class="delete-message">
               Are you sure you want to delete this user? This action is
