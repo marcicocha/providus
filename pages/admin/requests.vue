@@ -203,12 +203,58 @@
           </template>
         </AppTable>
       </div>
+      <AppModal
+        :is-visible="isModalVisible"
+        is-full-screen
+        @closeModal="closeModal"
+      >
+        <template slot="modal">
+          <section
+            class="modal-card-body"
+            style="background: #f9fafb !important"
+          >
+            <div class="modal-wrapper">
+              <div class="modal-sidebar">
+                <div class="card image-wrapper">
+                  <div class="card-image">
+                    <figure class="image is-5by3" style="text-align: center">
+                      <img
+                        src="@/assets/images/current-account.png"
+                        alt="Placeholder image"
+                        width="100%"
+                      />
+                    </figure>
+                  </div>
+                </div>
+                <div class="button-wrapper columns is-multiline">
+                  <div class="column">
+                    <AppButton
+                      class="custom-btn"
+                      title="Accept"
+                      style="padding: 15px; width: 100%"
+                    />
+                  </div>
+                  <div class="column">
+                    <AppButton
+                      class="custom-btn"
+                      title="Reject"
+                      style="padding: 15px; width: 100%"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-main-content">dfgjhtgjh</div>
+            </div>
+          </section>
+        </template>
+      </AppModal>
     </div>
   </div>
 </template>
 
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
+import AppModal from '@/components/UI/AppModal.vue'
 
 const dataSource = [
   {
@@ -374,17 +420,25 @@ export default {
   layout: 'dashboard',
   components: {
     AppTable,
+    AppModal,
   },
   data() {
     return {
       tabsel: 'all',
+      isModalVisible: true,
       dataSource,
       columns,
       pendingColumns,
       approvedColumns,
     }
   },
-  methods: {},
+  methods: {
+    closeModal() {
+      if (this.isModalVisible) {
+        this.isModalVisible = !this.isModalVisible
+      }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -427,5 +481,32 @@ li {
   transform: scale(1.2);
   font-family: GothamMedium;
   font-weight: 500;
+}
+.modal-card-body {
+  padding: 0px;
+  .modal-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    .modal-sidebar {
+      position: relative;
+      width: 25%;
+      max-width: 700px;
+      background: #fff;
+      height: 80%;
+      .image-wrapper,
+      .button-wrapper {
+        padding: 0px 5%;
+      }
+      .button-wrapper {
+        position: absolute;
+        margin: 0px;
+        bottom: 0px;
+        width: 100%;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
 }
 </style>

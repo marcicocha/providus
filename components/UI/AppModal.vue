@@ -4,9 +4,9 @@
     class="modal modal-fx-fadeInScale"
     :class="{ 'is-active': visible }"
   >
-    <slot name="modal">
-      <div class="modal-background" @click="closeModal"></div>
-      <div class="modal-card">
+    <div class="modal-background" @click="closeModal"></div>
+    <div class="modal-card" :class="{ 'is-fullscreen': isFullScreen }">
+      <slot name="modal">
         <header class="modal-card-head">
           <button
             class="delete custom-close-btn"
@@ -21,8 +21,8 @@
           <hr />
           <slot name="content"></slot>
         </section>
-      </div>
-    </slot>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -31,6 +31,10 @@ export default {
   name: 'AppModal',
   props: {
     isVisible: {
+      type: Boolean,
+      default: false,
+    },
+    isFullScreen: {
       type: Boolean,
       default: false,
     },
@@ -84,5 +88,9 @@ export default {
 }
 hr {
   margin: 10px 0px 25px 0px;
+}
+.is-fullscreen {
+  width: 80% !important;
+  height: 90%;
 }
 </style>
