@@ -18,9 +18,6 @@
       </div>
     </div>
     <AppTable :columns="columns" :data-source="dataSource">
-      <template slot="userId" slot-scope="{ record }">
-        <span style="background: red">{{ record.userId }}</span>
-      </template>
       <template slot="actions" slot-scope="{ record }">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
