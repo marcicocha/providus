@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     representativeSubmitHandler() {
-      console.log(this.representativeDetails, 'REPRESENTATIVE OBJECT!!')
+      this.$router.replace('/user/corporate/company-details')
     },
   },
 }

@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     kinDetailsHandler() {
-      console.log('KINS')
+      this.$router.replace('/user/individual/kin-contact-information')
     },
   },
 }

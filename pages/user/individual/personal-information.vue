@@ -50,7 +50,7 @@ export default {
       this.isNationalityInfo = true
     },
     identificationHandler() {
-      console.log('YESY')
+      this.$router.replace('/user/individual/contact-information')
     },
   },
 }

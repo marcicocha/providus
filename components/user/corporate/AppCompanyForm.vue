@@ -52,7 +52,7 @@
       </div>
     </div>
     <br />
-    <AppButton title="Continue" />
+    <AppButton title="Continue" @click="submitCompanyDetails" />
   </div>
 </template>
 <script>
@@ -70,6 +70,11 @@ export default {
     return {
       companyDetails: {},
     }
+  },
+  methods: {
+    submitCompanyDetails() {
+      this.$router.replace('/user/corporate/director-details')
+    },
   },
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 15px">
     <h1>{{ heading }}</h1>
     <p v-if="description">{{ description }}</p>
   </div>
