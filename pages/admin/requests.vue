@@ -226,6 +226,22 @@
                     </figure>
                   </div>
                 </div>
+                <div class="link-wrapper">
+                  <ul>
+                    <li
+                      :class="{ 'is-toggle-active': isProspect }"
+                      @click="toggleMethod('prospect')"
+                    >
+                      Prospect Information
+                    </li>
+                    <li
+                      :class="{ 'is-toggle-active': isUploaded }"
+                      @click="toggleMethod('upload')"
+                    >
+                      Uploaded
+                    </li>
+                  </ul>
+                </div>
                 <div class="button-wrapper columns is-multiline">
                   <div class="column">
                     <AppButton
@@ -243,7 +259,19 @@
                   </div>
                 </div>
               </div>
-              <div class="modal-main-content">dfgjhtgjh</div>
+              <div class="modal-main-content">
+                <button
+                  class="delete custom-close-btn"
+                  aria-label="close"
+                  @click="closeModal"
+                >
+                  <i class="fa fa-times"></i></button
+                ><br />
+                <AppAccountDetailsComponent
+                  v-if="isProspect"
+                  style="width: 100%"
+                />
+              </div>
             </div>
           </section>
         </template>
@@ -255,7 +283,7 @@
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
 import AppModal from '@/components/UI/AppModal.vue'
-
+import AppAccountDetailsComponent from '@/components/AppAccountDetailsComponent.vue'
 const dataSource = [
   {
     id: '01.',
@@ -421,11 +449,14 @@ export default {
   components: {
     AppTable,
     AppModal,
+    AppAccountDetailsComponent,
   },
   data() {
     return {
       tabsel: 'all',
       isModalVisible: true,
+      isUploaded: false,
+      isProspect: true,
       dataSource,
       columns,
       pendingColumns,
@@ -436,6 +467,15 @@ export default {
     closeModal() {
       if (this.isModalVisible) {
         this.isModalVisible = !this.isModalVisible
+      }
+    },
+    toggleMethod(str) {
+      if (str === 'prospect') {
+        this.isProspect = true
+        this.isUploaded = false
+      } else {
+        this.isProspect = false
+        this.isUploaded = true
       }
     },
   },
@@ -498,6 +538,26 @@ li {
       .button-wrapper {
         padding: 0px 5%;
       }
+      .link-wrapper {
+        margin-top: 15px;
+        padding-left: 5%;
+        ul li {
+          //   background: yellow;
+          margin: 0px;
+          padding: 15px 10px;
+          cursor: pointer;
+          font-family: GothamMedium;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 100%;
+          color: #2e434e;
+          transition: all 0.5s;
+          &:hover {
+            background: #eff3f6;
+          }
+        }
+      }
       .button-wrapper {
         position: absolute;
         margin: 0px;
@@ -507,6 +567,29 @@ li {
         right: 0;
       }
     }
+    .modal-main-content {
+      width: 75%;
+      padding: 50px 50px;
+      .custom-close-btn {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        float: right;
+        display: block;
+        margin-bottom: 70px !important;
+        &:active,
+        &:focus {
+          border: none;
+          outline: none;
+        }
+        i {
+          font-size: 16px;
+        }
+      }
+    }
   }
+}
+.is-toggle-active {
+  background: #eff3f6;
 }
 </style>
