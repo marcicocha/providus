@@ -58,7 +58,7 @@ export default {
     },
     block: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     hover: {
       type: Boolean,
@@ -83,11 +83,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 button {
-  width: 100%;
   border-radius: 0;
   font-size: 16px !important;
-  font-family: 'GothamMedium', sans-serif;
+  font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: bold;
 }
 </style>

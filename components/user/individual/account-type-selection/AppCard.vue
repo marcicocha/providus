@@ -33,6 +33,8 @@ export default {
   p {
     margin-top: 20px;
     font-size: 17px;
+    font-family: 'GothamLight', sans-serif;
+    font-weight: bold;
   }
 }
 .card:hover,

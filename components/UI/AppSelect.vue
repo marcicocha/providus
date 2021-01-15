@@ -141,6 +141,7 @@ export default {
   padding: 10px 20px;
   border: 1px solid #eaeaea;
   width: 100%;
+  margin-bottom: 15px;
 }
 select {
   outline: none;

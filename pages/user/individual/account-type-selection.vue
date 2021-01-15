@@ -13,7 +13,9 @@
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
           <div class="column">
-            <nuxt-link to="/user/corporate/representative-details"
+            <nuxt-link
+              to="/user/corporate/representative-details"
+              class="link_styling"
               ><AppCard :card-data="corporate"
             /></nuxt-link>
           </div>
@@ -38,7 +40,7 @@
             label="BVN"
             placeholder="Enter Bank Verification Number"
           />
-          <div style="height: 30px"></div>
+          <div style="height: 20px"></div>
           <AppButton title="Submit BVN" @click="bvnValidationHandler" />
         </div>
         <div></div>
@@ -220,5 +222,8 @@ hr {
     height: 100%;
     width: 100%;
   }
+}
+.link_styling {
+  color: #2e434e;
 }
 </style>

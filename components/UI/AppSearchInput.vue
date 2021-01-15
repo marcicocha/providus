@@ -1,15 +1,26 @@
 <template>
   <!-- <ValidationProvider rules="positive" v-slot="{ errors }"> -->
   <!-- <input v-model="value" type="text" /> -->
-  <div class="full-input">
-    <label for="name">{{ label }}</label>
+  <div class="control has-icons-left has-icons-right">
+    <!-- <label for="name">{{ label }}</label>
     <input
       v-model="innerValue"
       type="text"
       name="name"
       :placeholder="placeholder"
       @blur="blurHandler"
+    /> -->
+    <input
+      v-model="innerValue"
+      class="input is-medium"
+      type="text"
+      name="name"
+      :placeholder="placeholder"
+      @blur="blurHandler"
     />
+    <span class="icon is-left">
+      <i class="fas fa-search" style="font-weight: 100"></i>
+    </span>
   </div>
   <!-- <span>{{ errors[0] }}</span> -->
   <!-- </ValidationProvider> -->
@@ -19,7 +30,7 @@
 // import { ValidationProvider } from 'vee-validate'
 
 export default {
-  name: 'AppInput',
+  name: 'AppSearchInput',
   components: {
     // ValidationProvider,
   },
@@ -45,11 +56,7 @@ export default {
   watch: {
     value: {
       handler(newVal, oldVal) {
-        if (newVal && (newVal !== '' || newVal.length > 0)) {
-          this.innerValue = newVal
-        } else {
-          this.innerValue = undefined
-        }
+        this.innerValue = !newVal ? '' : newVal
       },
       immediate: true,
     },
@@ -73,10 +80,6 @@ export default {
   padding: 10px 20px;
   border: 1px solid #eaeaea;
   width: 100%;
-  margin-bottom: 15px;
-}
-label {
-  font-family: 'GothamThin', sans-serif;
 }
 input {
   outline: none;
@@ -84,7 +87,7 @@ input {
   display: block;
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: 600;
+  font-weight: inherit;
   font-size: 16px;
   line-height: 150%;
   color: #2e434e;

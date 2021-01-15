@@ -3,7 +3,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column" :name="column.dataindex">
+          <th
+            v-for="(column, index) in columns"
+            :key="index"
+            :name="column.dataindex"
+          >
             {{ column.name }}
           </th>
         </tr>
