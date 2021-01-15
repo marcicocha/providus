@@ -2,7 +2,7 @@
   <div class="wrapper isRetailBackground">
     <div class="wrapper_container">
       <AppAdminSideBar class="sideBar" />
-      <div class="page_container">
+      <div id="dashboard" class="page_container">
         <div class="userInfo">
           <img src="../assets/images/mheader.png" alt="" />
           <div class="details">
@@ -29,7 +29,7 @@ export default {
   width: auto;
   flex-grow: 1;
   margin: 0 auto;
-  height: 100vh;
+  height: 200vh;
   background: #e5e5e5;
   .wrapper_container {
     display: flex;
@@ -81,5 +81,27 @@ export default {
       }
     }
   }
+}
+.wrapper::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 10px;
+  background-color: #f5f5f5;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(122, 153, 217)),
+    color-stop(0.72, rgb(73, 125, 189)),
+    color-stop(0.86, rgb(28, 58, 148))
+  );
 }
 </style>
