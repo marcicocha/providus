@@ -54,11 +54,11 @@
       <template slot="modal-title"
         ><h1>
           {{
-            this.mode === 'CREATE_MODE'
+            mode === 'CREATE_MODE'
               ? 'Add New'
-              : this.mode === 'UPDATE_MODE'
+              : mode === 'UPDATE_MODE'
               ? 'Edit'
-              : this.mode === 'DELETE_MODE'
+              : mode === 'DELETE_MODE'
               ? 'Delete'
               : ''
           }}
@@ -66,7 +66,7 @@
         </h1></template
       >
       <template slot="content">
-        <div v-if="this.mode !== 'DELETE_MODE'" class="columns is-multiline">
+        <div v-if="mode !== 'DELETE_MODE'" class="columns is-multiline">
           <div class="column">
             <AppInput
               v-model="userObject.firstName"
@@ -100,7 +100,7 @@
             <AppButton title="Submit" style="padding: 30px" />
           </div>
         </div>
-        <div v-if="this.mode === 'DELETE_MODE'" class="columns is-multiline">
+        <div v-if="mode === 'DELETE_MODE'" class="columns is-multiline">
           <div class="column is-full">
             <p class="delete-message">
               Are you sure you want to delete this user? This action is

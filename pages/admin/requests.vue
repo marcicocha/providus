@@ -20,7 +20,10 @@
         >
           <a>Approved</a>
         </li>
-        <li :class="{ 'is-active': tabsel == 'doc' }" @click="tabsel = 'doc'">
+        <li
+          :class="{ 'is-active': tabsel == 'remove' }"
+          @click="tabsel = 'remove'"
+        >
           <a>Rejected</a>
         </li>
       </ul>
@@ -29,6 +32,7 @@
     <!-- Tab panes -->
     <div class="content">
       <div v-show="tabsel == 'all'">
+        <!-- all table -->
         <AppTable :columns="columns" :data-source="dataSource">
           <template slot="category" slot-scope="{ record }">
             <span
@@ -86,11 +90,119 @@
           </template>
         </AppTable>
       </div>
+      <!-- pending table -->
       <div v-show="tabsel == 'pending'">
-        <AppTable :columns="columns" :data-source="dataSource"></AppTable>
+        <AppTable :columns="pendingColumns" :data-source="dataSource">
+          <template slot="category" slot-scope="{ record }">
+            <span
+              v-if="record.category === 'R'"
+              style="background: #fdb813; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+            <span
+              v-if="record.category === 'C'"
+              style="background: #2e434e; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+          </template>
+          <template slot="actions" slot-scope="{ record }">
+            <span
+              style="background: #fdb813; padding: 10px; color: #282828"
+              @click="reviewRequest(record)"
+            >
+              Review
+            </span>
+          </template>
+        </AppTable>
       </div>
-      <div v-show="tabsel == 'approved'"><AppTable /></div>
-      <div v-show="tabsel == 'doc'"><AppTable /></div>
+      <!-- approved table -->
+      <div v-show="tabsel == 'approved'">
+        <AppTable :columns="approvedColumns" :data-source="dataSource">
+          <template slot="category" slot-scope="{ record }">
+            <span
+              v-if="record.category === 'R'"
+              style="background: #fdb813; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+            <span
+              v-if="record.category === 'C'"
+              style="background: #2e434e; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+          </template>
+          <template slot="actions" slot-scope="{ record }">
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <i
+                  class="custom-table-btn fas fa-ellipsis-v"
+                  aria-controls="dropdown-menu"
+                >
+                </i>
+              </div>
+              <div id="dropdown-menu" class="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a
+                    class="dropdown-item"
+                    @click="toggleModal('UPDATE_MODE', record)"
+                  >
+                    <i class="fas fa-pencil-alt" /> Edit User
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    @click="toggleModal('DELETE_MODE', record)"
+                  >
+                    <i class="fa fa-trash-alt" /> Delete User
+                  </a>
+                </div>
+              </div>
+            </div>
+          </template>
+        </AppTable>
+      </div>
+      <!-- remove table -->
+      <div v-show="tabsel == 'remove'">
+        <AppTable :columns="approvedColumns" :data-source="dataSource">
+          <template slot="category" slot-scope="{ record }">
+            <span
+              v-if="record.category === 'R'"
+              style="background: #fdb813; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+            <span
+              v-if="record.category === 'C'"
+              style="background: #2e434e; padding: 10px; color: #f8f8f8"
+              >{{ record.category }}</span
+            >
+          </template>
+          <template slot="actions" slot-scope="{ record }">
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <i
+                  class="custom-table-btn fas fa-ellipsis-v"
+                  aria-controls="dropdown-menu"
+                >
+                </i>
+              </div>
+              <div id="dropdown-menu" class="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a
+                    class="dropdown-item"
+                    @click="toggleModal('UPDATE_MODE', record)"
+                  >
+                    <i class="fas fa-pencil-alt" /> Edit User
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    @click="toggleModal('DELETE_MODE', record)"
+                  >
+                    <i class="fa fa-trash-alt" /> Delete User
+                  </a>
+                </div>
+              </div>
+            </div>
+          </template>
+        </AppTable>
+      </div>
     </div>
   </div>
 </template>
@@ -107,6 +219,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Pending',
+    comment: 'Complete',
   },
   {
     id: '02.',
@@ -116,6 +229,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Approved',
+    comment: 'Complete',
   },
   {
     id: '03.',
@@ -125,6 +239,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Pending',
+    comment: 'Complete',
   },
   {
     id: '04.',
@@ -134,6 +249,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Rejected',
+    comment: 'Complete',
   },
   {
     id: '05.',
@@ -143,6 +259,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Pending',
+    comment: 'Complete',
   },
   {
     id: '06.',
@@ -152,6 +269,7 @@ const dataSource = [
     dateOfReview: '15 Dec 2019',
     initiatorId: 'INI2201',
     status: 'Pending',
+    comment: 'Complete',
   },
 ]
 const columns = [
@@ -191,6 +309,67 @@ const columns = [
     dataIndex: 'actions',
   },
 ]
+const pendingColumns = [
+  {
+    name: 'No.',
+    dataIndex: 'id',
+  },
+  {
+    name: 'Request ID',
+    dataIndex: 'requestId',
+    // style: 'width: auto',
+  },
+  {
+    name: 'Category',
+    dataIndex: 'category',
+    style: 'text-align: center',
+  },
+  {
+    name: 'Date of Request',
+    dataIndex: 'dateOfRequest',
+  },
+  {
+    name: 'Actions',
+    dataIndex: 'actions',
+    style: 'text-align: left',
+  },
+]
+const approvedColumns = [
+  {
+    name: 'No.',
+    dataIndex: 'id',
+  },
+  {
+    name: 'Request ID',
+    dataIndex: 'requestId',
+    // style: 'width: auto',
+  },
+  {
+    name: 'Category',
+    dataIndex: 'category',
+    style: 'text-align: center',
+  },
+  {
+    name: 'Date of Request',
+    dataIndex: 'dateOfRequest',
+  },
+  {
+    name: 'Date Of Review',
+    dataIndex: 'dateOfReview',
+  },
+  {
+    name: 'Initiator ID',
+    dataIndex: 'initiatorId',
+  },
+  {
+    name: 'comment',
+    dataIndex: 'comment',
+  },
+  {
+    name: '',
+    dataIndex: 'actions',
+  },
+]
 export default {
   layout: 'dashboard',
   components: {
@@ -201,6 +380,8 @@ export default {
       tabsel: 'all',
       dataSource,
       columns,
+      pendingColumns,
+      approvedColumns,
     }
   },
   methods: {},

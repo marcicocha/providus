@@ -32,7 +32,7 @@ export default {
       const menu = [
         {
           name: 'User Management',
-          path: '/admin/usermanagement',
+          path: '/admin/usermangement',
           children: [],
         },
         {
@@ -42,7 +42,7 @@ export default {
         },
         {
           name: 'Request',
-          path: '/admin/request',
+          path: '/admin/requests',
           children: [],
         },
         {
