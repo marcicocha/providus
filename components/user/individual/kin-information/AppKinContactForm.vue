@@ -94,7 +94,7 @@ import AppInput from '@/components/UI/AppInput'
 import AppSelect from '@/components/UI/AppSelect'
 import AppButton from '@/components/UI/AppButton'
 export default {
-  name: 'AppContactDetails',
+  name: 'AppContactForm',
   components: {
     AppSelect,
     AppInput,

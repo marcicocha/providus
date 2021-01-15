@@ -147,8 +147,9 @@ select {
   outline: none;
   border: none;
   display: block;
-  font-family: 'GothamBold', sans-serif;
+  font-family: 'GothamLight', sans-serif;
   font-style: normal;
+  font-weight: 600;
   font-size: 16px;
   line-height: 150%;
   color: #2e434e;

@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <div class="columns">
+      <div class="column">
+        <AppInput
+          v-model="directorDetailsObject.firstName"
+          label="First Name"
+          placeholder="Type First Name"
+        />
+      </div>
+      <div class="column">
+        <AppInput
+          v-model="directorDetailsObject.surname"
+          label="Surname"
+          placeholder="Type Surname"
+        />
+      </div>
+    </div>
+    <AppInput
+      v-model="directorDetailsObject.email"
+      label="Email Address"
+      placeholder="Enter Director's email address"
+    />
+    <AppInput
+      v-model="directorDetailsObject.bvn"
+      label="BVN"
+      placeholder="Enter Director's Bank Verification Number"
+    />
+  </div>
+</template>
+<script>
+import AppInput from '@/components/UI/AppInput'
+export default {
+  name: 'AppDirectorForm',
+  components: {
+    AppInput,
+  },
+  data() {
+    return {
+      directorDetailsObject: {},
+    }
+  },
+}
+</script>

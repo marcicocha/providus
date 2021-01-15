@@ -28,3 +28,14 @@ label {
 .modal-background {
   background-color: #51646dbd;
 }
+.vsa-list {
+  --vsa-text-color: #fdb813;
+  --vsa-bg-color: #fff;
+  --vsa-border-color: #fff;
+  --vsa-highlight-color: #fff;
+}
+.vsa-item__trigger:focus, .vsa-item__trigger:hover {
+  outline: none;
+  background-color: var(--vsa-highlight-color);
+  color: var(--vsa-text-color);
+}
