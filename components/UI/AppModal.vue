@@ -4,27 +4,25 @@
     class="modal modal-fx-fadeInScale"
     :class="{ 'is-active': visible }"
   >
-    <div class="modal-background" @click="closeModal"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <button
-          class="delete custom-close-btn"
-          aria-label="close"
-          @click="closeModal"
-        >
-          <i class="fa fa-times"></i>
-        </button>
-      </header>
-      <section class="modal-card-body">
-        <h1 class="modal-card-title"><slot name="modal-title"></slot></h1>
-        <hr />
-        <slot name="content"></slot>
-      </section>
-      <!-- <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
-      </footer> -->
-    </div>
+    <slot name="modal">
+      <div class="modal-background" @click="closeModal"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <button
+            class="delete custom-close-btn"
+            aria-label="close"
+            @click="closeModal"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+        </header>
+        <section class="modal-card-body">
+          <h1 class="modal-card-title"><slot name="modal-title"></slot></h1>
+          <hr />
+          <slot name="content"></slot>
+        </section>
+      </div>
+    </slot>
   </div>
 </template>
 
