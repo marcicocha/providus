@@ -10,7 +10,7 @@
           <AppButton
             class="add-button"
             title="Add New User"
-            color="#282828"
+            color="primary"
             icon="fa fa-plus"
             @click="toggleModal('CREATE_MODE')"
           />

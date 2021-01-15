@@ -45,7 +45,11 @@ export default {
   watch: {
     value: {
       handler(newVal, oldVal) {
-        this.innerValue = !newVal ? '' : newVal
+        if (newVal && (newVal !== '' || newVal.length > 0)) {
+          this.innerValue = newVal
+        } else {
+          this.innerValue = undefined
+        }
       },
       immediate: true,
     },
@@ -69,14 +73,18 @@ export default {
   padding: 10px 20px;
   border: 1px solid #eaeaea;
   width: 100%;
+  margin-bottom: 15px;
+}
+label {
+  font-family: 'GothamThin', sans-serif;
 }
 input {
   outline: none;
   border: none;
   display: block;
-  font-family: 'GothamMedium', sans-serif;
+  font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: inherit;
+  font-weight: 600;
   font-size: 16px;
   line-height: 150%;
   color: #2e434e;

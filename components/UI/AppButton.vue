@@ -7,9 +7,13 @@
       'is-normal': size === 'normal',
       'is-medium': size === 'medium',
       'is-large': size === 'large',
+      'is-fullwidth': block,
+      'is-hovered': hover,
+      'is-primary': color === 'primary',
+      'is-info': color === 'secondary',
+      'is-success': color === 'success',
     }"
     :disabled="disabled"
-    :style="btnStyle"
     @click="$emit('click', $event)"
   >
     <span v-if="icon" class="icon">
@@ -50,7 +54,15 @@ export default {
     },
     color: {
       type: String,
-      default: '#fff',
+      default: 'primary',
+    },
+    block: {
+      type: Boolean,
+      default: true,
+    },
+    hover: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -58,47 +70,23 @@ export default {
       innerValue: '',
     }
   },
-  computed: {
-    btnStyle() {
-      const style = {
-        'background-color': this.background,
-        color: this.color,
-      }
-      return style
-    },
-  },
-  watch: {
-    value: {
-      handler(newVal, oldVal) {
-        this.innerValue = !newVal ? '' : newVal
-      },
-      immediate: true,
-    },
-    innerValue: {
-      handler(newVal, oldVal) {
-        this.$emit('input', newVal)
-      },
-      immediate: true,
-    },
-  },
-  methods: {
-    blurHandler(e) {
-      this.$emit('blur', e.target.value)
-    },
-  },
+  // computed: {
+  //   btnStyle() {
+  //     const style = {
+  //       'background-color': this.background,
+  //       color: this.color,
+  //     }
+  //     return style
+  //   },
+  // },
 }
 </script>
 <style lang="scss" scoped>
 button {
-  width: inherit;
-  height: inherit;
   border-radius: 0;
-  font-size: 20px;
-  font-family: 'GothamMedium', sans-serif;
+  font-size: 16px !important;
+  font-family: 'GothamLight', sans-serif;
   font-style: normal;
   font-weight: bold;
-  // font-size: 14px;
-  line-height: 150%;
-  text-align: center;
 }
 </style>

@@ -16,19 +16,7 @@
   font-family: GothamThin;
   src: url('./fonts/Gotham-Thin.otf');
 }
-label {
-  display: block;
-  font-family: 'GothamLight', sans-serif;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 150%;
-  color: #2e434e;
-  font-weight: 600;
-  // letter-spacing: 1px;
-  opacity: 0.7;
-  padding: 2px 1px;
+@font-face {
+  font-family: GothamBold;
+  src: url('./fonts/Gotham-Bold.otf');
 }
-.modal-background {
-  background-color: #51646dbd;
-}
-// scroll for admin
