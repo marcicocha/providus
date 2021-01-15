@@ -10,7 +10,7 @@
           <AppButton
             class="add-button"
             title="Add New User"
-            color="#282828"
+            color="primary"
             icon="fa fa-plus"
             @click="toggleModal('CREATE_MODE')"
           />
@@ -18,9 +18,6 @@
       </div>
     </div>
     <AppTable :columns="columns" :data-source="dataSource">
-      <template slot="userId" slot-scope="{ record }">
-        <span style="background: red">{{ record.userId }}</span>
-      </template>
       <template slot="actions" slot-scope="{ record }">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
@@ -100,7 +97,7 @@
             <AppButton title="Submit" style="padding: 30px" />
           </div>
         </div>
-        <div class="columns is-multiline">
+        <div v-if="mode === 'DELETE_MODE'" class="columns is-multiline">
           <div class="column is-full">
             <p class="delete-message">
               Are you sure you want to delete this user? This action is
