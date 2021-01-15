@@ -223,6 +223,7 @@
                         alt="Placeholder image"
                         width="100%"
                       />
+                      <span>R</span>
                     </figure>
                   </div>
                 </div>
@@ -271,6 +272,7 @@
                   v-if="isProspect"
                   style="width: 100%"
                 />
+                <AppUploadedDocumentComponent v-if="isUploaded" />
               </div>
             </div>
           </section>
@@ -283,6 +285,7 @@
 <script>
 import AppTable from '@/components/UI/AppTable.vue'
 import AppModal from '@/components/UI/AppModal.vue'
+import AppUploadedDocumentComponent from '@/components/AppUploadedDocumentComponent.vue'
 import AppAccountDetailsComponent from '@/components/AppAccountDetailsComponent.vue'
 const dataSource = [
   {
@@ -450,6 +453,7 @@ export default {
     AppTable,
     AppModal,
     AppAccountDetailsComponent,
+    AppUploadedDocumentComponent,
   },
   data() {
     return {
@@ -537,6 +541,16 @@ li {
       .image-wrapper,
       .button-wrapper {
         padding: 0px 5%;
+      }
+      .image-wrapper span {
+        text-align: start;
+        position: relative;
+        right: 40%;
+        bottom: 20px;
+        background: #fdb813;
+        padding: 10px;
+        font-size: 15px;
+        color: #fff;
       }
       .link-wrapper {
         margin-top: 15px;

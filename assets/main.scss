@@ -20,3 +20,10 @@
   font-family: GothamBold;
   src: url('./fonts/Gotham-Bold.otf');
 }
+.dropdown-trigger {
+  // padding: 0px 15px;
+  cursor: pointer;
+}
+.dropdown-menu {
+  left: -100px;
+}
