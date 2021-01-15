@@ -483,6 +483,9 @@ export default {
         this.isModalVisible = !this.isModalVisible
       }
     },
+    reviewRequest() {
+      this.isModalVisible = true
+    },
     toggleMethod(str) {
       if (str) {
         if (str === 'prospect') {
