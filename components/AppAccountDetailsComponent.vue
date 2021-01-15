@@ -235,4 +235,7 @@ export default {
   font-weight: 600;
   cursor: pointer;
 }
+.column {
+  margin-top: 15px;
+}
 </style>
