@@ -249,6 +249,7 @@
                       class="custom-btn"
                       title="Accept"
                       style="padding: 15px; width: 100%"
+                      @click="toggleMethod('accept')"
                     />
                   </div>
                   <div class="column">
@@ -256,6 +257,7 @@
                       class="custom-btn"
                       title="Reject"
                       style="padding: 15px; width: 100%"
+                      @click="toggleMethod('reject')"
                     />
                   </div>
                 </div>
@@ -273,6 +275,11 @@
                   style="width: 100%"
                 />
                 <AppUploadedDocumentComponent v-if="isUploaded" />
+                <AppAcceptRejectComponent
+                  v-else
+                  style="padding: 0px 200px"
+                  :operation="operation"
+                />
               </div>
             </div>
           </section>
@@ -287,6 +294,7 @@ import AppTable from '@/components/UI/AppTable.vue'
 import AppModal from '@/components/UI/AppModal.vue'
 import AppUploadedDocumentComponent from '@/components/AppUploadedDocumentComponent.vue'
 import AppAccountDetailsComponent from '@/components/AppAccountDetailsComponent.vue'
+import AppAcceptRejectComponent from '@/components/AppAcceptRejectComponent.vue'
 const dataSource = [
   {
     id: '01.',
@@ -454,13 +462,15 @@ export default {
     AppModal,
     AppAccountDetailsComponent,
     AppUploadedDocumentComponent,
+    AppAcceptRejectComponent,
   },
   data() {
     return {
       tabsel: 'all',
       isModalVisible: true,
       isUploaded: false,
-      isProspect: true,
+      isProspect: false,
+      operation: '',
       dataSource,
       columns,
       pendingColumns,
@@ -474,12 +484,16 @@ export default {
       }
     },
     toggleMethod(str) {
-      if (str === 'prospect') {
-        this.isProspect = true
-        this.isUploaded = false
-      } else {
-        this.isProspect = false
-        this.isUploaded = true
+      if (str) {
+        if (str === 'prospect') {
+          this.isProspect = true
+          this.isUploaded = false
+        } else if (str === 'upload') {
+          this.isProspect = false
+          this.isUploaded = true
+        } else {
+          this.operation = str
+        }
       }
     },
   },
