@@ -32,12 +32,22 @@ export default {
       const menu = [
         {
           name: 'User Management',
-          path: '/admin/dashboard/usermanagement',
+          path: '/admin/usermangement',
           children: [],
         },
         {
           name: 'Settings',
-          path: '/admin/dashboard/setting',
+          path: '/admin/setting',
+          children: [],
+        },
+        {
+          name: 'Request',
+          path: '/admin/requests',
+          children: [],
+        },
+        {
+          name: 'Team',
+          path: '/admin/team',
           children: [],
         },
       ]

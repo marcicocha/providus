@@ -7,6 +7,7 @@
             v-for="(column, index) in columns"
             :key="index"
             :name="column.dataindex"
+            :style="column.style"
           >
             {{ column.name }}
           </th>
@@ -14,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="record in dataSource" :key="record">
-          <td v-for="column in columns" :key="column">
+          <td v-for="column in columns" :key="column" :style="column.style">
             <slot
               v-if="column.dataIndex !== 'actions'"
               :name="column.dataIndex"

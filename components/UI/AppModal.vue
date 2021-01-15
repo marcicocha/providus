@@ -5,25 +5,23 @@
     :class="{ 'is-active': visible }"
   >
     <div class="modal-background" @click="closeModal"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <button
-          class="delete custom-close-btn"
-          aria-label="close"
-          @click="closeModal"
-        >
-          <i class="fa fa-times"></i>
-        </button>
-      </header>
-      <section class="modal-card-body">
-        <h1 class="modal-card-title"><slot name="modal-title"></slot></h1>
-        <hr />
-        <slot name="content"></slot>
-      </section>
-      <!-- <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
-      </footer> -->
+    <div class="modal-card" :class="{ 'is-fullscreen': isFullScreen }">
+      <slot name="modal">
+        <header class="modal-card-head">
+          <button
+            class="delete custom-close-btn"
+            aria-label="close"
+            @click="closeModal"
+          >
+            <i class="fa fa-times"></i>
+          </button>
+        </header>
+        <section class="modal-card-body">
+          <h1 class="modal-card-title"><slot name="modal-title"></slot></h1>
+          <hr />
+          <slot name="content"></slot>
+        </section>
+      </slot>
     </div>
   </div>
 </template>
@@ -33,6 +31,10 @@ export default {
   name: 'AppModal',
   props: {
     isVisible: {
+      type: Boolean,
+      default: false,
+    },
+    isFullScreen: {
       type: Boolean,
       default: false,
     },
@@ -86,5 +88,9 @@ export default {
 }
 hr {
   margin: 10px 0px 25px 0px;
+}
+.is-fullscreen {
+  width: 80% !important;
+  height: 90%;
 }
 </style>
