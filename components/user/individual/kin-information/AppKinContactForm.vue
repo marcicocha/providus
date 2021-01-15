@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     contactDetailsHandler() {
-      console.log('CONTACT')
+      this.$router.replace('/user/individual/capture-selfie')
     },
   },
 }

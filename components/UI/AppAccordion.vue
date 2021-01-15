@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vsa-list>
+    <vsa-list :init-active="true">
       <vsa-item>
         <vsa-heading
           ><span class="accordion_heading">{{ `${heading} ${counter}` }}</span>
