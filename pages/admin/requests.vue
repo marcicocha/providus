@@ -493,6 +493,8 @@ export default {
           this.isUploaded = true
         } else {
           this.operation = str
+          this.isProspect = false
+          this.isUploaded = false
         }
       }
     },
