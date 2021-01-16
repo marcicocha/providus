@@ -29,13 +29,79 @@
 }
 
 //Dika's Global Entries
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes fadeoutleft {
+  from {
+    opacity: 1;
+  }
 
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@keyframes fadeoutleft {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+@-webkit-keyframes fadeinright {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fadeinright {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.fadeinright {
+  -webkit-animation-name: fadeinright;
+  animation-name: fadeinright;
+}
+.fadeoutleft {
+  -webkit-animation-name: fadeoutleft;
+  animation-name: fadeoutleft;
+}
+.hide-scroller {
+  overflow: hidden !important;
+}
+.hidden {
+  display: none !important;
+}
 hr {
   margin: 1rem 0 !important;
   background: #f4f4f4 !important;
   height: 1px !important;
 }
-
 label {
   display: block;
   font-family: 'GothamThin', sans-serif;
@@ -47,3 +113,4 @@ label {
   opacity: 0.7;
   padding: 2px 1px;
 }
+//Dika's Global Entries
