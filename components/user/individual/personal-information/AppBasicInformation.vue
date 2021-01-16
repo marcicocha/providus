@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="columns">
-        <div class="column is-4">
+        <div class="firstname column is-4">
           <AppSelect
             v-model="personalInfoObject.title"
             :remote="false"
@@ -11,7 +11,7 @@
             :data="['Miss', 'Mrs', 'Mister']"
           />
         </div>
-        <div class="column is-8">
+        <div class="surname column is-8">
           <AppInput
             v-model="personalInfoObject.surname"
             label="Surname"
@@ -20,14 +20,14 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.firstName"
             label="First Name"
             placeholder="First Name"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppInput
             v-model="personalInfoObject.middleName"
             label="Middle Name"
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppSelect
             v-model="personalInfoObject.maritalStatus"
             :remote="false"
@@ -45,7 +45,7 @@
             :data="['Single', 'Divorced', 'Married', 'Widowed']"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppSelect
             v-model="personalInfoObject.gender"
             :remote="false"
@@ -56,14 +56,14 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.maidenName"
             label="Mother's Maiden Name"
             placeholder="Type Name"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppInput
             v-model="personalInfoObject.dob"
             label="Date of Birth"
@@ -73,14 +73,14 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.occupation"
             label="Occupation"
             placeholder="Type Occupation"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppSelect
             v-model="personalInfoObject.currency"
             :remote="false"
@@ -122,3 +122,21 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.surname {
+  width: 66.9%;
+  padding-left: 0 !important;
+  margin-left: -1px !important;
+  border-left-color: transparent !important;
+}
+.firstname {
+  padding-right: 0 !important;
+}
+.small-left-padding {
+  padding-left: 5px !important;
+}
+.small-right-padding {
+  padding-right: 5px !important;
+}
+</style>

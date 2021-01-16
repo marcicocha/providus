@@ -1,44 +1,49 @@
 <template>
   <div>
     <div>
-      <div>
-        <AppSelect
-          v-model="personalInfoObject.nationality"
-          :remote="false"
-          label="Nationality"
-          placeholder="Select Nationality"
-          :data="['LOCAL', 'FOREIGN']"
-        />
+      <div class="columns">
+        <div class="column">
+          <AppSelect
+            v-model="personalInfoObject.nationality"
+            :remote="false"
+            label="Nationality"
+            placeholder="Select Nationality"
+            :data="['LOCAL', 'FOREIGN']"
+          />
+        </div>
       </div>
+
       <div v-if="personalInfoObject.nationality === 'LOCAL'">
         <div class="columns">
-          <div class="column">
+          <div class="column small-right-padding">
             <AppSelect
               v-model="personalInfoObject.state"
               :remote="false"
               label="State of Origin"
               placeholder="Select Option"
-              :data="['Lagos']"
+              :data="['Lagos', 'Akure']"
             />
           </div>
-          <div class="column">
+          <div class="column small-left-padding">
             <AppSelect
               v-model="personalInfoObject.lga"
               :remote="false"
               label="LGA"
               placeholder="Select Option"
-              :data="['Lagos Island']"
+              :data="['Lagos Island', 'Ikeja', 'Lekki']"
             />
           </div>
         </div>
-        <div>
-          <AppSelect
-            v-model="personalInfoObject.religion"
-            :remote="false"
-            label="State of Origin"
-            placeholder="Select Option"
-            :data="['Christainity']"
-          />
+        <div class="columns">
+          <div class="column">
+            <AppSelect
+              v-model="personalInfoObject.religion"
+              :remote="false"
+              label="Religion"
+              placeholder="Select Option"
+              :data="['Christian', 'Muslim']"
+            />
+          </div>
         </div>
       </div>
       <div v-else>
@@ -53,16 +58,18 @@
           <div class="column"></div>
           <div class="column"></div>
         </div>
-        <div>
-          <AppInput
-            v-model="personalInfoObject.taxpayerId"
-            label="Tax Payer's ID"
-            placeholder="Enter ID"
-          />
+        <div class="columns">
+          <div class="column" style="margin-top: 10px">
+            <AppInput
+              v-model="personalInfoObject.taxpayerId"
+              label="Tax Payer's ID"
+              placeholder="Enter ID"
+            />
+          </div>
         </div>
 
         <div class="columns">
-          <div class="column">
+          <div class="column small-right-padding">
             <div>
               <AppSelect
                 v-model="personalInfoObject.dualCitizenship"
@@ -73,7 +80,7 @@
               />
             </div>
           </div>
-          <div class="column">
+          <div class="column small-left-padding">
             <AppSelect
               v-model="personalInfoObject.specifyCitizenship"
               :remote="false"
@@ -113,3 +120,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.small-left-padding {
+  padding-left: 5px !important;
+}
+.small-right-padding {
+  padding-right: 5px !important;
+}
+</style>

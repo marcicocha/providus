@@ -7,6 +7,7 @@
       name="name"
       :placeholder="placeholder"
       :rows="rows"
+      cols="50"
       @blur="blurHandler"
     />
   </div>
