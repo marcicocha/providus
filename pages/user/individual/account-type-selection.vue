@@ -212,7 +212,8 @@ h2 {
 }
 .account-info__block {
   width: 80%;
-  padding-top: 30px;
+  //padding-top: 30px;
+  padding-top: 20px;
 }
 hr {
   margin: 2rem 0 !important;

@@ -27,7 +27,8 @@ export default {
   justify-content: center;
   text-align: center;
   width: 100%;
-  height: 200px;
+  height: 150px;
+  cursor: pointer;
   border: 1px solid #eaeaea;
   box-sizing: border-box;
   p {

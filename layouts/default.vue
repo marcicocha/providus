@@ -7,9 +7,7 @@
       <div class="page_container">
         <Nuxt />
       </div>
-      <footer>
-        <img src="../assets/images/group.jpg" alt="footer-pattern" />
-      </footer>
+      <footer></footer>
     </div>
   </div>
 </template>
@@ -24,13 +22,15 @@
 header {
   text-align: right;
   max-height: 200px;
-  padding: 25px 30px;
+  //padding: 25px 30px;
+  padding: 17px 30px;
   img {
     height: 100%;
   }
 }
 .page_container {
-  padding: 0 100px;
+  //padding: 0 100px;
+  padding: 20px 100px 0 100px;
 }
 .isRetailBackground {
   background-image: url('../assets/images/background-image-individual.png');
@@ -40,8 +40,8 @@ header {
 }
 footer {
   width: 100%;
-  height: 100%;
-  background-image: url('../assets/images/footer-pattern.svg');
+  height: 87px;
+  background-image: url('../assets/images/footer-pattern-new.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
