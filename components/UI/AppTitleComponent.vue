@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 15px">
     <h1>{{ heading }}</h1>
     <p v-if="description">{{ description }}</p>
   </div>
@@ -21,20 +21,43 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+//Default
+
+//h1 {
+//  font-family: 'GothamMedium', sans-serif;
+//  font-style: normal;
+//  font-weight: bold;
+//  font-size: 25px;
+//  line-height: 150%;
+//  margin-bottom: 10px;
+//}
+//p {
+//  font-family: 'GothamLight', sans-serif;
+//  font-style: normal;
+//  font-weight: 500;
+//  font-size: 20px;
+//  line-height: 150%;
+//  color: #2e434e;
+//}
+
+// Dika's Entries
+
 h1 {
   font-family: 'GothamMedium', sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 25px;
-  line-height: 150%;
+  font-weight: 700;
+  font-size: 21px;
   margin-bottom: 10px;
+  color: #2e434e;
+  line-height: 150%;
 }
+
 p {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 14px;
   line-height: 150%;
-  color: #2e434e;
+  color: #617580;
 }
 </style>

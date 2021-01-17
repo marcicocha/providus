@@ -1,16 +1,16 @@
 <template>
   <div>
     <AppTitleComponent heading="Contact Details" />
-    <AppContactDetails />
+    <AppContactForm />
   </div>
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppContactDetails from '@/components/user/individual/contact-information/AppContactDetails.vue'
+import AppContactForm from '@/components/user/individual/contact-information/AppContactForm.vue'
 export default {
   components: {
     AppTitleComponent,
-    AppContactDetails,
+    AppContactForm,
   },
 }
 </script>

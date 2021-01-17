@@ -14,9 +14,9 @@
         >
       </div>
 
-      <p>
+      <p class="reference">
         Have a Reference Number?
-        <a><nuxt-link to="/user/reference">Continue</nuxt-link></a>
+        <a class="bold"><nuxt-link to="/user/reference">Continue</nuxt-link></a>
       </p>
     </div>
   </div>
@@ -37,6 +37,11 @@ export default {
 }
 </script>
 <style scoped>
+.bold,
+.bold * {
+  font-weight: 700 !important;
+  font-family: 'GothamMedium', sans-serif;
+}
 p {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
@@ -47,22 +52,27 @@ p {
   text-align: center;
   padding-top: 25px;
 }
+.reference {
+  text-align: left;
+  font-size: 14px;
+}
 .homepage_button__padding {
   padding-top: 50px;
 }
 .parent_container {
-  width: 85%;
+  /* width: 85%; */
+  width: 100%;
   height: 100%;
   position: relative;
-  top: 15%;
+  top: 19%;
 }
 .child-container {
-  width: 70%;
+  width: 80%;
 }
 .button {
   width: 100%;
   border-radius: 0;
-  font-size: 16px !important;
+  font-size: 15px !important;
   font-family: 'GothamMedium', sans-serif;
   font-style: normal;
   font-weight: 400;

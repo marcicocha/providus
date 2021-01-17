@@ -1,18 +1,62 @@
 <template>
-  <div class="wrapper isRetailBackground">
-    <div class="wrapper_container">
-      <header>
-        <img src="../assets/images/logo.svg" alt="logo" />
-      </header>
-      <div class="page_container">
-        <Nuxt />
+  <div>
+    <AppLoader v-if="isLoading" :class="loaderTag" />
+    <div :class="pageTag" class="wrapper isRetailBackground">
+      <div class="wrapper_container">
+        <header>
+          <img src="../assets/images/logo.svg" alt="logo" />
+        </header>
+        <div class="page_container">
+          <Nuxt />
+        </div>
+        <footer></footer>
       </div>
-      <footer>
-        <img src="../assets/images/group.jpg" alt="footer-pattern" />
-      </footer>
     </div>
   </div>
 </template>
+<script>
+import AppLoader from '@/components/UI/AppLoader.vue'
+export default {
+  components: {
+    AppLoader,
+  },
+  data() {
+    return {
+      isLoading: true,
+      loaderTag: {
+        'animated fadeoutleft': false,
+        hidden: false,
+      },
+      pageTag: {
+        'animated fadeinright': false,
+      },
+    }
+  },
+  beforeMount() {
+    const root = document.querySelector('html')
+    root.classList.add('hide-scroller')
+  },
+  mounted() {
+    this.initLoader()
+  },
+  methods: {
+    initLoader() {
+      const root = document.querySelector('html')
+      root.classList.add('hide-scroller')
+      setTimeout(() => {
+        root.classList.remove('hide-scroller')
+        this.loaderTag = {
+          'animated fadeoutleft': true,
+          hidden: false,
+        }
+        this.pageTag = {
+          'animated fadeinright': true,
+        }
+      }, 3000)
+    },
+  },
+}
+</script>
 <style lang="scss" scoped>
 .wrapper {
   position: relative;
@@ -24,13 +68,15 @@
 header {
   text-align: right;
   max-height: 200px;
-  padding: 25px 30px;
+  //padding: 25px 30px;
+  padding: 17px 30px;
   img {
     height: 100%;
   }
 }
 .page_container {
-  padding: 0 100px;
+  //padding: 0 100px;
+  padding: 20px 100px 0 100px;
 }
 .isRetailBackground {
   background-image: url('../assets/images/background-image-individual.png');
@@ -40,8 +86,8 @@ header {
 }
 footer {
   width: 100%;
-  height: 100%;
-  background-image: url('../assets/images/footer-pattern.svg');
+  height: 87px;
+  background-image: url('../assets/images/footer-pattern-new.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -51,7 +97,6 @@ footer {
     object-fit: cover;
   }
 }
-
 .wrapper_container {
   display: grid;
   grid-template-rows: 13% auto 13%;

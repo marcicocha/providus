@@ -1,20 +1,25 @@
 <template>
   <div>
     <div>
-      <AppInput
-        v-model="contactDetails.email"
-        label="Email Address"
-        placeholder="Enter your Email Address"
-      />
       <div class="columns">
         <div class="column">
+          <AppInput
+            v-model="contactDetails.email"
+            label="Email Address"
+            placeholder="Enter your Email Address"
+          />
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column small-right-padding">
           <AppInput
             v-model="contactDetails.phoneNumber"
             label="Phone Number"
             placeholder="Enter Number"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppInput
             v-model="contactDetails.altPhoneNumber"
             label="Alternate Phone Number"
@@ -23,14 +28,14 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column is-4">
+        <div class="column is-4 small-right-padding">
           <AppInput
             v-model="contactDetails.houseNo"
             label="House No."
             placeholder="Enter No."
           />
         </div>
-        <div class="column is-8">
+        <div class="column is-8 small-left-padding">
           <AppInput
             v-model="contactDetails.landmark"
             label="Closest Landmark"
@@ -39,14 +44,14 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppInput
             v-model="contactDetails.streetName"
             label="Street Name"
             placeholder="Enter Street Name"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppInput
             v-model="contactDetails.residentCity"
             label="City/Town"
@@ -55,7 +60,7 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <div class="column small-right-padding">
           <AppSelect
             v-model="contactDetails.residentState"
             :remote="false"
@@ -64,7 +69,7 @@
             :data="['Lagos']"
           />
         </div>
-        <div class="column">
+        <div class="column small-left-padding">
           <AppSelect
             v-model="contactDetails.residentLga"
             :remote="false"
@@ -98,8 +103,16 @@ export default {
   },
   methods: {
     contactDetailsHandler() {
-      console.log('CONTACT')
+      this.$router.replace('/user/individual/kin-information')
     },
   },
 }
 </script>
+<style scoped>
+.small-left-padding {
+  padding-left: 5px !important;
+}
+.small-right-padding {
+  padding-right: 5px !important;
+}
+</style>

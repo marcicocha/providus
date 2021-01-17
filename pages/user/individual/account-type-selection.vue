@@ -78,6 +78,7 @@
             </div>
           </div>
         </div>
+        <div style="height: 30px"></div>
         <div class="columns">
           <div class="column">
             <AppButton
@@ -163,21 +164,30 @@ export default {
         this.isAccountType = false
       }
     },
-    async bvnValidationHandler() {
+    bvnValidationHandler() {
       console.log(this.accountInformation, 'Account Info:::::')
-      try {
-        const { response } = await this.$axios.$post(
-          '/individual',
-          this.accountInformation
-        )
-        if (response) {
-          this.bvnDetails = { ...response }
-          this.isBvn = false
-          this.isBvnDetails = true
-        }
-      } catch (err) {
-        console.log(err)
+      this.bvnDetails = {
+        firstName: 'Bisi',
+        lastName: 'Adewale',
+        bvn: '000000000',
+        phoneNumber1: '081009****',
+        middleName: 'Ojo',
       }
+      this.isBvn = false
+      this.isBvnDetails = true
+      // try {
+      //   const { response } = await this.$axios.$post(
+      //     '/individual',
+      //     this.accountInformation
+      //   )
+      //   if (response) {
+      //     this.bvnDetails = { ...response }
+      //     this.isBvn = false
+      //     this.isBvnDetails = true
+      //   }
+      // } catch (err) {
+      //   console.log(err)
+      // }
     },
     returnHandler() {
       this.isBvn = true
@@ -202,7 +212,8 @@ h2 {
 }
 .account-info__block {
   width: 80%;
-  padding-top: 30px;
+  //padding-top: 30px;
+  padding-top: 20px;
 }
 hr {
   margin: 2rem 0 !important;
@@ -213,8 +224,9 @@ hr {
     font-size: 12px;
   }
   p {
+    font-family: 'GothamLight', sans-serif;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 .bvn_image {

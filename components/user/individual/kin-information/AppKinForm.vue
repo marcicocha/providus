@@ -3,7 +3,7 @@
     <div>
       <div>
         <div class="columns">
-          <div class="column is-4">
+          <div class="column is-4 small-right-padding">
             <AppSelect
               v-model="kinInfoObject.title"
               :remote="false"
@@ -12,7 +12,7 @@
               :data="['Miss', 'Mrs', 'Mister']"
             />
           </div>
-          <div class="column is-8">
+          <div class="column is-8 small-left-padding">
             <AppInput
               v-model="kinInfoObject.surname"
               label="Surname"
@@ -21,14 +21,14 @@
           </div>
         </div>
         <div class="columns">
-          <div class="column">
+          <div class="column small-right-padding">
             <AppInput
               v-model="kinInfoObject.firstName"
               label="First Name"
               placeholder="First Name"
             />
           </div>
-          <div class="column">
+          <div class="column small-left-padding">
             <AppInput
               v-model="kinInfoObject.middleName"
               label="Middle Name"
@@ -36,17 +36,19 @@
             />
           </div>
         </div>
-        <div>
-          <AppSelect
-            v-model="kinInfoObject.relationship"
-            :remote="false"
-            label="Relationship"
-            placeholder="Select your relationship with this person"
-            :data="['Single', 'Divorced', 'Married', 'Widowed']"
-          />
-        </div>
         <div class="columns">
           <div class="column">
+            <AppSelect
+              v-model="kinInfoObject.relationship"
+              :remote="false"
+              label="Relationship"
+              placeholder="Select your relationship with this person"
+              :data="['Single', 'Divorced', 'Married', 'Widowed']"
+            />
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column small-right-padding">
             <AppSelect
               v-model="kinInfoObject.maritalStatus"
               :remote="false"
@@ -55,7 +57,7 @@
               :data="['Single', 'Divorced', 'Married', 'Widowed']"
             />
           </div>
-          <div class="column">
+          <div class="column small-left-padding">
             <AppSelect
               v-model="kinInfoObject.gender"
               :remote="false"
@@ -66,7 +68,7 @@
           </div>
         </div>
         <div class="columns">
-          <div class="column">
+          <div class="column small-right-padding">
             <AppInput
               v-model="kinInfoObject.dob"
               label="Date of Birth"
@@ -74,7 +76,7 @@
               type="date"
             />
           </div>
-          <div class="column">
+          <div class="column small-left-padding">
             <AppInput
               v-model="kinInfoObject.bvn"
               label="BVN"
@@ -93,7 +95,7 @@ import AppInput from '@/components/UI/AppInput'
 import AppSelect from '@/components/UI/AppSelect'
 import AppButton from '@/components/UI/AppButton'
 export default {
-  name: 'AppKinDetails',
+  name: 'AppKinForm',
   components: {
     AppSelect,
     AppInput,
@@ -106,8 +108,16 @@ export default {
   },
   methods: {
     kinDetailsHandler() {
-      console.log('KINS')
+      this.$router.replace('/user/individual/kin-contact-information')
     },
   },
 }
 </script>
+<style scoped>
+.small-left-padding {
+  padding-left: 5px !important;
+}
+.small-right-padding {
+  padding-right: 5px !important;
+}
+</style>

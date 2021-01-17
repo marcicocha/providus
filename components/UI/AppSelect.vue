@@ -138,18 +138,20 @@ export default {
 <style lang="scss" scoped>
 .full-input {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: 1px solid #eaeaea;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  height: 60px;
 }
 select {
   outline: none;
   border: none;
   display: block;
-  font-family: 'GothamBold', sans-serif;
+  font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 150%;
   color: #2e434e;
   padding: 2px 1px;

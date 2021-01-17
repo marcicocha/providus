@@ -1,17 +1,17 @@
 <template>
   <div>
-    <AppTitleComponent heading="Next of Kin information" />
-
-    <AppKinForm />
+    <AppTitleComponent heading="Company Details" />
+    <br />
+    <AppCompanyForm />
   </div>
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppKinForm from '@/components/user/individual/kin-information/AppKinForm'
+import AppCompanyForm from '@/components/user/corporate/AppCompanyForm'
 export default {
   components: {
     AppTitleComponent,
-    AppKinForm,
+    AppCompanyForm,
   },
 }
 </script>
