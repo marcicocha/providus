@@ -1,17 +1,74 @@
 <template>
-  <div class="wrapper isRetailBackground">
-    <div class="wrapper_container">
-      <header>
-        <img src="../assets/images/logo.svg" alt="logo" />
-      </header>
-      <div class="page_container">
-        <Nuxt />
+  <div>
+    <AppLoader v-if="isLoading" :class="loaderTag" />
+    <div :class="pageTag" class="wrapper isRetailBackground">
+      <div class="wrapper_container">
+        <header>
+          <img
+            class="home-icon"
+            src="../assets/images/logo.svg"
+            alt="logo"
+            @click="goHome"
+          />
+        </header>
+        <div class="page_container">
+          <Nuxt />
+        </div>
+        <footer></footer>
       </div>
-      <footer></footer>
     </div>
   </div>
 </template>
+<script>
+import AppLoader from '@/components/UI/AppLoader.vue'
+export default {
+  components: {
+    AppLoader,
+  },
+  data() {
+    return {
+      isLoading: true,
+      loaderTag: {
+        'animated fadeoutleft': false,
+        hidden: false,
+      },
+      pageTag: {
+        'animated fadeinright': false,
+      },
+    }
+  },
+  beforeMount() {
+    const root = document.querySelector('html')
+    root.classList.add('hide-scroller')
+  },
+  mounted() {
+    this.initLoader()
+  },
+  methods: {
+    initLoader() {
+      const root = document.querySelector('html')
+      root.classList.add('hide-scroller')
+      setTimeout(() => {
+        root.classList.remove('hide-scroller')
+        this.loaderTag = {
+          'animated fadeoutleft': true,
+          hidden: false,
+        }
+        this.pageTag = {
+          'animated fadeinright': true,
+        }
+      }, 3000)
+    },
+    goHome() {
+      this.$router.push('/')
+    },
+  },
+}
+</script>
 <style lang="scss" scoped>
+.home-icon {
+  cursor: pointer !important;
+}
 .wrapper {
   position: relative;
   width: auto;
@@ -51,7 +108,6 @@ footer {
     object-fit: cover;
   }
 }
-
 .wrapper_container {
   display: grid;
   grid-template-rows: 13% auto 13%;

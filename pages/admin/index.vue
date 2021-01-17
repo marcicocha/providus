@@ -19,7 +19,7 @@
         />
       </div>
       <div class="column is-full">
-        <AppButton title="Sign In" style="padding: 30px" />
+        <AppButton title="Sign In" style="padding: 30px" @click="logIn" />
       </div>
     </div>
   </div>
@@ -45,8 +45,9 @@ export default {
     }
   },
   methods: {
-    daf() {
-      console.log('daf', this.user)
+    daf() {},
+    logIn() {
+      this.$router.push('admin/usermangement')
     },
   },
 }

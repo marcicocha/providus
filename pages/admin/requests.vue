@@ -276,7 +276,7 @@
                 />
                 <AppUploadedDocumentComponent v-if="isUploaded" />
                 <AppAcceptRejectComponent
-                  v-else
+                  v-if="operation"
                   style="padding: 0px 200px"
                   :operation="operation"
                 />
@@ -467,9 +467,9 @@ export default {
   data() {
     return {
       tabsel: 'all',
-      isModalVisible: true,
+      isModalVisible: false,
       isUploaded: false,
-      isProspect: false,
+      isProspect: true,
       operation: '',
       dataSource,
       columns,
@@ -491,8 +491,10 @@ export default {
         if (str === 'prospect') {
           this.isProspect = true
           this.isUploaded = false
+          this.operation = ''
         } else if (str === 'upload') {
           this.isProspect = false
+          this.operation = ''
           this.isUploaded = true
         } else {
           this.operation = str
