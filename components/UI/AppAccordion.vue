@@ -54,12 +54,15 @@ export default {
   font-family: 'GothamBold', sans-serif;
   font-size: 20px;
   display: flex;
+  width: 100%;
 }
 .accordion_heading::after {
   content: '';
   flex: 1;
   margin-left: 1rem;
-  height: 1px;
+  margin-top: 10px;
+  vertical-align: bottom;
+  height: 1.5px;
   background-color: #fdb813;
 }
 </style>
