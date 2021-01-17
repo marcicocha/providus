@@ -8,18 +8,31 @@
           <AppDirectorForm />
         </template>
       </AppAccordion>
+      <p><a @click="addDirectorFormHandler">+ Add Director</a></p>
     </div>
+    <br />
+    <AppButton title="Continue" @click="submitDirectorHandler" />
   </div>
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppAccordion from '@/components/UI/AppAccordion.vue'
-import AppDirectorForm from '@/components/user/corporate/director-details/AppDirectorForm.vue'
+import AppDirectorForm from '@/components/user/corporate/AppDirectorForm.vue'
+import AppButton from '@/components/UI/AppButton'
 export default {
   components: {
     AppTitleComponent,
     AppAccordion,
     AppDirectorForm,
+    AppButton,
+  },
+  methods: {
+    submitDirectorHandler() {
+      this.$router.replace('/user/corporate/proprietor-details')
+    },
+    addDirectorFormHandler() {
+      console.log('direcor:::')
+    },
   },
 }
 </script>

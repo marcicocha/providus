@@ -9,7 +9,7 @@
       <div>
         <h2>Representative Details</h2>
         <div>
-          <div class="columns">
+          <div class="columns" style="margin-bottom: 5px">
             <div class="column">
               <AppInput
                 v-model="representativeDetails.firstName"
@@ -25,7 +25,7 @@
               />
             </div>
           </div>
-          <div>
+          <div style="margin-bottom: 10px">
             <AppInput
               v-model="representativeDetails.emailAddress"
               label="Email Address"
@@ -49,6 +49,7 @@
             </div>
           </div>
         </div>
+        <div style="height: 20px"></div>
         <AppButton title="Continue" @click="representativeSubmitHandler" />
       </div>
     </div>

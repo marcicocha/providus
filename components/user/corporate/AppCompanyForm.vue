@@ -18,7 +18,7 @@
         label="Registered Business Address"
         placeholder="Type your registered Business Address"
       />
-      <div class="columns">
+      <div class="columns" style="margin-bottom: 0">
         <div class="column">
           <AppInput
             v-model="companyDetails.registrationNumber"
@@ -78,3 +78,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.mb-10 {
+  margin-bottom: 10px;
+}
+</style>

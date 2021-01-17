@@ -23,41 +23,43 @@ export default {
 <style lang="scss" scoped>
 //Default
 
-//h1 {
-//  font-family: 'GothamMedium', sans-serif;
-//  font-style: normal;
-//  font-weight: bold;
-//  font-size: 25px;
-//  line-height: 150%;
-//  margin-bottom: 10px;
-//}
-//p {
-//  font-family: 'GothamLight', sans-serif;
-//  font-style: normal;
-//  font-weight: 500;
-//  font-size: 20px;
-//  line-height: 150%;
-//  color: #2e434e;
-//}
-
-// Dika's Entries
-
 h1 {
   font-family: 'GothamMedium', sans-serif;
-  font-weight: 700;
-  font-size: 21px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 150%;
   margin-bottom: 10px;
   color: #2e434e;
-  line-height: 150%;
 }
-
 p {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: bold;
-  letter-spacing: 1px;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 18px;
   line-height: 150%;
-  color: #617580;
+  color: #2e434e;
+  letter-spacing: 1px;
 }
+
+// Dika's Entries
+
+// h1 {
+//   font-family: 'GothamMedium', sans-serif;
+//   font-weight: 700;
+//   font-size: 21px;
+//   margin-bottom: 10px;
+//   color: #2e434e;
+//   line-height: 150%;
+// }
+
+// p {
+//   font-family: 'GothamLight', sans-serif;
+//   font-style: normal;
+//   font-weight: bold;
+//   letter-spacing: 1px;
+//   font-size: 14px;
+//   line-height: 150%;
+//   color: #617580;
+// }
 </style>
