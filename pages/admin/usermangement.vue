@@ -216,6 +216,7 @@ export default {
         console.log(this.isModalVisible, 'close 233')
       }
     },
+    daf() {},
   },
 }
 </script>

@@ -45,11 +45,9 @@ export default {
     }
   },
   methods: {
-    daf() {
-      console.log('daf', this.user)
-    },
+    daf() {},
     logIn() {
-      this.$router.push('usermangement')
+      this.$router.push('admin/usermangement')
     },
   },
 }

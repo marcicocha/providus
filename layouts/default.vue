@@ -4,7 +4,12 @@
     <div :class="pageTag" class="wrapper isRetailBackground">
       <div class="wrapper_container">
         <header>
-          <img src="../assets/images/logo.svg" alt="logo" />
+          <img
+            class="home-icon"
+            src="../assets/images/logo.svg"
+            alt="logo"
+            @click="goHome"
+          />
         </header>
         <div class="page_container">
           <Nuxt />
@@ -54,10 +59,16 @@ export default {
         }
       }, 3000)
     },
+    goHome() {
+      this.$router.push('/')
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+.home-icon {
+  cursor: pointer !important;
+}
 .wrapper {
   position: relative;
   width: auto;
