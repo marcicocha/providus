@@ -54,20 +54,20 @@ p {
 }
 .reference {
   text-align: left;
-  font-size: 14px;
+
+  /* font-size: 14px; */
 }
 .homepage_button__padding {
   padding-top: 50px;
 }
 .parent_container {
-  /* width: 85%; */
-  width: 100%;
+  width: 85%;
   height: 100%;
   position: relative;
   top: 19%;
 }
 .child-container {
-  width: 80%;
+  width: 75%;
 }
 .button {
   width: 100%;

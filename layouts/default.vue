@@ -22,8 +22,8 @@
 header {
   text-align: right;
   max-height: 200px;
-  //padding: 25px 30px;
-  padding: 17px 30px;
+  padding: 25px 30px;
+  // padding: 17px 30px;
   img {
     height: 100%;
   }
@@ -40,7 +40,7 @@ header {
 }
 footer {
   width: 100%;
-  height: 87px;
+  height: 100%;
   background-image: url('../assets/images/footer-pattern-new.png');
   background-position: center;
   background-repeat: no-repeat;

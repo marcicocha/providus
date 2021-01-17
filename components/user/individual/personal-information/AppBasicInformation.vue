@@ -1,8 +1,8 @@
 <template>
   <div>
     <div>
-      <div class="columns">
-        <div class="firstname column is-4">
+      <div class="columns is-gapless">
+        <div class="column is-4">
           <AppSelect
             v-model="personalInfoObject.title"
             :remote="false"
@@ -125,10 +125,10 @@ export default {
 
 <style scoped>
 .surname {
-  width: 66.9%;
+  /* width: 66.9%;
   padding-left: 0 !important;
+  border-left-color: transparent !important; */
   margin-left: -1px !important;
-  border-left-color: transparent !important;
 }
 .firstname {
   padding-right: 0 !important;
