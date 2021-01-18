@@ -6,7 +6,10 @@
       v-if="isCaptureInstruction"
       @captureInstructionHandler="captureInstructionHandler"
     />
-    <AppCaptureSelfie v-if="isCapture" />
+    <AppCaptureSelfie
+      v-if="isCapture"
+      @submitCapturehandler="submitCapturehandler"
+    />
   </div>
 </template>
 <script>
@@ -32,6 +35,9 @@ export default {
       this.isCapture = true
       this.description =
         'Stay still and keep your face inside the oval while taking selfie'
+    },
+    submitCapturehandler() {
+      this.$router.replace('/user/corporate/upload-document')
     },
   },
 }

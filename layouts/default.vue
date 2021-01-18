@@ -1,7 +1,14 @@
 <template>
   <div>
     <AppLoader v-if="isLoading" :class="loaderTag" />
-    <div :class="pageTag" class="wrapper isRetailBackground">
+    <div
+      :style="pageTag"
+      :class="{
+        wrapper: true,
+        retail_background: accountCategory === 'individual',
+        corporate_background: accountCategory === 'corporate',
+      }"
+    >
       <div class="wrapper_container">
         <header>
           <img
@@ -14,12 +21,24 @@
         <div class="page_container">
           <Nuxt />
         </div>
-        <footer></footer>
+        <footer>
+          <img
+            v-if="accountCategory === 'individual'"
+            src="~assets/images/footer-pattern-individual.png"
+            alt="footer-pattern"
+          />
+          <img
+            v-if="accountCategory === 'corporate'"
+            src="~assets/images/footer-pattern-corporate.png"
+            alt="footer-pattern"
+          />
+        </footer>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import AppLoader from '@/components/UI/AppLoader.vue'
 export default {
   components: {
@@ -36,6 +55,11 @@ export default {
         'animated fadeinright': false,
       },
     }
+  },
+  computed: {
+    ...mapState({
+      accountCategory: (state) => state.accountCategory,
+    }),
   },
   beforeMount() {
     const root = document.querySelector('html')
@@ -89,8 +113,14 @@ header {
   //padding: 0 100px;
   padding: 20px 100px 0 100px;
 }
-.isRetailBackground {
+.retail_background {
   background-image: url('../assets/images/background-image-individual.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.corporate_background {
+  background-image: url('../assets/images/corporate-background-image.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,14 +128,14 @@ header {
 footer {
   width: 100%;
   height: 100%;
-  background-image: url('../assets/images/footer-pattern-new.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  // background-image: url('../assets/images/footer-pattern-new.png');
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    // object-fit: cover;
   }
 }
 .wrapper_container {

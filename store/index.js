@@ -9,6 +9,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: () => ({
       pageFlag: '',
+      accountCategory: 'individual',
     }),
     getters,
     mutations,
