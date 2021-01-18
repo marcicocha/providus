@@ -13,11 +13,7 @@
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
           <div class="column">
-            <nuxt-link
-              to="/user/corporate/representative-details"
-              class="link_styling"
-              ><AppCard :card-data="corporate"
-            /></nuxt-link>
+            <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
           </div>
         </div>
       </div>
@@ -141,11 +137,16 @@ export default {
     },
     onClickHandler(value) {
       if (value === 'Individual') {
+        this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'individual')
         this.isAccountCategory = false
         this.isAccountType = true
         this.accountInformation = {
           accountCategory: 'INDIVIDUAL',
         }
+      }
+      if (value === 'Corporate') {
+        this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
+        this.$router.replace('/user/corporate/representative-details')
       }
       if (value === 'Savings') {
         this.accountInformation = {
@@ -165,7 +166,6 @@ export default {
       }
     },
     bvnValidationHandler() {
-      console.log(this.accountInformation, 'Account Info:::::')
       this.bvnDetails = {
         firstName: 'Bisi',
         lastName: 'Adewale',
