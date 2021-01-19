@@ -89,4 +89,9 @@ button {
   font-style: normal;
   font-weight: bold;
 }
+@media only screen and (max-width: 991px) {
+  button {
+    font-size: 13px !important;
+  }
+}
 </style>

@@ -1,20 +1,18 @@
 <template>
   <div>
     <div>
-      <div class="columns">
-        <div class="column">
-          <AppSelect
-            v-model="personalInfoObject.nationality"
-            :remote="false"
-            label="Nationality"
-            placeholder="Select Nationality"
-            :data="['LOCAL', 'FOREIGN']"
-          />
-        </div>
+      <div>
+        <AppSelect
+          v-model="personalInfoObject.nationality"
+          :remote="false"
+          label="Nationality"
+          placeholder="Select Nationality"
+          :data="['LOCAL', 'FOREIGN']"
+        />
       </div>
 
       <div v-if="personalInfoObject.nationality === 'LOCAL'">
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppSelect
               v-model="personalInfoObject.state"
@@ -34,7 +32,7 @@
             />
           </div>
         </div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppSelect
               v-model="personalInfoObject.religion"
@@ -54,12 +52,24 @@
             placeholder="Type Number"
           />
         </div>
-        <div class="columns">
-          <div class="column"></div>
-          <div class="column"></div>
+        <div class="columns is-mobile">
+          <div class="column">
+            <AppInput
+              v-model="personalInfoObject.permitIssueDate"
+              label="Permit Issue Date"
+              placeholder="Select date"
+            />
+          </div>
+          <div class="column">
+            <AppInput
+              v-model="personalInfoObject.permitExpiryDate"
+              label="Permit Expiry Date"
+              placeholder="Select date"
+            />
+          </div>
         </div>
         <div class="columns">
-          <div class="column" style="margin-top: 10px">
+          <div class="column">
             <AppInput
               v-model="personalInfoObject.taxpayerId"
               label="Tax Payer's ID"
@@ -68,7 +78,7 @@
           </div>
         </div>
 
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column small-right-padding">
             <div>
               <AppSelect

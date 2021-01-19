@@ -18,10 +18,22 @@
             @click="goHome"
           />
         </header>
+        <footer class="mobile_footer">
+          <img
+            v-if="accountCategory === 'individual'"
+            src="~assets/images/footer-pattern-individual.png"
+            alt="footer-pattern"
+          />
+          <img
+            v-if="accountCategory === 'corporate'"
+            src="~assets/images/footer-pattern-corporate.png"
+            alt="footer-pattern"
+          />
+        </footer>
         <div class="page_container">
           <Nuxt />
         </div>
-        <footer>
+        <footer class="web_footer">
           <img
             v-if="accountCategory === 'individual'"
             src="~assets/images/footer-pattern-individual.png"
@@ -100,19 +112,11 @@ export default {
   margin: 0 auto;
   height: 100vh;
 }
-header {
-  text-align: right;
-  max-height: 200px;
-  padding: 25px 30px;
-  // padding: 17px 30px;
-  img {
-    height: 100%;
-  }
-}
 .page_container {
-  //padding: 0 100px;
-  padding: 20px 100px 0 100px;
+  padding: 10px 24px;
+  // overflow: scroll;
 }
+
 .retail_background {
   background-image: url('../assets/images/background-image-individual.png');
   background-position: center;
@@ -128,26 +132,76 @@ header {
 footer {
   width: 100%;
   height: 100%;
-  // background-image: url('../assets/images/footer-pattern-new.png');
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
   img {
     width: 100%;
     height: 100%;
-    // object-fit: cover;
   }
 }
-.wrapper_container {
-  display: grid;
-  grid-template-rows: 13% auto 13%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 80px;
-  width: 40vw;
-  height: 85vh;
-  margin: auto;
-  background-color: #fff;
+@media only screen and (max-width: 991px) {
+  .web_footer {
+    display: none;
+  }
+  .mobile_footer {
+    display: block;
+  }
+  .wrapper_container {
+    display: grid;
+    grid-template-rows: 10% 8% auto;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background-color: #fff;
+  }
+  footer {
+    img {
+      object-fit: cover;
+    }
+  }
+  header {
+    padding: 20px;
+    padding-bottom: 0px;
+    text-align: center;
+    img {
+      height: 100%;
+    }
+  }
+}
+@media only screen and (min-width: 992px) {
+  .wrapper_container {
+    display: grid;
+    grid-template-rows: 13% auto 13%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 80px;
+    width: 40vw;
+    height: 85vh;
+    margin: auto;
+    background-color: #fff;
+  }
+  header {
+    text-align: right;
+    padding: 25px 30px;
+    // padding: 17px 30px;
+    img {
+      height: 100%;
+    }
+  }
+  .page_container {
+    padding: 20px 100px 0 100px;
+  }
+  .web_footer {
+    display: block;
+  }
+  .mobile_footer {
+    display: none;
+  }
+}
+@media only screen and (max-width: 596px) {
+  footer {
+    img {
+      object-fit: contain;
+    }
+  }
 }
 </style>

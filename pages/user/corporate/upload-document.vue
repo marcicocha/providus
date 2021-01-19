@@ -7,7 +7,7 @@
       <p>Here are the tasks left for you to complete</p>
       <br />
       <div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppUpload label="Mandate Form" />
           </div>
@@ -18,7 +18,7 @@
         <div class="mb-10">
           <AppUpload label="Company Registration Documents" />
         </div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppUpload label="ID" />
           </div>

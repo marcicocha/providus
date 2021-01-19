@@ -80,4 +80,16 @@ li:first-child {
     padding-left: 5px;
   }
 }
+@media only screen and (max-width: 991px) {
+  .flex_display {
+    div {
+      width: 10%;
+    }
+    p {
+      width: 90%;
+      font-size: 12px;
+      padding-left: 10px;
+    }
+  }
+}
 </style>

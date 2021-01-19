@@ -2,8 +2,8 @@
   <div>
     <div>
       <div>
-        <div class="columns">
-          <div class="column is-4 small-right-padding">
+        <div class="columns is-gapless is-mobile">
+          <div class="column is-4">
             <AppSelect
               v-model="kinInfoObject.title"
               :remote="false"
@@ -12,7 +12,7 @@
               :data="['Miss', 'Mrs', 'Mister']"
             />
           </div>
-          <div class="column is-8 small-left-padding">
+          <div class="column surname is-8">
             <AppInput
               v-model="kinInfoObject.surname"
               label="Surname"
@@ -20,7 +20,7 @@
             />
           </div>
         </div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppInput
               v-model="kinInfoObject.firstName"
@@ -36,18 +36,16 @@
             />
           </div>
         </div>
-        <div class="columns">
-          <div class="column">
-            <AppSelect
-              v-model="kinInfoObject.relationship"
-              :remote="false"
-              label="Relationship"
-              placeholder="Select your relationship with this person"
-              :data="['Single', 'Divorced', 'Married', 'Widowed']"
-            />
-          </div>
+        <div>
+          <AppSelect
+            v-model="kinInfoObject.relationship"
+            :remote="false"
+            label="Relationship"
+            placeholder="Select your relationship with this person"
+            :data="['Single', 'Divorced', 'Married', 'Widowed']"
+          />
         </div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppSelect
               v-model="kinInfoObject.maritalStatus"
@@ -67,7 +65,7 @@
             />
           </div>
         </div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppInput
               v-model="kinInfoObject.dob"
@@ -119,5 +117,8 @@ export default {
 }
 .small-right-padding {
   padding-right: 5px !important;
+}
+.surname {
+  margin-left: -1px !important;
 }
 </style>
