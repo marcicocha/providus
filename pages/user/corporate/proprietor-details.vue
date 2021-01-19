@@ -36,3 +36,12 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+@media only screen and (max-width: 600px) {
+  p {
+    a {
+      font-size: 13px !important;
+    }
+  }
+}
+</style>

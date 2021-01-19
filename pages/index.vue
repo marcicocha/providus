@@ -78,4 +78,12 @@ p {
   font-weight: 400;
   color: #fff !important;
 }
+@media only screen and (max-width: 600px) {
+  .parent_container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 2%;
+  }
+}
 </style>

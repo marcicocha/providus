@@ -4,6 +4,8 @@ import actions from './actions'
 
 const state = () => ({
   bvnDetails: {},
+  personalInfoObj: {},
+  contactInfoObj: {},
 })
 export default {
   namespaced: true,

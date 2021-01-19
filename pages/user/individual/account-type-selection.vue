@@ -8,7 +8,7 @@
       <div><hr /></div>
       <div v-if="isAccountCategory">
         <h2>Select Account Category</h2>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
@@ -19,7 +19,7 @@
       </div>
       <div v-if="isAccountType">
         <h2>Select Account Type</h2>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppCard :card-data="savings" @onClickHandler="onClickHandler" />
           </div>
@@ -27,6 +27,11 @@
             <AppCard :card-data="current" @onClickHandler="onClickHandler" />
           </div>
         </div>
+        <p class="notification">
+          A reference form is required to open a Current Account,
+          <a download>click here</a> to download, fill and make ready for
+          upload.
+        </p>
       </div>
       <div v-if="isBvn">
         <h2>BVN Validation</h2>
@@ -38,11 +43,15 @@
           />
           <div style="height: 20px"></div>
           <AppButton title="Submit BVN" @click="bvnValidationHandler" />
+          <p :class="{ notification: true, error_message: message }">
+            <span style="display: block">{{ message }}</span>
+            <span>Dial *565*0# to check your Bank Verification Number</span>
+          </p>
         </div>
         <div></div>
       </div>
       <div v-if="isBvnDetails">
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column is-5 bvn_image">
             <img
               :src="getImgUrl(bvnDetails.base64Image)"
@@ -58,7 +67,7 @@
               <small>Surname and First Name</small>
               <p>{{ `${bvnDetails.lastName} ${bvnDetails.firstName}` }}</p>
             </div>
-            <div class="columns">
+            <div class="columns is-mobile">
               <div class="column">
                 <div class="bvn-child__block">
                   <small>Phone Number</small>
@@ -75,7 +84,7 @@
           </div>
         </div>
         <div style="height: 30px"></div>
-        <div class="columns">
+        <div class="columns is-mobile">
           <div class="column">
             <AppButton
               title="Return"
@@ -84,9 +93,7 @@
             />
           </div>
           <div class="column">
-            <nuxt-link to="/user/individual/personal-information"
-              ><AppButton title="Continue"
-            /></nuxt-link>
+            <AppButton title="Continue" @click="nextHandler" />
           </div>
         </div>
       </div>
@@ -129,6 +136,7 @@ export default {
       },
       accountInformation: {},
       bvnDetails: {},
+      message: '',
     }
   },
   methods: {
@@ -165,29 +173,38 @@ export default {
         this.isAccountType = false
       }
     },
-    bvnValidationHandler() {
-      this.bvnDetails = {
-        firstName: 'Bisi',
-        lastName: 'Adewale',
-        bvn: '000000000',
-        phoneNumber1: '081009****',
-        middleName: 'Ojo',
-      }
-      this.isBvn = false
-      this.isBvnDetails = true
-      // try {
-      //   const { response } = await this.$axios.$post(
-      //     '/individual',
-      //     this.accountInformation
-      //   )
-      //   if (response) {
-      //     this.bvnDetails = { ...response }
-      //     this.isBvn = false
-      //     this.isBvnDetails = true
-      //   }
-      // } catch (err) {
-      //   console.log(err)
+    async bvnValidationHandler() {
+      // this.bvnDetails = {
+      //   firstName: 'Bisi',
+      //   lastName: 'Adewale',
+      //   bvn: '000000000',
+      //   phoneNumber1: '081009****',
+      //   middleName: 'Ojo',
       // }
+      // this.isBvn = false
+      // this.isBvnDetails = true
+      if (
+        !this.accountInformation ||
+        this.accountInformation.bvn === undefined ||
+        this.accountInformation.bvn === ''
+      ) {
+        this.message = 'Your BVN seems to be incorrect,'
+        return
+      }
+      try {
+        this.message = ''
+        const { response } = await this.$axios.$post(
+          '/individual',
+          this.accountInformation
+        )
+        if (response) {
+          this.bvnDetails = { ...response }
+          this.isBvn = false
+          this.isBvnDetails = true
+        }
+      } catch (err) {
+        console.log(err)
+      }
     },
     returnHandler() {
       this.isBvn = true
@@ -197,6 +214,9 @@ export default {
         ...this.accountInformation,
         bvn: '',
       }
+    },
+    nextHandler() {
+      this.$router.replace('/user/individual/personal-information')
     },
   },
 }
@@ -235,7 +255,31 @@ hr {
     width: 100%;
   }
 }
-.link_styling {
-  color: #2e434e;
+.parent-container {
+  width: 90%;
+  position: relative;
+}
+.notification {
+  position: absolute;
+  bottom: 5%;
+  font-size: 15px;
+}
+.error_message {
+  color: #cc4c4c;
+}
+@media only screen and (max-width: 991px) {
+  .account-info__block {
+    width: 100%;
+    padding-top: 0;
+  }
+  .parent-container {
+    width: 100%;
+  }
+  .notification {
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 16px;
+  }
 }
 </style>

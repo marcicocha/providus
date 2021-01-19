@@ -9,7 +9,7 @@
       <div>
         <h2>Representative Details</h2>
         <div>
-          <div class="columns" style="margin-bottom: 5px">
+          <div class="columns is-mobile" style="margin-bottom: 5px">
             <div class="column">
               <AppInput
                 v-model="representativeDetails.firstName"
@@ -25,14 +25,14 @@
               />
             </div>
           </div>
-          <div style="margin-bottom: 10px">
+          <div>
             <AppInput
               v-model="representativeDetails.emailAddress"
               label="Email Address"
               placeholder="Enter your Email Address"
             />
           </div>
-          <div class="columns">
+          <div class="columns is-mobile">
             <div class="column">
               <AppInput
                 v-model="representativeDetails.phoneNumber"
@@ -92,5 +92,14 @@ h2 {
 }
 hr {
   margin: 2rem 0 !important;
+}
+@media only screen and (max-width: 991px) {
+  .account-info__block {
+    width: 100%;
+    padding-top: 0;
+  }
+  hr {
+    margin: 1rem 0 !important;
+  }
 }
 </style>

@@ -51,4 +51,14 @@ p {
     font-weight: bold;
   }
 }
+@media only screen and (max-width: 992px) {
+  p {
+    font-size: 16px !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  p {
+    font-size: 14px !important;
+  }
+}
 </style>

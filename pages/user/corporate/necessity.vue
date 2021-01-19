@@ -56,4 +56,14 @@ li {
     font-weight: bold;
   }
 }
+@media only screen and (max-width: 992px) {
+  li {
+    font-size: 16px !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  li {
+    font-size: 14px !important;
+  }
+}
 </style>

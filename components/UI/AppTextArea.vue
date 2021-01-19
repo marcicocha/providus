@@ -68,7 +68,7 @@ export default {
 <style lang="scss" scoped>
 .full-input {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: 1px solid #eaeaea;
   width: 100%;
   margin-bottom: 15px;
@@ -88,5 +88,16 @@ textarea {
   color: #2e434e;
   padding: 2px 1px;
   width: 100%;
+}
+@media only screen and (max-width: 600px) {
+  label {
+    font-size: 10px !important;
+  }
+}
+@media only screen and (max-width: 991px) {
+  textarea {
+    font-size: 13px !important;
+    line-height: 195%;
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="columns is-gapless">
+      <div class="columns is-gapless is-mobile">
         <div class="column is-4">
           <AppSelect
             v-model="personalInfoObject.title"
@@ -19,7 +19,7 @@
           />
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-mobile">
         <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.firstName"
@@ -35,7 +35,7 @@
           />
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-mobile">
         <div class="column small-right-padding">
           <AppSelect
             v-model="personalInfoObject.maritalStatus"
@@ -55,7 +55,7 @@
           />
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-mobile">
         <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.maidenName"
@@ -72,7 +72,7 @@
           />
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-mobile">
         <div class="column small-right-padding">
           <AppInput
             v-model="personalInfoObject.occupation"

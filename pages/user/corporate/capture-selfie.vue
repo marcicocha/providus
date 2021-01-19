@@ -47,4 +47,10 @@ export default {
   width: 85%;
   height: 100%;
 }
+@media only screen and (max-width: 600px) {
+  .parent_container {
+    width: 100% !important;
+    height: 100%;
+  }
+}
 </style>

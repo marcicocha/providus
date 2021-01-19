@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="columns" style="margin-bottom: 0">
+    <div class="columns is-mobile" style="margin-bottom: 0">
       <div class="column">
         <AppInput
           v-model="directorDetailsObject.firstName"

@@ -1,24 +1,22 @@
 <template>
   <div>
     <div>
-      <div class="columns">
-        <div class="column">
-          <AppInput
-            v-model="contactDetails.email"
-            label="Email Address"
-            placeholder="Enter Next of Kin's Email Address"
-          />
-        </div>
+      <div>
+        <AppInput
+          v-model="contactDetails.email"
+          label="Email Address"
+          placeholder="Enter Next of Kin's Email Address"
+        />
       </div>
-      <div class="columns">
-        <div class="column small-right-padding">
+      <div class="columns is-mobile">
+        <div class="column">
           <AppInput
             v-model="contactDetails.phoneNumber"
             label="Phone Number"
             placeholder="Enter Number"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column">
           <AppInput
             v-model="contactDetails.altPhoneNumber"
             label="Alternate Phone Number"
@@ -26,15 +24,15 @@
           />
         </div>
       </div>
-      <div class="columns">
-        <div class="column is-4 small-right-padding">
+      <div class="columns is-mobile">
+        <div class="column is-4">
           <AppInput
             v-model="contactDetails.houseNo"
             label="House No."
             placeholder="Enter No."
           />
         </div>
-        <div class="column is-8 small-left-padding">
+        <div class="column is-8">
           <AppInput
             v-model="contactDetails.landmark"
             label="Closest Landmark"
@@ -42,15 +40,15 @@
           />
         </div>
       </div>
-      <div class="columns">
-        <div class="column small-right-padding">
+      <div class="columns is-mobile">
+        <div class="column">
           <AppInput
             v-model="contactDetails.streetName"
             label="Street Name"
             placeholder="Enter Street Name"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column">
           <AppInput
             v-model="contactDetails.residentCity"
             label="City/Town"
@@ -58,8 +56,8 @@
           />
         </div>
       </div>
-      <div class="columns">
-        <div class="column small-right-padding">
+      <div class="columns is-mobile">
+        <div class="column">
           <AppSelect
             v-model="contactDetails.residentState"
             :remote="false"
@@ -68,7 +66,7 @@
             :data="['Lagos']"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column">
           <AppSelect
             v-model="contactDetails.residentLga"
             :remote="false"
@@ -91,7 +89,6 @@
       </div>
     </div>
 
-    <br />
     <AppButton title="Continue" @click="contactDetailsHandler" />
   </div>
 </template>

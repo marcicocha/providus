@@ -18,7 +18,7 @@
         label="Registered Business Address"
         placeholder="Type your registered Business Address"
       />
-      <div class="columns" style="margin-bottom: 0">
+      <div class="columns is-mobile">
         <div class="column">
           <AppInput
             v-model="companyDetails.registrationNumber"
@@ -34,7 +34,7 @@
           />
         </div>
       </div>
-      <div class="columns">
+      <div class="columns is-mobile">
         <div class="column">
           <AppInput
             v-model="companyDetails.phoneNumber"
@@ -51,7 +51,6 @@
         </div>
       </div>
     </div>
-    <br />
     <AppButton title="Continue" @click="submitCompanyDetails" />
   </div>
 </template>

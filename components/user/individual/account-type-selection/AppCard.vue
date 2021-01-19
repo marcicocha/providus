@@ -29,7 +29,7 @@ export default {
   width: 100%;
   height: 200px;
   cursor: pointer;
-  border: 1px solid #eaeaea;
+  border: 1.5px solid #eaeaea;
   box-sizing: border-box;
   p {
     margin-top: 20px;
@@ -45,6 +45,17 @@ export default {
   img {
     filter: invert(59%) sepia(99%) saturate(391%) hue-rotate(2deg)
       brightness(105%) contrast(99%);
+  }
+}
+@media only screen and (max-width: 991px) {
+  .card {
+    height: 150px;
+    p {
+      margin-top: 20px;
+      font-size: 14px;
+      font-family: 'GothamLight', sans-serif;
+      font-weight: bold;
+    }
   }
 }
 </style>

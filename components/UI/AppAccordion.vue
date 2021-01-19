@@ -65,4 +65,16 @@ export default {
   height: 1.5px;
   background-color: #fdb813;
 }
+@media only screen and (max-width: 600px) {
+  .accordion_heading {
+    font-family: 'GothamBold', sans-serif;
+    font-size: 17px;
+    display: flex;
+    width: 100%;
+  }
+  .accordion_heading::after {
+    content: '';
+    height: 1.2px;
+  }
+}
 </style>

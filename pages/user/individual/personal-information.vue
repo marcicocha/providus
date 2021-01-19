@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppBasicInformation from '@/components/user/individual/personal-information/AppBasicInformation.vue'
 import AppNationalityInformation from '@/components/user/individual/personal-information/AppNationalityInformation.vue'
@@ -49,9 +50,22 @@ export default {
       this.isBasicInformation = false
       this.isNationalityInfo = true
     },
-    identificationHandler() {
-      this.$router.replace('/user/individual/contact-information')
+    async identificationHandler() {
+      if (!this.personalInfoObject) {
+        return
+      }
+      try {
+        await this.$axios.$put(
+          '/individual/personalInfo',
+          this.personalInfoObject
+        )
+        await this.submitPersonalInfoHandler(this.personalInfoObject)
+        this.$router.replace('/user/individual/contact-information')
+      } catch (err) {}
     },
+    ...mapActions({
+      submitPersonalInfoHandler: 'individualModule/POST_PERSONAL_INFORMATION',
+    }),
   },
 }
 </script>

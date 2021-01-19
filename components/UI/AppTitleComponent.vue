@@ -27,7 +27,6 @@ h1 {
   font-family: 'GothamMedium', sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 25px;
   line-height: 150%;
   margin-bottom: 10px;
   color: #2e434e;
@@ -36,12 +35,26 @@ p {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
   line-height: 150%;
   color: #2e434e;
   letter-spacing: 1px;
 }
-
+@media only screen and (max-width: 991px) {
+  h1 {
+    font-size: 18px;
+  }
+  p {
+    font-size: 15px;
+  }
+}
+@media only screen and (min-width: 992px) {
+  h1 {
+    font-size: 25px;
+  }
+  p {
+    font-size: 18px;
+  }
+}
 // Dika's Entries
 
 // h1 {

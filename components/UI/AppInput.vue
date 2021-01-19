@@ -74,6 +74,7 @@ export default {
   border: 1px solid #eaeaea;
   width: 100%;
   margin-bottom: 10px;
+  height: 60px;
 }
 label {
   font-family: 'GothamThin', sans-serif;
@@ -86,9 +87,20 @@ input {
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  line-height: 150%;
+  line-height: 155%;
   color: #2e434e;
   padding: 2px 1px;
   width: 100%;
+}
+@media only screen and (max-width: 991px) {
+  input {
+    font-size: 13px !important;
+    line-height: 195%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  label {
+    font-size: 10px !important;
+  }
 }
 </style>
