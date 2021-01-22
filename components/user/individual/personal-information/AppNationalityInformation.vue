@@ -58,6 +58,7 @@
               v-model="personalInfoObject.permitIssueDate"
               label="Permit Issue Date"
               placeholder="Select date"
+              input-type="date"
             />
           </div>
           <div class="column">
@@ -65,13 +66,14 @@
               v-model="personalInfoObject.permitExpiryDate"
               label="Permit Expiry Date"
               placeholder="Select date"
+              input-type="date"
             />
           </div>
         </div>
         <div class="columns">
           <div class="column">
             <AppInput
-              v-model="personalInfoObject.taxpayerId"
+              v-model="personalInfoObject.taxPayerId"
               label="Tax Payer's ID"
               placeholder="Enter ID"
             />
@@ -91,12 +93,10 @@
             </div>
           </div>
           <div class="column small-left-padding">
-            <AppSelect
-              v-model="personalInfoObject.specifyCitizenship"
-              :remote="false"
+            <AppInput
+              v-model="personalInfoObject.altCitizenship"
               label="If Yes, Specify?"
               placeholder="Select Option"
-              :data="['True', 'False']"
             />
           </div>
         </div>

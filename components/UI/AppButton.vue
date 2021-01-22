@@ -12,6 +12,7 @@
       'is-primary': color === 'primary',
       'is-info': color === 'secondary',
       'is-success': color === 'success',
+      'is-outlined': outlined,
     }"
     :disabled="disabled"
     @click="$emit('click', $event)"
@@ -61,6 +62,10 @@ export default {
       default: true,
     },
     hover: {
+      type: Boolean,
+      default: false,
+    },
+    outlined: {
       type: Boolean,
       default: false,
     },

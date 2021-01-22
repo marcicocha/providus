@@ -5,10 +5,16 @@
         <div class="column is-4">
           <AppSelect
             v-model="personalInfoObject.title"
-            :remote="false"
             label="Title"
             placeholder="Select"
             :data="['Miss', 'Mrs', 'Mister']"
+            url="/globalData/data?name=TITLE"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
         <div class="surname column is-8">
@@ -39,19 +45,29 @@
         <div class="column small-right-padding">
           <AppSelect
             v-model="personalInfoObject.maritalStatus"
-            :remote="false"
             label="Marital Status"
             placeholder="Select Option"
-            :data="['Single', 'Divorced', 'Married', 'Widowed']"
+            url="/globalData/data?name=MARITAL_STATUS"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
         <div class="column small-left-padding">
           <AppSelect
             v-model="personalInfoObject.gender"
-            :remote="false"
             label="Gender"
             placeholder="Select Option"
-            :data="['Male', 'Female']"
+            url="/globalData/data?name=GENDER"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
       </div>
@@ -65,10 +81,10 @@
         </div>
         <div class="column small-left-padding">
           <AppInput
-            v-model="personalInfoObject.dob"
+            v-model="personalInfoObject.dateOfBirth"
             label="Date of Birth"
             placeholder="Select Date"
-            type="date"
+            input-type="date"
           />
         </div>
       </div>
@@ -83,10 +99,15 @@
         <div class="column small-left-padding">
           <AppSelect
             v-model="personalInfoObject.currency"
-            :remote="false"
             label="Currency Type"
             placeholder="Select Currency"
-            :data="['NGN', 'USD']"
+            url="/globalData/data?name=CURRENCY"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
       </div>
