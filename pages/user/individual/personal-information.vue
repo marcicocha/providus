@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppBasicInformation from '@/components/user/individual/personal-information/AppBasicInformation.vue'
 import AppNationalityInformation from '@/components/user/individual/personal-information/AppNationalityInformation.vue'
@@ -38,8 +38,15 @@ export default {
       isBasicInformation: true,
       isNationalityInfo: false,
       isIdentificationInfo: false,
-      personalInfoObject: {},
+      personalInfoObject: {
+        currency: 'NGN',
+      },
     }
+  },
+  computed: {
+    ...mapState({
+      bvnDetails: (state) => state.individualModule.bvnDetails,
+    }),
   },
   methods: {
     nationalityHandler() {
@@ -54,12 +61,13 @@ export default {
       if (!this.personalInfoObject) {
         return
       }
+      const personalInfoObject = {
+        ...this.personalInfoObject,
+        BVN: this.bvnDetails.BVN,
+      }
       try {
-        await this.$axios.$put(
-          '/individual/personalInfo',
-          this.personalInfoObject
-        )
-        await this.submitPersonalInfoHandler(this.personalInfoObject)
+        await this.$axios.$put('/individual/personalInfo', personalInfoObject)
+        await this.submitPersonalInfoHandler(personalInfoObject)
         this.$router.replace('/user/individual/contact-information')
       } catch (err) {}
     },

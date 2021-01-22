@@ -11,7 +11,7 @@
       placeholder="Enter Number"
     />
     <AppTextArea
-      v-model="personalInfoObject.accountPurpose"
+      v-model="personalInfoObject.purposeOfAcc"
       label="Purpose of Account"
       placeholder="Type purpose of account here"
     />

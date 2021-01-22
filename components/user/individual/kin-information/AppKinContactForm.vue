@@ -60,19 +60,29 @@
         <div class="column">
           <AppSelect
             v-model="contactDetails.residentState"
-            :remote="false"
             label="State"
             placeholder="Select Option"
-            :data="['Lagos']"
+            url="/country/states?name=NIGERIA"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
         <div class="column">
           <AppSelect
             v-model="contactDetails.residentLga"
-            :remote="false"
             label="LGA"
             placeholder="Select Option"
-            :data="['Lagos Island']"
+            url="/state/lgas"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
       </div>
@@ -80,10 +90,15 @@
         <div class="column">
           <AppSelect
             v-model="contactDetails.residentCountry"
-            :remote="false"
             label="Country"
             placeholder="Select the country of residence of yoour next of Kin"
-            :data="['Nigeria']"
+            url="/country/countryList"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
       </div>

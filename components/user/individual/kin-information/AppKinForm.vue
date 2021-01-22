@@ -6,10 +6,15 @@
           <div class="column is-4">
             <AppSelect
               v-model="kinInfoObject.title"
-              :remote="false"
               label="Title"
               placeholder="Select"
-              :data="['Miss', 'Mrs', 'Mister']"
+              url="/globalData/data?name=TITLE"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
           <div class="column surname is-8">
@@ -39,29 +44,44 @@
         <div>
           <AppSelect
             v-model="kinInfoObject.relationship"
-            :remote="false"
             label="Relationship"
             placeholder="Select your relationship with this person"
-            :data="['Single', 'Divorced', 'Married', 'Widowed']"
+            url="/globalData/data?name=RELATIONSHIP"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
         <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppSelect
               v-model="kinInfoObject.maritalStatus"
-              :remote="false"
               label="Marital Status"
               placeholder="Select Option"
-              :data="['Single', 'Divorced', 'Married', 'Widowed']"
+              url="/globalData/data?name=MARITAL_STATUS"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
           <div class="column small-left-padding">
             <AppSelect
               v-model="kinInfoObject.gender"
-              :remote="false"
               label="Gender"
               placeholder="Select Option"
-              :data="['Male', 'Female']"
+              url="/globalData/data?name=GENDER"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
         </div>
@@ -89,6 +109,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
 import AppSelect from '@/components/UI/AppSelect'
 import AppButton from '@/components/UI/AppButton'
@@ -105,9 +126,19 @@ export default {
     }
   },
   methods: {
-    kinDetailsHandler() {
-      this.$router.replace('/user/individual/kin-contact-information')
+    async kinDetailsHandler() {
+      if (!this.kinInfoObject) {
+        return
+      }
+      try {
+        await this.$axios.$put('/individual/personalInfo', this.kinInfoObject)
+        await this.submitKinInfoHandler(this.kinInfoObject)
+        this.$router.replace('/user/individual/kin-contact-information')
+      } catch (err) {}
     },
+    ...mapActions({
+      submitKinInfoHandler: 'individualModule/POST_KINS_INFORMATION',
+    }),
   },
 }
 </script>

@@ -2,6 +2,7 @@ import {
   GET_BVN_INFORMATION,
   POST_PERSONAL_INFORMATION,
   POST_CONTACT_INFORMATION,
+  POST_KINS_INFORMATION,
 } from '@/utils/mutation-types/user/individual'
 
 export default {
@@ -13,5 +14,8 @@ export default {
   },
   [POST_CONTACT_INFORMATION](state, payload) {
     state.contactInfoObj = payload
+  },
+  [POST_KINS_INFORMATION](state, payload) {
+    state.kinObjInfo = payload
   },
 }

@@ -5,7 +5,7 @@
     <label for="name">{{ label }}</label>
     <input
       v-model="innerValue"
-      type="text"
+      :type="inputType"
       name="name"
       :placeholder="placeholder"
       @blur="blurHandler"
@@ -35,6 +35,10 @@ export default {
     placeholder: {
       type: String,
       default: '',
+    },
+    inputType: {
+      type: String,
+      default: 'text',
     },
   },
   data() {

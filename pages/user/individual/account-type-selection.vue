@@ -37,12 +37,16 @@
         <h2>BVN Validation</h2>
         <div>
           <AppInput
-            v-model="accountInformation.bvn"
+            v-model="accountInformation.BVN"
             label="BVN"
             placeholder="Enter Bank Verification Number"
           />
           <div style="height: 20px"></div>
-          <AppButton title="Submit BVN" @click="bvnValidationHandler" />
+          <AppButton
+            title="Submit BVN"
+            :disabled="!accountInformation.BVN"
+            @click="bvnValidationHandler"
+          />
           <p :class="{ notification: true, error_message: message }">
             <span style="display: block">{{ message }}</span>
             <span>Dial *565*0# to check your Bank Verification Number</span>
@@ -101,6 +105,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppCard from '@/components/user/individual/account-type-selection/AppCard'
 import AppInput from '@/components/UI/AppInput'
@@ -185,8 +190,8 @@ export default {
       // this.isBvnDetails = true
       if (
         !this.accountInformation ||
-        this.accountInformation.bvn === undefined ||
-        this.accountInformation.bvn === ''
+        this.accountInformation.BVN === undefined ||
+        this.accountInformation.BVN === ''
       ) {
         this.message = 'Your BVN seems to be incorrect,'
         return
@@ -197,6 +202,7 @@ export default {
           '/individual',
           this.accountInformation
         )
+        await this.submitBvnInfoHandler(this.accountInformation)
         if (response) {
           this.bvnDetails = { ...response }
           this.isBvn = false
@@ -218,6 +224,9 @@ export default {
     nextHandler() {
       this.$router.replace('/user/individual/personal-information')
     },
+    ...mapActions({
+      submitBvnInfoHandler: 'individualModule/GET_BVN_INFORMATION',
+    }),
   },
 }
 </script>

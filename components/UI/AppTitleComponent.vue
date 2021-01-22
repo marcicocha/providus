@@ -49,10 +49,18 @@ p {
 }
 @media only screen and (min-width: 992px) {
   h1 {
+    font-size: 23px;
+  }
+  p {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  h1 {
     font-size: 25px;
   }
   p {
-    font-size: 18px;
+    font-size: 17px;
   }
 }
 // Dika's Entries
