@@ -3,43 +3,59 @@
     <div>
       <div>
         <AppSelect
-          v-model="personalInfoObject.nationality"
+          v-model="nationalityObject.nationality"
           :remote="false"
           label="Nationality"
           placeholder="Select Nationality"
           :data="['LOCAL', 'FOREIGN']"
+          @change="changeNationalityHandler"
         />
       </div>
 
-      <div v-if="personalInfoObject.nationality === 'LOCAL'">
+      <div v-if="nationalityObject.nationality === 'LOCAL'">
         <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppSelect
-              v-model="personalInfoObject.state"
-              :remote="false"
+              v-model="nationalityObject.state"
               label="State of Origin"
               placeholder="Select Option"
-              :data="['Lagos', 'Akure']"
+              url="/country/states?name=NIGERIA"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
           <div class="column small-left-padding">
             <AppSelect
-              v-model="personalInfoObject.lga"
-              :remote="false"
+              v-model="nationalityObject.lga"
               label="LGA"
               placeholder="Select Option"
-              :data="['Lagos Island', 'Ikeja', 'Lekki']"
+              :url="`/state/lgas?name=${contactDetails.state}`"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
         </div>
         <div class="columns is-mobile">
           <div class="column">
             <AppSelect
-              v-model="personalInfoObject.religion"
-              :remote="false"
+              v-model="nationalityObject.religion"
               label="Religion"
               placeholder="Select Option"
-              :data="['Christian', 'Muslim']"
+              url="/globalData/data?name=RELIGION"
+              :call-back-func="
+                (resp) => ({
+                  text: resp,
+                  value: resp,
+                })
+              "
             />
           </div>
         </div>
@@ -47,7 +63,7 @@
       <div v-else>
         <div>
           <AppInput
-            v-model="personalInfoObject.residentPermitNo"
+            v-model="nationalityObject.residentPermitNo"
             label="Resident Permit No"
             placeholder="Type Number"
           />
@@ -55,7 +71,7 @@
         <div class="columns is-mobile">
           <div class="column">
             <AppInput
-              v-model="personalInfoObject.permitIssueDate"
+              v-model="nationalityObject.permitIssueDate"
               label="Permit Issue Date"
               placeholder="Select date"
               input-type="date"
@@ -63,7 +79,7 @@
           </div>
           <div class="column">
             <AppInput
-              v-model="personalInfoObject.permitExpiryDate"
+              v-model="nationalityObject.permitExpiryDate"
               label="Permit Expiry Date"
               placeholder="Select date"
               input-type="date"
@@ -73,7 +89,7 @@
         <div class="columns">
           <div class="column">
             <AppInput
-              v-model="personalInfoObject.taxPayerId"
+              v-model="nationalityObject.taxPayerId"
               label="Tax Payer's ID"
               placeholder="Enter ID"
             />
@@ -84,7 +100,7 @@
           <div class="column small-right-padding">
             <div>
               <AppSelect
-                v-model="personalInfoObject.dualCitizenship"
+                v-model="nationalityObject.dualCitizenship"
                 :remote="false"
                 label="Dual Citizenship?"
                 placeholder="Select Option"
@@ -94,7 +110,7 @@
           </div>
           <div class="column small-left-padding">
             <AppInput
-              v-model="personalInfoObject.altCitizenship"
+              v-model="nationalityObject.altCitizenship"
               label="If Yes, Specify?"
               placeholder="Select Option"
             />
@@ -118,7 +134,7 @@ export default {
     AppSelect,
   },
   props: {
-    personalInfoObject: {
+    nationalityObject: {
       type: Object,
       default: () => {},
     },
@@ -126,6 +142,11 @@ export default {
   methods: {
     submitNationalityInfoHandler() {
       this.$emit('nationalityHandler')
+    },
+    changeNationalityHandler(value) {
+      this.nationalityObject = {
+        nationality: value,
+      }
     },
   },
 }

@@ -290,5 +290,14 @@ hr {
   h2 {
     font-size: 16px;
   }
+  .bvn-child__block {
+    padding-bottom: 15px;
+    small {
+      font-size: 11px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
 }
 </style>
