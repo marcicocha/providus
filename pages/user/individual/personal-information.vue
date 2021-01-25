@@ -9,8 +9,9 @@
       />
       <AppNationalityInformation
         v-if="isNationalityInfo"
-        :nationalityObject="nationalityObject"
+        :nationality-object="nationalityObject"
         @nationalityHandler="nationalityHandler"
+        @updateNationalityDetails="updateNationalityDetails"
       />
       <AppIdentificationNumberInformation
         v-if="isIdentificationInfo"
@@ -53,6 +54,11 @@ export default {
     nationalityHandler() {
       this.isNationalityInfo = false
       this.isIdentificationInfo = true
+    },
+    updateNationalityDetails(value) {
+      this.nationalityObject = {
+        nationality: value,
+      }
     },
     basicInfoHandler() {
       this.isBasicInformation = false

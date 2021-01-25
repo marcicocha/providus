@@ -16,7 +16,7 @@
         <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppSelect
-              v-model="nationalityObject.state"
+              v-model="nationalityObject.stateOfOrigin"
               label="State of Origin"
               placeholder="Select Option"
               url="/country/states?name=NIGERIA"
@@ -33,7 +33,7 @@
               v-model="nationalityObject.lga"
               label="LGA"
               placeholder="Select Option"
-              :url="`/state/lgas?name=${contactDetails.state}`"
+              :url="`/state/lgas?name=${nationalityObject.stateOfOrigin}`"
               :call-back-func="
                 (resp) => ({
                   text: resp,
@@ -144,9 +144,7 @@ export default {
       this.$emit('nationalityHandler')
     },
     changeNationalityHandler(value) {
-      this.nationalityObject = {
-        nationality: value,
-      }
+      this.$emit('updateNationalityDetails', value)
     },
   },
 }
