@@ -212,31 +212,34 @@ export default {
         console.log(err.response.data.errorMessage, 'ERROR')
         const errorMessage = err.response.data.errorMessage
         if (errorMessage.includes('already exist')) {
-          const { response } = this.$axios.$get(
-            `/individual/getCurrentWorkFlow?bvn=${this.bvnDetails.BVN}`
+          const { response } = await this.$axios.$get(
+            `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
           )
-          if (response === 'PERSONAL_INFO') {
+          console.log(response, 'RESPONSE')
+          const nextWorkFlow = response.nextWorkFlow
+          console.log(nextWorkFlow, 'neXt WORK')
+          if (nextWorkFlow === 'PERSONAL_INFO') {
             this.$router.replace('/user/individual/personal-information')
           }
-          if (response === 'CONTACT') {
+          if (nextWorkFlow === 'CONTACT') {
             this.$router.replace('/user/individual/contact-information')
           }
-          if (response === 'KIN_DETAILS') {
+          if (nextWorkFlow === 'KIN_DETAILS') {
             this.$router.replace('/user/individual/kin-information')
           }
-          if (response === 'SELFIE') {
+          if (nextWorkFlow === 'SELFIE') {
             this.$router.replace('/user/individual/capture-selfie')
           }
-          if (response === 'ID_UPLOAD') {
+          if (nextWorkFlow === 'ID_UPLOAD') {
             this.$router.replace('/user/individual/capture-id')
           }
-          if (response === 'UTILITY_BILL') {
+          if (nextWorkFlow === 'UTILITY_BILL') {
             this.$router.replace('/user/individual/capture-utility')
           }
-          if (response === 'DOC_UPLOAD') {
+          if (nextWorkFlow === 'DOC_UPLOAD') {
             this.$router.replace('/user/individual/upload-document')
           }
-          if (response === 'LIVE_CHECK') {
+          if (nextWorkFlow === 'LIVE_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
         } else {
