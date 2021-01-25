@@ -43,22 +43,6 @@
             />
           </div>
         </div>
-        <div class="columns is-mobile">
-          <div class="column">
-            <AppSelect
-              v-model="nationalityObject.religion"
-              label="Religion"
-              placeholder="Select Option"
-              url="/globalData/data?name=RELIGION"
-              :call-back-func="
-                (resp) => ({
-                  text: resp,
-                  value: resp,
-                })
-              "
-            />
-          </div>
-        </div>
       </div>
       <div v-else>
         <div>
@@ -104,7 +88,7 @@
                 :remote="false"
                 label="Dual Citizenship?"
                 placeholder="Select Option"
-                :data="['True', 'False']"
+                :data="['YES', 'NO']"
               />
             </div>
           </div>
@@ -115,6 +99,22 @@
               placeholder="Select Option"
             />
           </div>
+        </div>
+      </div>
+      <div class="columns is-mobile">
+        <div class="column">
+          <AppSelect
+            v-model="nationalityObject.religion"
+            label="Religion"
+            placeholder="Select Option"
+            url="/globalData/data?name=RELIGION"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
+          />
         </div>
       </div>
     </div>

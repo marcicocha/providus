@@ -212,10 +212,12 @@ export default {
         console.log(err.response.data.errorMessage, 'ERROR')
         const errorMessage = err.response.data.errorMessage
         if (errorMessage.includes('already exist')) {
-          const { response } = this.$axios.$get(
-            `/individual/getCurrentWorkFlow?bvn=${this.bvnDetails.BVN}`
+          const { response } = await this.$axios.$get(
+            `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
           )
+          console.log(response, 'RESPONSE')
           const nextWorkFlow = response.nextWorkFlow
+          console.log(nextWorkFlow, 'neXt WORK')
           if (nextWorkFlow === 'PERSONAL_INFO') {
             this.$router.replace('/user/individual/personal-information')
           }
