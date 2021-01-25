@@ -61,19 +61,29 @@
         <div class="column small-right-padding">
           <AppSelect
             v-model="contactDetails.residentState"
-            :remote="false"
             label="State"
             placeholder="Select Option"
-            :data="['Lagos']"
+            url="/country/states?name=NIGERIA"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
         <div class="column small-left-padding">
           <AppSelect
             v-model="contactDetails.residentLga"
-            :remote="false"
             label="LGA"
             placeholder="Select Option"
-            :data="['Lagos Island']"
+            :url="`/state/lgas?name=${contactDetails.residentState}`"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
           />
         </div>
       </div>

@@ -50,7 +50,7 @@
         </div>
         <div class="column">
           <AppInput
-            v-model="contactDetails.residentCity"
+            v-model="contactDetails.city"
             label="City/Town"
             placeholder="Enter City or Town"
           />
@@ -125,7 +125,15 @@ export default {
   },
   methods: {
     contactDetailsHandler() {
-      this.$router.replace('/user/individual/capture-selfie')
+      if (!this.contactDetails) {
+        return
+      }
+      this.$emit('kinsContactDetails', this.contactDetails)
+      // try {
+      //   await this.$axios.$put('/individual/personalInfo', this.contactDetails)
+      //   await this.submitKinInfoHandler(this.contactDetails)
+      //   this.$router.replace('/user/individual/capture-selfie')
+      // } catch (err) {}
     },
   },
 }
