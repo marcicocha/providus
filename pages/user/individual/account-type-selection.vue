@@ -212,7 +212,9 @@ export default {
         console.log(err.response.data.errorMessage, 'ERROR')
         const errorMessage = err.response.data.errorMessage
         if (errorMessage.includes('already exist')) {
-          const { response } = this.$axios.$get('', this.bvnDetails.BVN)
+          const { response } = this.$axios.$get(
+            `/individual/getCurrentWorkFlow?bvn=${this.bvnDetails.BVN}`
+          )
           if (response === 'PERSONAL_INFO') {
             this.$router.replace('/user/individual/personal-information')
           }
