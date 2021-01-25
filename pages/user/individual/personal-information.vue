@@ -9,8 +9,9 @@
       />
       <AppNationalityInformation
         v-if="isNationalityInfo"
-        :personal-info-object="personalInfoObject"
+        :nationality-object="nationalityObject"
         @nationalityHandler="nationalityHandler"
+        @updateNationalityDetails="updateNationalityDetails"
       />
       <AppIdentificationNumberInformation
         v-if="isIdentificationInfo"
@@ -41,6 +42,7 @@ export default {
       personalInfoObject: {
         currency: 'NGN',
       },
+      nationalityObject: {},
     }
   },
   computed: {
@@ -53,6 +55,11 @@ export default {
       this.isNationalityInfo = false
       this.isIdentificationInfo = true
     },
+    updateNationalityDetails(value) {
+      this.nationalityObject = {
+        nationality: value,
+      }
+    },
     basicInfoHandler() {
       this.isBasicInformation = false
       this.isNationalityInfo = true
@@ -63,7 +70,10 @@ export default {
       }
       const personalInfoObject = {
         ...this.personalInfoObject,
-        BVN: this.bvnDetails.BVN,
+        ...this.nationalityObject,
+        bvn: this.bvnDetails.BVN,
+        foreignNationality:
+          this.nationalityObject.nationality === 'FOREIGN' ? 'YES' : 'NO',
       }
       try {
         await this.$axios.$put('/individual/personalInfo', personalInfoObject)

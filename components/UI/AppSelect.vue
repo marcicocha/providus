@@ -3,13 +3,15 @@
     <label for="name">{{ label }}</label>
     <select
       v-model="innerValue"
-      name="name"
+      :name="name"
       :class="{
         'is-loading': fetching,
       }"
+      :disabled="disabled"
       @blur="blurHandler"
       @change="changeHandler"
       @focus="searchHandler"
+      @select="selectHandler"
     >
       <template v-if="remote">
         <template>
@@ -65,6 +67,14 @@ export default {
       type: Function,
       default: () => 1,
     },
+    name: {
+      type: String,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -92,6 +102,13 @@ export default {
       immediate: true,
     },
   },
+  created() {
+    if (this.value && this.value.length > 0) {
+      this.innerValue = this.value
+    } else {
+      this.innerValue = undefined
+    }
+  },
   methods: {
     blurHandler(e) {
       this.$emit('blur', e.target.value)
@@ -103,6 +120,9 @@ export default {
       if (this.remote) {
         this.fetchDataHandler(e.target.value)
       }
+    },
+    selectHandler(e) {
+      this.$emit('select', e.target.value)
     },
     fetchDataHandler(value) {
       if (this.lastFetchId > 0) {
@@ -116,13 +136,21 @@ export default {
         .then((body) => {
           if (body.response && Array.isArray(body.response)) {
             const dataRemote = body.response.map(callBackFunc)
-            this.dataRemote = dataRemote
+            this.$nextTick(() => {
+              this.dataRemote = dataRemote
+            })
           } else if (!body.response) {
             const dataRemote = body.map(callBackFunc)
-            this.dataRemote = dataRemote
+            this.$nextTick(() => {
+              this.dataRemote = dataRemote
+            })
+            // this.dataRemote = dataRemote
           } else {
             const dataRemote = body.response.content.map(callBackFunc)
-            this.dataRemote = dataRemote
+            this.$nextTick(() => {
+              this.dataRemote = dataRemote
+            })
+            // this.dataRemote = dataRemote
           }
           this.fetching = false
           this.lastFetchId += 1

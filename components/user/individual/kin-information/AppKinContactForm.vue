@@ -56,13 +56,29 @@
           />
         </div>
       </div>
+      <div class="columns">
+        <div class="column">
+          <AppSelect
+            v-model="contactDetails.residentCountry"
+            label="Country"
+            placeholder="Select the country of residence of yoour next of Kin"
+            url="/country/countryList"
+            :call-back-func="
+              (resp) => ({
+                text: resp,
+                value: resp,
+              })
+            "
+          />
+        </div>
+      </div>
       <div class="columns is-mobile">
         <div class="column">
           <AppSelect
             v-model="contactDetails.residentState"
             label="State"
             placeholder="Select Option"
-            url="/country/states?name=NIGERIA"
+            :url="`/country/states?name=${contactDetails.residentCountry}`"
             :call-back-func="
               (resp) => ({
                 text: resp,
@@ -76,23 +92,7 @@
             v-model="contactDetails.residentLga"
             label="LGA"
             placeholder="Select Option"
-            url="/state/lgas"
-            :call-back-func="
-              (resp) => ({
-                text: resp,
-                value: resp,
-              })
-            "
-          />
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-          <AppSelect
-            v-model="contactDetails.residentCountry"
-            label="Country"
-            placeholder="Select the country of residence of yoour next of Kin"
-            url="/country/countryList"
+            :url="`/state/lgas?name=${contactDetails.residentState}`"
             :call-back-func="
               (resp) => ({
                 text: resp,

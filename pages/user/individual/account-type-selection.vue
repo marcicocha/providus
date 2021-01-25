@@ -209,7 +209,39 @@ export default {
           this.isBvnDetails = true
         }
       } catch (err) {
-        console.log(err)
+        console.log(err.response.data.errorMessage, 'ERROR')
+        const errorMessage = err.response.data.errorMessage
+        if (errorMessage.includes('already exist')) {
+          const { response } = this.$axios.$get(
+            `/individual/getCurrentWorkFlow?bvn=${this.bvnDetails.BVN}`
+          )
+          if (response === 'PERSONAL_INFO') {
+            this.$router.replace('/user/individual/personal-information')
+          }
+          if (response === 'CONTACT') {
+            this.$router.replace('/user/individual/contact-information')
+          }
+          if (response === 'KIN_DETAILS') {
+            this.$router.replace('/user/individual/kin-information')
+          }
+          if (response === 'SELFIE') {
+            this.$router.replace('/user/individual/capture-selfie')
+          }
+          if (response === 'ID_UPLOAD') {
+            this.$router.replace('/user/individual/capture-id')
+          }
+          if (response === 'UTILITY_BILL') {
+            this.$router.replace('/user/individual/capture-utility')
+          }
+          if (response === 'DOC_UPLOAD') {
+            this.$router.replace('/user/individual/upload-document')
+          }
+          if (response === 'LIVE_CHECK') {
+            this.$router.replace('/user/individual/liveness-check')
+          }
+        } else {
+          this.message = errorMessage
+        }
       }
     },
     returnHandler() {
@@ -289,6 +321,15 @@ hr {
   }
   h2 {
     font-size: 16px;
+  }
+  .bvn-child__block {
+    padding-bottom: 15px;
+    small {
+      font-size: 11px;
+    }
+    p {
+      font-size: 14px;
+    }
   }
 }
 </style>
