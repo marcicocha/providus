@@ -209,7 +209,18 @@ export default {
           this.isBvnDetails = true
         }
       } catch (err) {
-        console.log(err)
+        const msg =
+          typeof err === 'object' && 'errorMessage' in err
+            ? err.errorMessage
+            : err
+
+        this.$toast.open({
+          message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${msg} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
       }
     },
     returnHandler() {
