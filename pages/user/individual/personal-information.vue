@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppBasicInformation from '@/components/user/individual/personal-information/AppBasicInformation.vue'
 import AppNationalityInformation from '@/components/user/individual/personal-information/AppNationalityInformation.vue'
@@ -45,11 +45,6 @@ export default {
       nationalityObject: {},
     }
   },
-  computed: {
-    ...mapState({
-      bvnDetails: (state) => state.individualModule.bvnDetails,
-    }),
-  },
   methods: {
     nationalityHandler() {
       this.isNationalityInfo = false
@@ -68,10 +63,11 @@ export default {
       if (!this.personalInfoObject) {
         return
       }
+      const response = this.$cookies.get('requestId')
       const personalInfoObject = {
         ...this.personalInfoObject,
         ...this.nationalityObject,
-        bvn: this.bvnDetails.BVN,
+        requestId: response,
         foreignNationality:
           this.nationalityObject.nationality === 'FOREIGN' ? 'YES' : 'NO',
       }

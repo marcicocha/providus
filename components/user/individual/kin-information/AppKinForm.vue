@@ -88,10 +88,10 @@
         <div class="columns is-mobile">
           <div class="column small-right-padding">
             <AppInput
-              v-model="kinInfoObject.dob"
+              v-model="kinInfoObject.dateOfBirth"
               label="Date of Birth"
               placeholder="Select Date"
-              type="date"
+              input-type="date"
             />
           </div>
           <div class="column small-left-padding">
@@ -109,7 +109,6 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
 import AppSelect from '@/components/UI/AppSelect'
 import AppButton from '@/components/UI/AppButton'
@@ -120,25 +119,16 @@ export default {
     AppInput,
     AppButton,
   },
-  data() {
-    return {
-      kinInfoObject: {},
-    }
+  props: {
+    kinInfoObject: {
+      type: Object,
+      default: () => {},
+    },
   },
   methods: {
-    async kinDetailsHandler() {
-      if (!this.kinInfoObject) {
-        return
-      }
-      try {
-        await this.$axios.$put('/individual/personalInfo', this.kinInfoObject)
-        await this.submitKinInfoHandler(this.kinInfoObject)
-        this.$router.replace('/user/individual/kin-contact-information')
-      } catch (err) {}
+    kinDetailsHandler() {
+      this.$emit('kinDetailsHandler')
     },
-    ...mapActions({
-      submitKinInfoHandler: 'individualModule/POST_KINS_INFORMATION',
-    }),
   },
 }
 </script>

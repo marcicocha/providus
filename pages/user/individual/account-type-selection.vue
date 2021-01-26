@@ -44,7 +44,7 @@
           <div style="height: 20px"></div>
           <AppButton
             title="Submit BVN"
-            :disabled="!accountInformation.BVN"
+            :disabled="!accountInformation.BVN || fetching"
             @click="bvnValidationHandler"
           />
           <p :class="{ notification: true, error_message: message }">
@@ -142,6 +142,7 @@ export default {
       accountInformation: {},
       bvnDetails: {},
       message: '',
+      fetching: false,
     }
   },
   methods: {
@@ -178,16 +179,15 @@ export default {
         this.isAccountType = false
       }
     },
+    async getRequestId(value) {
+      try {
+        const { response } = await this.$axios.$get(
+          `/individual/getRequestIdByBvn?bvn=${value}`
+        )
+        this.$cookies.set('requestId', response.requestId)
+      } catch (err) {}
+    },
     async bvnValidationHandler() {
-      // this.bvnDetails = {
-      //   firstName: 'Bisi',
-      //   lastName: 'Adewale',
-      //   bvn: '000000000',
-      //   phoneNumber1: '081009****',
-      //   middleName: 'Ojo',
-      // }
-      // this.isBvn = false
-      // this.isBvnDetails = true
       if (
         !this.accountInformation ||
         this.accountInformation.BVN === undefined ||
@@ -196,6 +196,7 @@ export default {
         this.message = 'Your BVN seems to be incorrect,'
         return
       }
+      this.fetching = true
       try {
         this.message = ''
         const { response } = await this.$axios.$post(
@@ -203,11 +204,13 @@ export default {
           this.accountInformation
         )
         await this.submitBvnInfoHandler(this.accountInformation)
+        this.getRequestId(this.accountInformation.BVN)
         if (response) {
           this.bvnDetails = { ...response }
           this.isBvn = false
           this.isBvnDetails = true
         }
+        this.fetching = false
       } catch (err) {
         console.log(err.response.data.errorMessage, 'ERROR')
         const errorMessage = err.response.data.errorMessage
@@ -215,9 +218,9 @@ export default {
           const { response } = await this.$axios.$get(
             `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
           )
-          console.log(response, 'RESPONSE')
+          this.getRequestId(this.accountInformation.BVN)
+
           const nextWorkFlow = response.nextWorkFlow
-          console.log(nextWorkFlow, 'neXt WORK')
           if (nextWorkFlow === 'PERSONAL_INFO') {
             this.$router.replace('/user/individual/personal-information')
           }
@@ -245,6 +248,7 @@ export default {
         } else {
           this.message = errorMessage
         }
+        this.fetching = false
       }
     },
     returnHandler() {

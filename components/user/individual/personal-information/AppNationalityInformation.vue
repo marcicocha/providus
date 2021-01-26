@@ -14,7 +14,7 @@
 
       <div v-if="nationalityObject.nationality === 'LOCAL'">
         <div class="columns is-mobile">
-          <div class="column small-right-padding">
+          <div class="column is-6 small-right-padding">
             <AppSelect
               v-model="nationalityObject.stateOfOrigin"
               label="State of Origin"
@@ -28,7 +28,7 @@
               "
             />
           </div>
-          <div class="column small-left-padding">
+          <div class="column is-6 small-left-padding">
             <AppSelect
               v-model="nationalityObject.lga"
               label="LGA"
@@ -53,7 +53,7 @@
           />
         </div>
         <div class="columns is-mobile">
-          <div class="column">
+          <div class="column is-6">
             <AppInput
               v-model="nationalityObject.permitIssueDate"
               label="Permit Issue Date"
@@ -61,7 +61,7 @@
               input-type="date"
             />
           </div>
-          <div class="column">
+          <div class="column is-6">
             <AppInput
               v-model="nationalityObject.permitExpiryDate"
               label="Permit Expiry Date"
@@ -70,18 +70,14 @@
             />
           </div>
         </div>
-        <div class="columns">
-          <div class="column">
-            <AppInput
-              v-model="nationalityObject.taxPayerId"
-              label="Tax Payer's ID"
-              placeholder="Enter ID"
-            />
-          </div>
-        </div>
+        <AppInput
+          v-model="nationalityObject.taxPayerId"
+          label="Tax Payer's ID"
+          placeholder="Enter ID"
+        />
 
         <div class="columns is-mobile">
-          <div class="column small-right-padding">
+          <div class="column is-6 small-right-padding">
             <div>
               <AppSelect
                 v-model="nationalityObject.dualCitizenship"
@@ -92,7 +88,7 @@
               />
             </div>
           </div>
-          <div class="column small-left-padding">
+          <div class="column is-6 small-left-padding">
             <AppInput
               v-model="nationalityObject.altCitizenship"
               label="If Yes, Specify?"
@@ -101,22 +97,18 @@
           </div>
         </div>
       </div>
-      <div class="columns is-mobile">
-        <div class="column">
-          <AppSelect
-            v-model="nationalityObject.religion"
-            label="Religion"
-            placeholder="Select Option"
-            url="/globalData/data?name=RELIGION"
-            :call-back-func="
-              (resp) => ({
-                text: resp,
-                value: resp,
-              })
-            "
-          />
-        </div>
-      </div>
+      <AppSelect
+        v-model="nationalityObject.religion"
+        label="Religion"
+        placeholder="Select Option"
+        url="/globalData/data?name=RELIGION"
+        :call-back-func="
+          (resp) => ({
+            text: resp,
+            value: resp,
+          })
+        "
+      />
     </div>
     <br />
     <AppButton title="Continue" @click="submitNationalityInfoHandler" />

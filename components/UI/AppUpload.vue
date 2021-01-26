@@ -2,7 +2,13 @@
   <div class="full-input">
     <div class="file">
       <label class="file-label">
-        <input class="file-input" type="file" name="resume" />
+        <input
+          ref="file"
+          class="file-input"
+          type="file"
+          name="name"
+          @change="newHandleChange"
+        />
         <span class="file-cta" :style="{ height: height }">
           <div class="file_label__display">
             <span class="file-icon">
@@ -11,7 +17,8 @@
             <span class="file-label">Upload {{ label }} </span>
           </div>
           <slot name="caption">
-            <span> {{ caption }} </span>
+            <span v-if="file === null"> {{ caption }} </span>
+            <span v-if="file !== null" class="file_name">{{ file.name }}</span>
           </slot>
         </span>
       </label>
@@ -33,6 +40,48 @@ export default {
     height: {
       type: String,
       default: '4.5em',
+    },
+    value: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    extension: {
+      type: String,
+      default: 'jpg',
+    },
+  },
+  data() {
+    return {
+      file: null,
+    }
+  },
+  methods: {
+    newHandleChange() {
+      const file = this.$refs.file.files[0]
+      if (file === undefined) {
+        return
+      }
+      if (file.name.includes(this.extension) && file.size < 634593) {
+        this.file = file
+        console.log(this.file)
+        this.$emit('fileUploadHandler', this.file)
+      } else if (file.size > 634593) {
+        this.file = null
+        this.$emit(
+          'errorMessagehandler',
+          'Input File must not be Larger than 635KB'
+        )
+      } else if (!file.name.includes(this.extension)) {
+        this.file = null
+        this.$emit(
+          'errorMessagehandler',
+          `You can only upload ${this.extension} file`
+        )
+      }
     },
   },
 }
@@ -57,6 +106,10 @@ export default {
 }
 .file-icon {
   width: 2em;
+}
+.file_name {
+  color: #18c139;
+  margin-top: 15px;
 }
 label {
   opacity: 1;

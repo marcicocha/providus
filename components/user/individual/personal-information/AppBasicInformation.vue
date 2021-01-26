@@ -26,14 +26,14 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column small-right-padding">
+        <div class="column is-6 small-right-padding">
           <AppInput
             v-model="personalInfoObject.firstName"
             label="First Name"
             placeholder="First Name"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column is-6 small-left-padding">
           <AppInput
             v-model="personalInfoObject.middleName"
             label="Middle Name"
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column small-right-padding">
+        <div class="column is-6 small-right-padding">
           <AppSelect
             v-model="personalInfoObject.maritalStatus"
             label="Marital Status"
@@ -56,7 +56,7 @@
             "
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column is-6 small-left-padding">
           <AppSelect
             v-model="personalInfoObject.gender"
             label="Gender"
@@ -72,14 +72,14 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column small-right-padding">
+        <div class="column is-6 small-right-padding">
           <AppInput
             v-model="personalInfoObject.maidenName"
             label="Mother's Maiden Name"
             placeholder="Type Name"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column is-6 small-left-padding">
           <AppInput
             v-model="personalInfoObject.dateOfBirth"
             label="Date of Birth"
@@ -89,14 +89,14 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column small-right-padding">
+        <div class="column is-6 small-right-padding">
           <AppInput
             v-model="personalInfoObject.occupation"
             label="Occupation"
             placeholder="Type Occupation"
           />
         </div>
-        <div class="column small-left-padding">
+        <div class="column is-6 small-left-padding">
           <AppSelect
             v-model="personalInfoObject.currency"
             label="Currency Type"

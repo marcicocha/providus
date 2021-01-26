@@ -8,10 +8,10 @@
       <br />
       <div>
         <div class="columns">
-          <div class="column">
+          <div class="column is-6">
             <AppUpload label="Mandate Form" />
           </div>
-          <div class="column">
+          <div class="column is-6">
             <AppUpload label="Board Resolution" />
           </div>
         </div>
@@ -19,10 +19,10 @@
           <AppUpload label="Company Registration Documents" />
         </div>
         <div class="columns">
-          <div class="column">
+          <div class="column is-6">
             <AppUpload label="ID" />
           </div>
-          <div class="column">
+          <div class="column is-6">
             <AppUpload label="Utility Bill" />
           </div>
         </div>

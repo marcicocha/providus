@@ -113,7 +113,7 @@ export default {
   height: 100vh;
 }
 .page_container {
-  padding: 10px 24px;
+  padding: 10px 18px;
   // overflow: scroll;
 }
 
