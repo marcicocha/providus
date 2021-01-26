@@ -180,7 +180,8 @@ label {
   color: white !important;
 }
 .button.is-primary.is-loading::after {
-  border-color: transparent transparent rgba(255, 255, 255, 0.9) rgba(255, 255, 255, 0.9) !important;
+  border-color: transparent transparent rgba(255, 255, 255, 0.9)
+    rgba(255, 255, 255, 0.9) !important;
 }
 .fa {
   /* Add a right margin to each icon */
