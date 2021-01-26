@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" >
+        <!-- <meta name="viewport" content="width=device-width, minimum-scale=0.25, initial-scale=1.0, user-scalable=yes"> -->
+        <meta name="viewport" content="width=522, user-scalable=yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="description" content="Initial attempt at an HTML5/JS capture client for 3DFL">
+
+        <title>3D Face Liveness Capture</title>
+
+        <style>
+            @media screen and (orientation: landscape) {
+                body {
+                    --cam-width: 640px;
+                    --cam-height: 480px;
+                }
+            }
+
+            @media screen and (orientation: portrait) {
+                body {
+                    --cam-width: 480px;
+                    --cam-height: 640px;
+                }
+            }
+
+            html {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                /* width: 100%; */
+                background-color: rgb(228, 227, 215);
+                text-align: center;
+                height: 100%;
+                margin: 0;
+            }
+
+            #clientcontainer {
+                margin: 0 auto;
+                border: 1px solid black;
+                padding: 5px;
+                width: 50%;
+                min-width: calc(var(--cam-width) + 30px);
+            }
+
+            #videocontainer {
+                position: relative; /*this is the anchor*/
+                width: calc(var(--cam-width) + 2px);
+                height: calc(var(--cam-height) + 2px);
+                margin: 0 auto;
+                /* z-index: 10; */
+            }
+
+            video {
+                border: 1px solid black;
+                /* z-index: 0; */
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: var(--cam-width);
+                height: var(--cam-height);
+
+                transform: rotateY(180deg); /* preview mirror */
+            }
+
+            .displaycanvas {
+                border: 1px solid black;
+                /* z-index: 5; */
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: var(--cam-width);
+                height: var(--cam-height);
+                pointer-events: none;
+
+                transform: rotateY(180deg); /* preview mirror */
+            }
+
+
+            /* this is for the settings panel */
+            .container_visible {
+                display: block;
+            }
+
+            .container_invisible {
+                display: none;
+            }
+
+            /* this is for live data display */
+            .info_col1,.info_col2 {
+                font-size: 75%;
+                position: absolute;
+                display: block;
+                color: white;
+            }
+
+            .info_col1 {
+                text-align: right;
+                right: 10px;
+            }
+
+            .info_col2 {
+                text-align: left;
+                left: 10px;
+                display: none;
+            }
+
+            #versionstr { top: 10px; }
+            #nbcaptures { top: 25px; }
+            #dimensions { top: 10px; }
+            #timingTracker { top: 25px; }
+            #timingAnalysis { top: 40px; }
+            #ied        { top: 55px; }
+
+            #instructions_on_face {
+                position: absolute;
+                margin: 0;
+                text-align: center;
+                font-size: 2.5em;
+                font-weight: bold;
+                font-family: monospace;
+                color: cyan;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            #btn-settings {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                padding: 0.5em;
+                font-size: 1em;
+            }
+
+            input:disabled+label{
+                color:#999;
+            }
+
+            #buttonscontainer {
+                text-align: left;
+            }
+
+            #btn-start-session {
+                padding: 0.7em 0.5em;
+                font-size: 1.2em;
+            }
+
+            #score3dfl {
+                font-size: 1.2em;
+                margin-left: 0.8em;
+                display: inline-block;
+            }
+
+            .panel {
+                position: fixed;
+                top: 0; left: 0; bottom: 0; right: 0;
+                margin: auto;
+                width: 220px;
+                height: 210px;
+
+                background: rgb(228, 227, 215);
+                padding: 0px 0px;
+                -moz-border-radius: 2px;
+                -webkit-border-radius: 2px;
+                border-radius: 5px;
+                -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+                -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+
+                z-index: 50;
+            }
+
+            .panel ul {
+                text-align: left;
+                list-style-type: none;
+                list-style-position: outside;
+                padding: 0;
+                margin: 16px 5px;
+            }
+
+            .panel ul select {
+                margin: 16px 5px 5px 5px;
+            }
+
+            .panel button {
+                margin: 0.5em;
+            }
+
+        </style>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <div id="clientcontainer">
+
+            <h1>3D Face Liveness web-client</h1>
+            <div id=videocontainer>
+                <video id="video_capture" muted playsinline autoplay> Placeholder for video</video>
+                <canvas id="motioncanvas" class="displaycanvas"></canvas>
+                <canvas id="rendercanvas" class="displaycanvas"></canvas>
+                <label id="versionstr" class="info_col1">##version_number##</label>
+                <label id="nbcaptures" class="info_col1">nb captures: 0</label>
+                <label id="dimensions" class="info_col2">-- x --</label>
+                <label id="timingTracker" class="info_col2">3dfl: -- ms</label>
+                <label id="timingAnalysis" class="info_col2">3dfl: -- ms</label>
+                <label id="ied" class="info_col2">ied: --</label>
+                <button id="btn-settings" class="fas fa-cogs"></button>
+                <p id="instructions_on_face"></p>
+            </div>
+
+            <p id="instructions">Please center your face so it fills the guide.</p>
+
+            <div id="buttonscontainer">
+                <button id="btn-start-session">Please Wait...</button>
+                <label id="score3dfl" >Liveness: --</label>
+            </div>
+
+
+            <div id="settingsdiv" class="panel container_invisible">
+                <ul>
+                    <li>
+                        <input type="checkbox" id="keeptplcheck" name="options_keep_tpl" checked >
+                        <label for="keeptplcheck">keep tpl on server</label >
+                    </li>
+                    <li>
+                        <input type="checkbox" id="showextrainfo" name="options_show_info" checked>
+                        <label for="showextrainfo">show extra info</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="allowh264" name="options_allow_h264" >
+                        <label for="allowh264">use H264 if available</label >
+                    </li>
+                    <li>
+                        <input type="checkbox" id="displayfacebox" name="display_face_box" checked >
+                        <label for="displayfacebox">show face box</label >
+                    </li>
+                    <li>
+                        <input type="checkbox" id="forcejpegtpl" name="force_jpeg_tpl" >
+                        <label for="forcejpegtpl">force JPEG templates</label >
+                    </li>
+                    <li>
+                        <select id="jpeglevels" size="1">
+                            <option value="0.4">0.4</option>
+                            <option value="0.5">0.5</option>
+                            <option value="0.6" selected>0.6</option>
+                            <option value="0.7">0.7</option>
+                            <option value="0.8">0.8</option>
+                            <option value="0.9">0.9</option>
+                            <!-- <option value="png">PNG</option> -->
+                        </select>
+                        <label for="jpeglevels">JPEG compression</label>
+                    </li>
+                </ul>
+
+                <button id="btn-settings-return">Back</button>
+            </div>
+
+        </div>
+
+    </body>
+
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <!-- <script src="adapter-latest.js" defer></script> -->
+    <script src="labels.js" ></script>
+    <script src="Daon.FaceLiveness3D.min.js" ></script>
+    <script src="3dflClient_withlib.js" ></script>
+    <script src="animation.js" ></script>
+    <script src="ui.js" ></script>
+
+</html>

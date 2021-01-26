@@ -40,11 +40,13 @@
             v-model="accountInformation.BVN"
             label="BVN"
             placeholder="Enter Bank Verification Number"
+            :disabled="isLoading"
           />
           <div style="height: 20px"></div>
           <AppButton
             title="Submit BVN"
             :disabled="!accountInformation.BVN"
+            :loading="isLoading"
             @click="bvnValidationHandler"
           />
           <p :class="{ notification: true, error_message: message }">
@@ -120,6 +122,7 @@ export default {
   data() {
     return {
       isAccountType: false,
+      isLoading: false,
       isAccountCategory: true,
       isBvn: false,
       isBvnDetails: false,
@@ -194,10 +197,19 @@ export default {
         this.accountInformation.BVN === ''
       ) {
         this.message = 'Your BVN seems to be incorrect,'
+
+        this.$toast.open({
+          message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
         return
       }
       try {
         this.message = ''
+        this.isLoading = true
         const { response } = await this.$axios.$post(
           '/individual',
           this.accountInformation
@@ -207,10 +219,47 @@ export default {
           this.bvnDetails = { ...response }
           this.isBvn = false
           this.isBvnDetails = true
+          this.isLoading = false
         }
       } catch (err) {
-        console.log(err.response.data.errorMessage, 'ERROR')
-        const errorMessage = err.response.data.errorMessage
+        this.isLoading = false
+        // console.log(err.response.data.errorMessage, 'ERROR')
+        console.log(err)
+
+        let errorMessage = ''
+        // Network Error
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          // eslint-disable-next-line no-prototype-builtins
+          errorMessage =
+            // eslint-disable-next-line no-prototype-builtins
+            res & res.hasOwnProperty('data') ? res.data.errorMessage : err
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        // BVN Already Exists
         if (errorMessage.includes('already exist')) {
           const { response } = await this.$axios.$get(
             `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
@@ -242,8 +291,6 @@ export default {
           if (nextWorkFlow === 'LIVE_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
-        } else {
-          this.message = errorMessage
         }
       }
     },

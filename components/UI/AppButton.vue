@@ -17,9 +17,10 @@
     :disabled="disabled"
     @click="$emit('click', $event)"
   >
-    <span v-if="icon" class="icon">
+    <span v-if="icon || loading" class="icon">
       <i :class="icon"></i>
     </span>
+
     <span>{{ title }}</span>
   </button>
 </template>
