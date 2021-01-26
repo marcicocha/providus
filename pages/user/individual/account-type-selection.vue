@@ -215,7 +215,17 @@ export default {
           this.accountInformation
         )
         await this.submitBvnInfoHandler(this.accountInformation)
-        if (response) {
+        if (response.hasError) {
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${response.errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+        if (!response.hasError) {
           this.bvnDetails = { ...response }
           this.isBvn = false
           this.isBvnDetails = true
@@ -224,7 +234,6 @@ export default {
       } catch (err) {
         this.isLoading = false
         // console.log(err.response.data.errorMessage, 'ERROR')
-        console.log(err)
 
         let errorMessage = ''
         // Network Error
@@ -244,10 +253,8 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          // eslint-disable-next-line no-prototype-builtins
-          errorMessage =
-            // eslint-disable-next-line no-prototype-builtins
-            res & res.hasOwnProperty('data') ? res.data.errorMessage : err
+          console.log(err.response, 'ERROR BLOCK')
+          errorMessage = res.data.errorMessage
 
           this.$toast.open({
             message: `<p class="toast-title">Error Message</p>
