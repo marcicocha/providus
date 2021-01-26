@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 // const f3d = {
 //   instance: undefined,
@@ -15,7 +15,7 @@
 //   },
 //   setConfig: function (configuration) {
 //     const config = Object.assign({}, configuration)
-//     // 'png' is a special case, for research data collection, 
+//     // 'png' is a special case, for research data collection,
 //     // do not allow this on production code
 //     if (config.compression && config.compression !== 'png') {
 //       config.compression = parseFloat(config.compression);
@@ -28,7 +28,3 @@
 //     f3d.instance.startSession();
 //   }
 // }
-
-
-
-
