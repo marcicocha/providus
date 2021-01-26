@@ -24,7 +24,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppInput from '@/components/UI/AppInput.vue'
