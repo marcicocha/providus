@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="Daon.DocumentCapture.min.js"></script>
+  <style>
+    .container {
+      position: relative;
+      width: 100%;
+    }
+
+    video {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      z-index: -10;
+    }
+
+    canvas, img {
+      width: 100%;
+    }
+
+
+    #url-container,
+    #url {
+      width: 90%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <label>Doc type:
+      <select onchange="onSelectChange(this.value)" id="doc-type">
+        <option value="PASSPORT" selected>PASSPORT</option>
+        <option value="ID_CARD">ID_CARD</option>
+      </select>
+    </label>
+    <label>Width:
+      <input type="number" value=400 min=10 onchange="onWidthChange(this.value)" id="width" />
+    </label>
+    <div>Url:
+      <input type="text" onchange="onUrlChange(this.value)" id="url" />
+    </div>
+  </div>
+  <div class="container">
+    <canvas></canvas>
+  </div>
+  <div class="select">
+    <label for="videoSource">Video source: </label><select onchange="restart()" id="videoSource"></select>
+  </div>
+  <button onclick="capture()">Capture</button>
+  <p>Response:</p>
+  <pre></pre>
+  <p>Sent image:</p>
+  <img id="img-sent" />
+  <p>Processed image from server:</p>
+  <img id="img-processed" />
+  <script src="app.js"></script>
+</body>
+
+</html>
