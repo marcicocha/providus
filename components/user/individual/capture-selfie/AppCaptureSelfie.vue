@@ -77,14 +77,12 @@
   </div>
 </template>
 <script>
-import { Camera } from 'vue-capture'
 import AppButton from '@/components/UI/AppButton'
 
 export default {
   name: 'AppCaptureSelfie',
   components: {
     AppButton,
-    Camera,
   },
   data() {
     return {
