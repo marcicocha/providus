@@ -145,6 +145,7 @@ export default {
       accountInformation: {},
       bvnDetails: {},
       message: '',
+      fetching: false,
     }
   },
   methods: {
@@ -181,16 +182,15 @@ export default {
         this.isAccountType = false
       }
     },
+    async getRequestId(value) {
+      try {
+        const { response } = await this.$axios.$get(
+          `/individual/getRequestIdByBvn?bvn=${value}`
+        )
+        this.$cookies.set('requestId', response.requestId)
+      } catch (err) {}
+    },
     async bvnValidationHandler() {
-      // this.bvnDetails = {
-      //   firstName: 'Bisi',
-      //   lastName: 'Adewale',
-      //   bvn: '000000000',
-      //   phoneNumber1: '081009****',
-      //   middleName: 'Ojo',
-      // }
-      // this.isBvn = false
-      // this.isBvnDetails = true
       if (
         !this.accountInformation ||
         this.accountInformation.BVN === undefined ||
@@ -207,6 +207,7 @@ export default {
         })
         return
       }
+      this.fetching = true
       try {
         this.message = ''
         this.isLoading = true
@@ -215,22 +216,28 @@ export default {
           this.accountInformation
         )
         await this.submitBvnInfoHandler(this.accountInformation)
-        if (response.hasError) {
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${response.errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-        if (!response.hasError) {
-          this.bvnDetails = { ...response }
-          this.isBvn = false
-          this.isBvnDetails = true
-          this.isLoading = false
-        }
+        this.getRequestId(this.accountInformation.BVN)
+        // if (response.hasError) {
+        //   this.$toast.open({
+        //     message: `<p class="toast-title">Error Message</p>
+        //             <p class="toast-msg"> ${response.errorMessage} </p>`,
+        //     type: 'error',
+        //     duration: 4000,
+        //     dismissible: true,
+        //   })
+        //   return
+        // }
+        // if (!response.hasError) {
+        //   this.bvnDetails = { ...response }
+        //   this.isBvn = false
+        //   this.isBvnDetails = true
+        //   this.isLoading = false
+        // }
+        this.bvnDetails = { ...response }
+        this.isBvn = false
+        this.isBvnDetails = true
+        this.isLoading = false
+        this.fetching = false
       } catch (err) {
         this.isLoading = false
         // console.log(err.response.data.errorMessage, 'ERROR')
@@ -271,9 +278,9 @@ export default {
           const { response } = await this.$axios.$get(
             `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
           )
-          console.log(response, 'RESPONSE')
+          this.getRequestId(this.accountInformation.BVN)
+
           const nextWorkFlow = response.nextWorkFlow
-          console.log(nextWorkFlow, 'neXt WORK')
           if (nextWorkFlow === 'PERSONAL_INFO') {
             this.$router.replace('/user/individual/personal-information')
           }
@@ -299,6 +306,7 @@ export default {
             this.$router.replace('/user/individual/liveness-check')
           }
         }
+        this.fetching = false
       }
     },
     returnHandler() {

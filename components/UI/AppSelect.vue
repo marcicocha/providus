@@ -150,7 +150,7 @@ export default {
             this.$nextTick(() => {
               this.dataRemote = dataRemote
             })
-            // this.dataRemote = dataRemote
+            this.dataRemote = dataRemote
           }
           this.fetching = false
           this.lastFetchId += 1

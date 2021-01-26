@@ -3,7 +3,7 @@
     <div>
       <div>
         <AppInput
-          v-model="contactDetails.email"
+          v-model="kinInfoObject.email"
           label="Email Address"
           placeholder="Enter Next of Kin's Email Address"
         />
@@ -11,14 +11,14 @@
       <div class="columns is-mobile">
         <div class="column">
           <AppInput
-            v-model="contactDetails.phoneNumber"
+            v-model="kinInfoObject.phoneNumber"
             label="Phone Number"
             placeholder="Enter Number"
           />
         </div>
         <div class="column">
           <AppInput
-            v-model="contactDetails.altPhoneNumber"
+            v-model="kinInfoObject.altPhoneNumber"
             label="Alternate Phone Number"
             placeholder="Enter Number"
           />
@@ -27,14 +27,14 @@
       <div class="columns is-mobile">
         <div class="column is-4">
           <AppInput
-            v-model="contactDetails.houseNo"
+            v-model="kinInfoObject.houseNo"
             label="House No."
             placeholder="Enter No."
           />
         </div>
         <div class="column is-8">
           <AppInput
-            v-model="contactDetails.landmark"
+            v-model="kinInfoObject.landMark"
             label="Closest Landmark"
             placeholder="Enter Closest Landmark"
           />
@@ -43,14 +43,14 @@
       <div class="columns is-mobile">
         <div class="column">
           <AppInput
-            v-model="contactDetails.streetName"
+            v-model="kinInfoObject.streetName"
             label="Street Name"
             placeholder="Enter Street Name"
           />
         </div>
         <div class="column">
           <AppInput
-            v-model="contactDetails.city"
+            v-model="kinInfoObject.city"
             label="City/Town"
             placeholder="Enter City or Town"
           />
@@ -59,7 +59,7 @@
       <div class="columns">
         <div class="column">
           <AppSelect
-            v-model="contactDetails.residentCountry"
+            v-model="kinInfoObject.residentCountry"
             label="Country"
             placeholder="Select the country of residence of yoour next of Kin"
             url="/country/countryList"
@@ -75,10 +75,10 @@
       <div class="columns is-mobile">
         <div class="column">
           <AppSelect
-            v-model="contactDetails.residentState"
+            v-model="kinInfoObject.residentState"
             label="State"
             placeholder="Select Option"
-            :url="`/country/states?name=${contactDetails.residentCountry}`"
+            :url="`/country/states?name=${kinInfoObject.residentCountry}`"
             :call-back-func="
               (resp) => ({
                 text: resp,
@@ -89,10 +89,10 @@
         </div>
         <div class="column">
           <AppSelect
-            v-model="contactDetails.residentLga"
+            v-model="kinInfoObject.residentLga"
             label="LGA"
             placeholder="Select Option"
-            :url="`/state/lgas?name=${contactDetails.residentState}`"
+            :url="`/state/lgas?name=${kinInfoObject.residentState}`"
             :call-back-func="
               (resp) => ({
                 text: resp,
@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <AppButton title="Continue" @click="contactDetailsHandler" />
+    <AppButton title="Continue" @click="kinsContactDetailsHandler" />
   </div>
 </template>
 <script>
@@ -118,22 +118,18 @@ export default {
     AppInput,
     AppButton,
   },
-  data() {
-    return {
-      contactDetails: {},
-    }
+  props: {
+    kinInfoObject: {
+      type: Object,
+      default: () => {},
+    },
   },
   methods: {
-    contactDetailsHandler() {
-      if (!this.contactDetails) {
+    kinsContactDetailsHandler() {
+      if (!this.kinInfoObject) {
         return
       }
-      this.$emit('kinsContactDetails', this.contactDetails)
-      // try {
-      //   await this.$axios.$put('/individual/personalInfo', this.contactDetails)
-      //   await this.submitKinInfoHandler(this.contactDetails)
-      //   this.$router.replace('/user/individual/capture-selfie')
-      // } catch (err) {}
+      this.$emit('kinsContactDetailsHandler', this.kinInfoObject)
     },
   },
 }

@@ -77,12 +77,14 @@
   </div>
 </template>
 <script>
+import { Camera } from 'vue-capture'
 import AppButton from '@/components/UI/AppButton'
 
 export default {
   name: 'AppCaptureSelfie',
   components: {
     AppButton,
+    Camera,
   },
   data() {
     return {
@@ -111,6 +113,9 @@ export default {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
+    },
+    getImage(data) {
+      console.log(data, 'IMAGE DATA')
     },
   },
 }

@@ -6,7 +6,7 @@
     />
     <br />
     <div>
-      <AppSelect
+      <!-- <AppSelect
         v-model="idObject.idType"
         label="Id Type"
         placeholder="Select Identification Type"
@@ -17,7 +17,25 @@
             value: resp,
           })
         "
-      />
+      /> -->
+      <div class="columns is-mobile">
+        <div class="column is-6">
+          <AppInput
+            v-model="idObject.issuedDate"
+            label="Issue Date"
+            placeholder="Select Date"
+            input-type="date"
+          />
+        </div>
+        <div class="column is-6">
+          <AppInput
+            v-model="idObject.expiryDate"
+            label="Expiry Date"
+            placeholder="Select Date"
+            input-type="date"
+          />
+        </div>
+      </div>
       <button
         :class="{
           button: true,
@@ -25,46 +43,101 @@
           'is-normal': true,
           'is-primary': true,
           'is-outlined': true,
+          'outlined-button': true,
         }"
         @click="capturePageHandler"
       >
-        <span
+        <span class="flex_display"
           ><img src="@/assets/images/camera.svg" alt="camera" />
           <span>Capture with Camera</span></span
         >
       </button>
       <br />
       <h4>OR</h4>
-      <AppUpload label="from Device" height="10em"
+      <AppUpload
+        label="from Device"
+        height="10em"
+        @fileUploadHandler="fileUploadHandler"
+        @errorMessagehandler="errorMessagehandler"
         ><template slot="caption">
-          <ul class="caption_list">
+          <ul v-if="!identityFile" class="caption_list">
             <li>ID must take up at least 80% of the image</li>
             <li>Resolution should be above 300 DPI</li>
             <li>Must be a Jpeg</li>
           </ul>
+          <p v-if="identityFile" class="file_name">{{ identityFile.name }}</p>
         </template>
       </AppUpload>
+      <AppButton
+        v-if="identityFile"
+        title="Continue"
+        @click="submitUploadHandler"
+      />
+      <p>{{ message }}</p>
     </div>
   </div>
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppSelect from '@/components/UI/AppSelect'
+// import AppSelect from '@/components/UI/AppSelect'
 import AppUpload from '@/components/UI/AppUpload'
+import AppButton from '@/components/UI/AppButton'
 export default {
   components: {
     AppTitleComponent,
-    AppSelect,
+    // AppSelect,
     AppUpload,
+    AppButton,
   },
   data() {
     return {
       idObject: {},
+      identityFile: '',
+      message: '',
     }
   },
   methods: {
+    async submitUploadHandler() {
+      if (
+        this.idObject.expiryDate === undefined ||
+        this.idObject.expiryDate === ''
+      ) {
+        this.message = 'Expiry date is Compulsory'
+        return
+      }
+      if (
+        this.idObject.issuedDate === '' ||
+        this.idObject.issuedDate === undefined
+      ) {
+        this.message = 'Issued Date is Compulsory'
+        return
+      }
+      try {
+        this.message = ''
+        const response = this.$cookies.get('requestId')
+        console.log(response, 'COOKIE response')
+        console.log('clicked')
+        const formData = new FormData()
+        formData.append('file', this.identityFile)
+        formData.append('requestId', response)
+        formData.append('issuedDate', this.idObject.expiryDate)
+        formData.append('expiryDate', this.idObject.expiryDate)
+        await this.$axios.$post('/individual/idCardUpload', formData)
+        this.$router.replace('/user/individual/capture-id')
+      } catch (err) {
+        // this.message = err.response.data.errorMessage
+      }
+    },
     capturePageHandler() {
       this.$router.replace('/user/individual/capture-id')
+    },
+    fileUploadHandler(file) {
+      this.identityFile = file
+      this.message = ''
+    },
+    errorMessagehandler(message) {
+      this.message = message
+      this.identityFile = ''
     },
   },
 }
@@ -97,7 +170,11 @@ h4::after {
   left: 0.5em;
   margin-right: -50%;
 }
-button {
+.file_name {
+  color: #18c139;
+  margin-top: 15px;
+}
+.outlined-button {
   border: 1px solid #fdb813 !important;
   background-color: transparent !important;
   color: #fdb813 !important;
@@ -106,6 +183,12 @@ button {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
   font-weight: bold;
+  .flex_display {
+    display: flex;
+    img {
+      margin-right: 10px;
+    }
+  }
 }
 .caption_list {
   margin-top: 20px;
@@ -120,7 +203,7 @@ button {
   }
 }
 @media only screen and (max-width: 991px) {
-  button {
+  .outlined-button {
     font-size: 13px !important;
   }
   h4 {

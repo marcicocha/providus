@@ -114,12 +114,14 @@ export default {
       if (!this.contactDetails) {
         return
       }
+      const response = this.$cookies.get('requestId')
+      const contactDetails = {
+        ...this.contactDetails,
+        requestId: response,
+      }
       try {
-        await this.$axios.$put(
-          '/individual/contactDetails',
-          this.contactDetails
-        )
-        await this.submitContactHandler(this.contactDetails)
+        await this.$axios.$put('/individual/contactDetails', contactDetails)
+        await this.submitContactHandler(contactDetails)
         this.$router.replace('/user/individual/kin-information')
       } catch (err) {}
     },
