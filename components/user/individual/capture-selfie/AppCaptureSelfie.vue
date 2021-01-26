@@ -139,7 +139,6 @@ pre {
   display: block;
   font-size: 9px;
 }
-
 .video {
   width: 100%;
   height: auto;
@@ -147,13 +146,11 @@ pre {
   top: 0;
   left: 0;
 }
-
 select {
   display: inline-block;
   width: 100%;
   float: left;
 }
-
 .canvas {
   width: 100%;
   height: auto;
@@ -173,7 +170,8 @@ select {
   float: left;
   font-size: 9px;
 }
-.sl {
+.sl,
+#face-coord {
   font-size: 11px;
 }
 .select:not(.is-multiple):not(.is-loading)::after {

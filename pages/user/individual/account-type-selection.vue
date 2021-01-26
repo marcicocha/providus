@@ -225,14 +225,7 @@ export default {
       } catch (err) {
         this.isLoading = false
         this.fetching = false
-        this.$toast.open({
-          message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${err.response.data.errorMessage} </p>`,
-          type: 'error',
-          duration: 4000,
-          dismissible: true,
-        })
-        console.log(err.response.data.errorMessage, 'ERROR')
+        console.log(err, 'ERROR')
 
         let errorMessage = ''
         // Network Error
