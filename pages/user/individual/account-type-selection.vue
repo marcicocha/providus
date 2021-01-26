@@ -217,22 +217,6 @@ export default {
         )
         await this.submitBvnInfoHandler(this.accountInformation)
         this.getRequestId(this.accountInformation.BVN)
-        // if (response.hasError) {
-        //   this.$toast.open({
-        //     message: `<p class="toast-title">Error Message</p>
-        //             <p class="toast-msg"> ${response.errorMessage} </p>`,
-        //     type: 'error',
-        //     duration: 4000,
-        //     dismissible: true,
-        //   })
-        //   return
-        // }
-        // if (!response.hasError) {
-        //   this.bvnDetails = { ...response }
-        //   this.isBvn = false
-        //   this.isBvnDetails = true
-        //   this.isLoading = false
-        // }
         this.bvnDetails = { ...response }
         this.isBvn = false
         this.isBvnDetails = true
@@ -240,7 +224,15 @@ export default {
         this.fetching = false
       } catch (err) {
         this.isLoading = false
-        // console.log(err.response.data.errorMessage, 'ERROR')
+        this.fetching = false
+        this.$toast.open({
+          message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${err.response.data.errorMessage} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        console.log(err.response.data.errorMessage, 'ERROR')
 
         let errorMessage = ''
         // Network Error
