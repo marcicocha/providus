@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Face capture demo</title>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="faceCapture.min.js"></script>
+  <style>
+.container {
+  margin: 0 auto;
+  position: relative;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.canvas {
+  width: 80%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  transform: scaleX(-1);
+}
+#controls {
+  z-index: 10;
+  position: absolute;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+  <video autoplay playsinline style="width:80%;"></video>
+  <canvas class="canvas" id="face-detected-cv"></canvas>
+  </div>
+  <div id="controls">
+  <p id="video-settings" style="width:80%;overflow:scroll"></p>
+  <p id="feedback" style="width:80%;overflow:scroll"></p>
+  <button id="start-capture" onclick="startCamera()">Start Camera</button>
+  <button id="start-capture" onclick="capture()">Start Capture</button>
+  <button id="start-capture-single" onclick="captureSingle()">Capture</button>
+  <button id="find-face" onclick="findFace()" disabled>Find face</button>
+  <button id="find-face" onclick="stopCapture()">STOP</button>
+  <div class="select">
+    <label for="videoSource">Video source: </label><select onchange="restart()" id="videoSource"></select>
+  </div>
+</div>
+<div id="face-coords">
+  <span>Face coords:
+    <pre id="face-coords"></pre></span>
+</div>
+
+<img id="image" />
+  <script src="auto.js"></script>
+
+  <pre id="settings"></pre>
+</body>
+
+</html>

@@ -113,4 +113,79 @@ label {
   opacity: 0.7;
   padding: 2px 1px;
 }
+.toast-title {
+  margin: 0;
+  font-size: 1rem;
+  width: 100%;
+  display: inline-block;
+  float: left;
+  color: white;
+  font-weight: 500;
+}
+.toast-msg {
+  font-size: 14px;
+  width: 100%;
+  display: inline-block;
+  float: left;
+  color: white;
+  font-family: 'GothamLight', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+}
+.notices {
+  position: fixed;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2em 0.5em !important;
+  overflow: hidden;
+  z-index: 999999999999999999 !important;
+  pointer-events: none;
+}
+.notices .toast {
+  opacity: 1;
+  width: 319px;
+  min-height: 4em;
+  border-radius: 20px !important;
+}
+.notices .toast .toast-icon {
+  display: block;
+}
+.toast-text {
+  color: white;
+  font-family: 'GothamLight', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+}
+.notices .toast-success {
+  background-color: #1bb05d !important;
+}
+.notices .toast-warning {
+  background-color: #d58512 !important;
+}
+.notices .toast-error {
+  background-color: crimson !important;
+}
+.notices .toast-default {
+  background-color: #343a40;
+}
+.buttonloader {
+  border: none; /* Remove borders */
+  color: white; /* White text */
+}
+.buttonloader::after {
+  font-size: 16px;
+  color: white !important;
+}
+.button.is-primary.is-loading::after {
+  border-color: transparent transparent rgba(255, 255, 255, 0.9)
+    rgba(255, 255, 255, 0.9) !important;
+}
+.fa {
+  /* Add a right margin to each icon */
+  margin-left: -12px;
+  margin-right: 8px;
+}
 //Dika's Global Entries

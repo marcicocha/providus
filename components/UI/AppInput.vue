@@ -8,6 +8,7 @@
       :type="inputType"
       name="name"
       :placeholder="placeholder"
+      :disabled="disabled"
       @blur="blurHandler"
     />
   </div>
@@ -39,6 +40,10 @@ export default {
     inputType: {
       type: String,
       default: 'text',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
