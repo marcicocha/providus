@@ -1,20 +1,18 @@
 <template>
   <div>
     <div>
-      <div>
-        <AppSelectHybrid
-          v-model="nationalityObject.nationality"
-          :remote="false"
-          label="Nationality"
-          placeholder="Select Nationality"
-          :data="['LOCAL', 'FOREIGN']"
-          @change="changeNationalityHandler"
-        />
-      </div>
+      <AppSelectHybrid
+        v-model="nationalityObject.nationality"
+        :remote="false"
+        label="Nationality"
+        placeholder="Select Nationality"
+        :data="['LOCAL', 'FOREIGN']"
+        @change="changeNationalityHandler"
+      />
 
-      <div v-if="nationalityObject.nationality === 'LOCAL'">
+      <template v-if="nationalityObject.nationality === 'LOCAL'">
         <div class="columns is-mobile">
-          <div class="column is-6 small-right-padding">
+          <div class="column is-6">
             <AppSelectHybrid
               v-model="nationalityObject.stateOfOrigin"
               label="State of Origin"
@@ -28,7 +26,7 @@
               "
             />
           </div>
-          <div class="column is-6 small-left-padding">
+          <div class="column is-6">
             <AppSelectHybrid
               v-model="nationalityObject.lga"
               label="LGA"
@@ -43,8 +41,8 @@
             />
           </div>
         </div>
-      </div>
-      <div v-else>
+      </template>
+      <template v-else>
         <div>
           <AppInput
             v-model="nationalityObject.residentPermitNo"
@@ -77,7 +75,7 @@
         />
 
         <div class="columns is-mobile">
-          <div class="column is-6 small-right-padding">
+          <div class="column is-6">
             <div>
               <AppSelectHybrid
                 v-model="nationalityObject.dualCitizenship"
@@ -88,7 +86,7 @@
               />
             </div>
           </div>
-          <div class="column is-6 small-left-padding">
+          <div class="column is-6">
             <AppInput
               v-model="nationalityObject.altCitizenship"
               label="If Yes, Specify?"
@@ -96,7 +94,7 @@
             />
           </div>
         </div>
-      </div>
+      </template>
       <AppSelectHybrid
         v-model="nationalityObject.religion"
         label="Religion"
