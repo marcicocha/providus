@@ -43,7 +43,7 @@
       </div>
       <div class="columns is-mobile">
         <div class="column is-6 small-right-padding">
-          <AppSelect
+          <AppSelectHybrid
             v-model="personalInfoObject.maritalStatus"
             label="Marital Status"
             placeholder="Select Option"
@@ -57,7 +57,7 @@
           />
         </div>
         <div class="column is-6 small-left-padding">
-          <AppSelect
+          <AppSelectHybrid
             v-model="personalInfoObject.gender"
             label="Gender"
             placeholder="Select Option"

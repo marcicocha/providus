@@ -270,7 +270,8 @@ export default {
 }
 
 .custom-select .items p:hover {
-  background-color: #ad8225;
+  background-color: #f1b100;
+  color: #fff;
 }
 
 .selectHide {
