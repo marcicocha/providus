@@ -97,7 +97,7 @@
           />
         </div>
         <div class="column is-6 small-left-padding">
-          <AppSelect
+          <AppSelectHybrid
             v-model="personalInfoObject.currency"
             label="Currency Type"
             placeholder="Select Currency"
@@ -119,6 +119,7 @@
 <script>
 import AppInput from '@/components/UI/AppInput'
 import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppBasicInformation',
@@ -126,6 +127,7 @@ export default {
     AppInput,
     AppButton,
     AppSelect,
+    AppSelectHybrid,
   },
   props: {
     personalInfoObject: {
