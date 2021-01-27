@@ -1,8 +1,8 @@
-const outlineImageGreen = new Image()
-outlineImageGreen.src = 'frame_overlay_far_green.png'
-const outlineImageRed = new Image()
-outlineImageRed.src = 'frame_overlay_far_red.png'
-const outlineImage = null
+let outlineImageGreen = new Image()
+outlineImageGreen.src = '/frame_overlay_far_green.png'
+let outlineImageRed = new Image()
+outlineImageRed.src = '/frame_overlay_far_red.png'
+let outlineImage = null
 
 function drawOutline() {
   if (outlineImage && !outlineImage.complete) {
