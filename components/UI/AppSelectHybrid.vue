@@ -10,7 +10,7 @@
       <div class="selected" :class="{ open: open }" @click="open = !open">
         <span>{{ setSelected }}</span>
       </div>
-      <div class="items" :class="{ selectHide: !open }">
+      <div class="items" :class="{ selectHide: !open }" v-if="remote">
         <p
           v-for="(option, i) of dataRemote"
           :key="i"
@@ -23,6 +23,22 @@
         >
           {{ option.text }}
         </p>
+      </div>
+      <div class="items" :class="{ selectHide: !open }" v-else>
+        <template v-if="data && data.length !== ''">
+          <p
+            v-for="(option, i) of data"
+            :key="i"
+            class="item"
+            @click="
+              selected = option
+              open = false
+              $emit('input', option)
+            "
+          >
+            {{ option }}
+          </p>
+        </template>
       </div>
     </div>
     <!--    <select-->
@@ -217,6 +233,14 @@ export default {
   outline: none;
   height: 150%;
   line-height: 150%;
+  border: none;
+  display: block;
+  font-family: 'GothamLight', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  color: #2e434e;
+  padding: 2px 1px;
 }
 
 .custom-select .selected {
@@ -249,13 +273,16 @@ export default {
 .custom-select .items {
   color: #2e434e;
   border-radius: 0px 0px 6px 6px;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
   position: absolute;
   // background-color: #fff;
   margin: auto 0px;
   left: 0;
   right: 0;
   z-index: 1;
+  max-height: 50vh;
+  border: 1px solid #eaeaea;
 }
 
 .custom-select .items p {
@@ -276,5 +303,15 @@ export default {
 
 .selectHide {
   display: none;
+}
+@media only screen and (max-width: 991px) {
+  .custom-select {
+    font-size: 13px !important;
+  }
+}
+@media only screen and (max-width: 600px) {
+  label {
+    font-size: 10px !important;
+  }
 }
 </style>

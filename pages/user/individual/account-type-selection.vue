@@ -225,41 +225,11 @@ export default {
       } catch (err) {
         this.isLoading = false
         this.fetching = false
-        console.log(err, 'ERROR')
 
         let errorMessage = ''
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          console.log(err.response, 'ERROR BLOCK')
-          errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-
+        const error = err.response.data.errorMessage
         // BVN Already Exists
-        if (errorMessage.includes('already exist')) {
+        if (error.includes('already exist')) {
           const { response } = await this.$axios.$get(
             `/individual/getCurrentWorkFlow?bvn=${this.accountInformation.BVN}`
           )
@@ -290,7 +260,39 @@ export default {
           if (nextWorkFlow === 'LIVE_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
+          return
         }
+
+        // Network Error
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          console.log(err.response, 'ERROR BLOCK')
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
         this.fetching = false
       }
     },
@@ -358,6 +360,27 @@ hr {
 .error_message {
   color: #cc4c4c;
 }
+@media only screen and (min-width: 1025px) {
+  .account-info__block {
+    width: 95%;
+    padding-top: 0;
+  }
+  .parent-container {
+    width: 90%;
+    position: relative;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .account-info__block {
+    width: 80%;
+    //padding-top: 30px;
+    padding-top: 20px;
+  }
+  .parent-container {
+    width: 90%;
+    position: relative;
+  }
+}
 @media only screen and (max-width: 991px) {
   .account-info__block {
     width: 100%;
@@ -380,6 +403,18 @@ hr {
     p {
       font-size: 14px;
     }
+  }
+}
+@media only screen and (max-width: 767px) {
+  h2 {
+    line-height: 1px;
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .notification {
+    position: absolute;
+    bottom: 0;
+    font-size: 13px;
   }
 }
 </style>
