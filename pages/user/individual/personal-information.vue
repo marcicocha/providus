@@ -6,17 +6,21 @@
         v-if="isBasicInformation"
         :personal-info-object="personalInfoObject"
         @basicInfoHandler="basicInfoHandler"
+        @errorMessageHandler="errorMessageHandler"
       />
       <AppNationalityInformation
         v-if="isNationalityInfo"
         :nationality-object="nationalityObject"
         @nationalityHandler="nationalityHandler"
         @updateNationalityDetails="updateNationalityDetails"
+        @errorMessageHandler="errorMessageHandler"
+        @dualCitizenshipHandler="dualCitizenshipHandler"
       />
       <AppIdentificationNumberInformation
         v-if="isIdentificationInfo"
         :personal-info-object="personalInfoObject"
         @identificationHandler="identificationHandler"
+        @errorMessageHandler="errorMessageHandler"
       />
     </div>
   </div>
@@ -43,6 +47,7 @@ export default {
         currency: 'NGN',
       },
       nationalityObject: {},
+      message: '',
     }
   },
   methods: {
@@ -55,9 +60,25 @@ export default {
         nationality: value,
       }
     },
+    dualCitizenshipHandler(value) {
+      this.nationalityObject = {
+        ...this.nationalityObject,
+        altCitizenship: '',
+      }
+    },
     basicInfoHandler() {
       this.isBasicInformation = false
       this.isNationalityInfo = true
+    },
+    errorMessageHandler(message) {
+      this.message = `${message} field is compulsory`
+      this.$toast.open({
+        message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${message} is Compulsory</p>`,
+        type: 'error',
+        duration: 4000,
+        dismissible: true,
+      })
     },
     async identificationHandler() {
       if (!this.personalInfoObject) {
@@ -75,7 +96,23 @@ export default {
         await this.$axios.$put('/individual/personalInfo', personalInfoObject)
         await this.submitPersonalInfoHandler(personalInfoObject)
         this.$router.replace('/user/individual/contact-information')
-      } catch (err) {}
+      } catch (err) {
+        this.message = err.response.data.errorMessage
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
     },
     ...mapActions({
       submitPersonalInfoHandler: 'individualModule/POST_PERSONAL_INFORMATION',

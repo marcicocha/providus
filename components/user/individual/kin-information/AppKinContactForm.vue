@@ -58,7 +58,7 @@
       </div>
       <div class="columns">
         <div class="column">
-          <AppSelect
+          <AppSelectHybrid
             v-model="kinInfoObject.residentCountry"
             label="Country"
             placeholder="Select the country of residence of yoour next of Kin"
@@ -74,7 +74,7 @@
       </div>
       <div class="columns is-mobile">
         <div class="column">
-          <AppSelect
+          <AppSelectHybrid
             v-model="kinInfoObject.residentState"
             label="State"
             placeholder="Select Option"
@@ -88,7 +88,7 @@
           />
         </div>
         <div class="column">
-          <AppSelect
+          <AppSelectHybrid
             v-model="kinInfoObject.residentLga"
             label="LGA"
             placeholder="Select Option"
@@ -109,12 +109,12 @@
 </template>
 <script>
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppContactForm',
   components: {
-    AppSelect,
+    AppSelectHybrid,
     AppInput,
     AppButton,
   },

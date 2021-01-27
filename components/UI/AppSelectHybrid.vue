@@ -4,13 +4,14 @@
     <div
       class="custom-select"
       :tabindex="tabindex"
+      :disabled="disabled"
       @blur="open = false"
       @click="searchHandler"
     >
       <div class="selected" :class="{ open: open }" @click="open = !open">
         <span>{{ setSelected }}</span>
       </div>
-      <div class="items" :class="{ selectHide: !open }" v-if="remote">
+      <div v-if="remote" class="items" :class="{ selectHide: !open }">
         <p
           v-for="(option, i) of dataRemote"
           :key="i"
@@ -24,7 +25,7 @@
           {{ option.text }}
         </p>
       </div>
-      <div class="items" :class="{ selectHide: !open }" v-else>
+      <div v-else class="items" :class="{ selectHide: !open }">
         <template v-if="data && data.length !== ''">
           <p
             v-for="(option, i) of data"
