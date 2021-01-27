@@ -1,41 +1,11 @@
 <template>
   <div class="parent-container">
     <AppTitleComponent
-      heading="Upload Valid Id"
-      description="Please upload a valid means of Identification. Either International passport, Driver’s license, Permanent Voter’s card or National ID"
+      heading="Upload Utility Bill"
+      description="Please upload a valid utilily bill not later than 3 months"
     />
     <br />
     <div>
-      <!-- <AppSelect
-        v-model="idObject.idType"
-        label="Id Type"
-        placeholder="Select Identification Type"
-        url="/globalData/data?name=ID%20TYPE"
-        :call-back-func="
-          (resp) => ({
-            text: resp,
-            value: resp,
-          })
-        "
-      /> -->
-      <div class="columns is-mobile">
-        <div class="column is-6">
-          <AppInput
-            v-model="idObject.issuedDate"
-            label="Issue Date"
-            placeholder="Select Date"
-            input-type="date"
-          />
-        </div>
-        <div class="column is-6">
-          <AppInput
-            v-model="idObject.expiryDate"
-            label="Expiry Date"
-            placeholder="Select Date"
-            input-type="date"
-          />
-        </div>
-      </div>
       <button
         :class="{
           button: true,
@@ -79,17 +49,13 @@
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-// import AppSelect from '@/components/UI/AppSelect'
 import AppUpload from '@/components/UI/AppUpload'
 import AppButton from '@/components/UI/AppButton'
-import AppInput from '@/components/UI/AppInput'
 export default {
   components: {
     AppTitleComponent,
-    // AppSelect,
     AppUpload,
     AppButton,
-    AppInput,
   },
   data() {
     return {
@@ -100,20 +66,6 @@ export default {
   },
   methods: {
     async submitUploadHandler() {
-      if (
-        this.idObject.expiryDate === undefined ||
-        this.idObject.expiryDate === ''
-      ) {
-        this.message = 'Expiry date is Compulsory'
-        return
-      }
-      if (
-        this.idObject.issuedDate === '' ||
-        this.idObject.issuedDate === undefined
-      ) {
-        this.message = 'Issued Date is Compulsory'
-        return
-      }
       try {
         this.message = ''
         const response = this.$cookies.get('requestId')
@@ -122,16 +74,14 @@ export default {
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)
-        formData.append('issuedDate', this.idObject.expiryDate)
-        formData.append('expiryDate', this.idObject.expiryDate)
-        await this.$axios.$post('/individual/idCardUpload', formData)
-        this.$router.replace('/user/individual/upload-utility')
+        await this.$axios.$post('/individual/utilityBillUpload', formData)
+        this.$router.replace('/user/individual/upload-document')
       } catch (err) {
         // this.message = err.response.data.errorMessage
       }
     },
     capturePageHandler() {
-      this.$router.replace('/user/individual/capture-id')
+      this.$router.replace('/user/individual/capture-utility')
     },
     fileUploadHandler(file) {
       this.identityFile = file

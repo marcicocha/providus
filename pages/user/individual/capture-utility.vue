@@ -1,8 +1,8 @@
 <template>
   <div>
     <AppTitleComponent
-      heading="Upload Utility Bill"
-      description="Please upload a valid utilily bill not later than 3 months."
+      heading="Capture Utility Bill"
+      description="Please capture a valid utility bill not later than 3 months."
     />
   </div>
 </template>
