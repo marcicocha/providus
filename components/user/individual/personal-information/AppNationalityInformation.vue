@@ -2,7 +2,7 @@
   <div>
     <div>
       <div>
-        <AppSelect
+        <AppSelectHybrid
           v-model="nationalityObject.nationality"
           :remote="false"
           label="Nationality"
@@ -15,7 +15,7 @@
       <div v-if="nationalityObject.nationality === 'LOCAL'">
         <div class="columns is-mobile">
           <div class="column is-6 small-right-padding">
-            <AppSelect
+            <AppSelectHybrid
               v-model="nationalityObject.stateOfOrigin"
               label="State of Origin"
               placeholder="Select Option"
@@ -29,7 +29,7 @@
             />
           </div>
           <div class="column is-6 small-left-padding">
-            <AppSelect
+            <AppSelectHybrid
               v-model="nationalityObject.lga"
               label="LGA"
               placeholder="Select Option"
@@ -79,7 +79,7 @@
         <div class="columns is-mobile">
           <div class="column is-6 small-right-padding">
             <div>
-              <AppSelect
+              <AppSelectHybrid
                 v-model="nationalityObject.dualCitizenship"
                 :remote="false"
                 label="Dual Citizenship?"
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <AppSelect
+      <AppSelectHybrid
         v-model="nationalityObject.religion"
         label="Religion"
         placeholder="Select Option"
@@ -116,14 +116,14 @@
 </template>
 <script>
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppNationalityInformation',
   components: {
     AppInput,
     AppButton,
-    AppSelect,
+    AppSelectHybrid,
   },
   props: {
     nationalityObject: {

@@ -3,7 +3,7 @@
     <div>
       <div class="columns is-gapless is-mobile">
         <div class="column is-4">
-          <AppSelect
+          <AppSelectHybrid
             v-model="personalInfoObject.title"
             label="Title"
             placeholder="Select"
@@ -118,7 +118,7 @@
 </template>
 <script>
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+// import AppSelect from '@/components/UI/AppSelect'
 import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
@@ -126,7 +126,7 @@ export default {
   components: {
     AppInput,
     AppButton,
-    AppSelect,
+    // AppSelect,
     AppSelectHybrid,
   },
   props: {
