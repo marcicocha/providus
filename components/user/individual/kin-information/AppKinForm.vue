@@ -4,7 +4,7 @@
       <div>
         <div class="columns is-gapless is-mobile">
           <div class="column is-4">
-            <AppSelect
+            <AppSelectHybrid
               v-model="kinInfoObject.title"
               label="Title"
               placeholder="Select"
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div>
-          <AppSelect
+          <AppSelectHybrid
             v-model="kinInfoObject.relationship"
             label="Relationship"
             placeholder="Select your relationship with this person"
@@ -57,7 +57,7 @@
         </div>
         <div class="columns is-mobile">
           <div class="column small-right-padding">
-            <AppSelect
+            <AppSelectHybrid
               v-model="kinInfoObject.maritalStatus"
               label="Marital Status"
               placeholder="Select Option"
@@ -71,7 +71,7 @@
             />
           </div>
           <div class="column small-left-padding">
-            <AppSelect
+            <AppSelectHybrid
               v-model="kinInfoObject.gender"
               label="Gender"
               placeholder="Select Option"
@@ -110,12 +110,12 @@
 </template>
 <script>
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppKinForm',
   components: {
-    AppSelect,
+    AppSelectHybrid,
     AppInput,
     AppButton,
   },

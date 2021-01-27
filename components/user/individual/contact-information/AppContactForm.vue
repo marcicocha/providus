@@ -59,7 +59,7 @@
       </div>
       <div class="columns is-mobile">
         <div class="column small-right-padding">
-          <AppSelect
+          <AppSelectHybrid
             v-model="contactDetails.residentState"
             label="State"
             placeholder="Select Option"
@@ -73,7 +73,7 @@
           />
         </div>
         <div class="column small-left-padding">
-          <AppSelect
+          <AppSelectHybrid
             v-model="contactDetails.residentLga"
             label="LGA"
             placeholder="Select Option"
@@ -95,12 +95,12 @@
 <script>
 import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppContactDetails',
   components: {
-    AppSelect,
+    AppSelectHybrid,
     AppInput,
     AppButton,
   },
@@ -111,7 +111,60 @@ export default {
   },
   methods: {
     async contactDetailsHandler() {
-      if (!this.contactDetails) {
+      if (
+        this.contactDetails.email === '' ||
+        this.contactDetails.email === undefined
+      ) {
+        this.errorHandler('Email')
+        return
+      }
+      if (
+        this.contactDetails.phoneNumber === '' ||
+        this.contactDetails.phoneNumber === undefined
+      ) {
+        this.errorHandler('Phone Number')
+        return
+      }
+      if (
+        this.contactDetails.houseNo === '' ||
+        this.contactDetails.houseNo === undefined
+      ) {
+        this.errorHandler('House Number')
+        return
+      }
+      if (
+        this.contactDetails.landmark === '' ||
+        this.contactDetails.landmark === undefined
+      ) {
+        this.errorHandler('Landmark')
+        return
+      }
+      if (
+        this.contactDetails.streetName === '' ||
+        this.contactDetails.streetName === undefined
+      ) {
+        this.errorHandler('Street Name')
+        return
+      }
+      if (
+        this.contactDetails.residentCity === '' ||
+        this.contactDetails.residentCity === undefined
+      ) {
+        this.errorHandler('Resident City')
+        return
+      }
+      if (
+        this.contactDetails.residentState === '' ||
+        this.contactDetails.residentState === undefined
+      ) {
+        this.errorHandler('Resident State')
+        return
+      }
+      if (
+        this.contactDetails.residentLga === '' ||
+        this.contactDetails.residentLga === undefined
+      ) {
+        this.errorHandler('Resident Lga')
         return
       }
       const response = this.$cookies.get('requestId')
@@ -123,7 +176,31 @@ export default {
         await this.$axios.$put('/individual/contactDetails', contactDetails)
         await this.submitContactHandler(contactDetails)
         this.$router.replace('/user/individual/kin-information')
-      } catch (err) {}
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
+    errorHandler(err) {
+      this.$toast.open({
+        message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${err} is Compulsory</p>`,
+        type: 'error',
+        duration: 4000,
+        dismissible: true,
+      })
     },
     ...mapActions({
       submitContactHandler: 'individualModule/POST_CONTACT_INFORMATION',

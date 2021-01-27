@@ -43,13 +43,11 @@
         </div>
       </template>
       <template v-else>
-        <div>
-          <AppInput
-            v-model="nationalityObject.residentPermitNo"
-            label="Resident Permit No"
-            placeholder="Type Number"
-          />
-        </div>
+        <AppInput
+          v-model="nationalityObject.residentPermitNo"
+          label="Resident Permit No"
+          placeholder="Type Number"
+        />
         <div class="columns is-mobile">
           <div class="column is-6">
             <AppInput
@@ -83,6 +81,7 @@
                 label="Dual Citizenship?"
                 placeholder="Select Option"
                 :data="['YES', 'NO']"
+                @change="dualCitizenshipHandler"
               />
             </div>
           </div>
@@ -91,6 +90,7 @@
               v-model="nationalityObject.altCitizenship"
               label="If Yes, Specify?"
               placeholder="Select Option"
+              :disabled="nationalityObject.dualCitizenship !== 'YES'"
             />
           </div>
         </div>
@@ -131,10 +131,89 @@ export default {
   },
   methods: {
     submitNationalityInfoHandler() {
+      if (
+        this.nationalityObject.nationality === '' ||
+        this.nationalityObject.nationality === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Nationality')
+        return
+      }
+      if (this.nationalityObject.nationality === 'LOCAL') {
+        if (
+          this.nationalityObject.stateOfOrigin === '' ||
+          this.nationalityObject.stateOfOrigin === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'State of Origin')
+          return
+        }
+        if (
+          this.nationalityObject.lga === '' ||
+          this.nationalityObject.lga === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'LGA')
+          return
+        }
+      }
+      if (this.nationalityObject.nationality === 'FOREIGN') {
+        if (
+          this.nationalityObject.residentPermitNo === '' ||
+          this.nationalityObject.residentPermitNo === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'Resident Permit No')
+          return
+        }
+        if (
+          this.nationalityObject.permitIssueDate === '' ||
+          this.nationalityObject.permitIssueDate === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'Permit Issue Date')
+          return
+        }
+        if (
+          this.nationalityObject.permitExpiryDate === '' ||
+          this.nationalityObject.permitExpiryDate === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'Permit Expiry Date')
+          return
+        }
+        if (
+          this.nationalityObject.taxPayerId === '' ||
+          this.nationalityObject.taxPayerId === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'Tax Payer Id')
+          return
+        }
+        if (
+          this.nationalityObject.dualCitizenship === '' ||
+          this.nationalityObject.dualCitizenship === undefined
+        ) {
+          this.$emit('errorMessageHandler', 'Dual Citizenship')
+          return
+        }
+        if (this.nationalityObject.dualCitizenship === 'YES') {
+          if (
+            this.nationalityObject.altCitizenship === '' ||
+            this.nationalityObject.altCitizenship === undefined
+          ) {
+            this.$emit('errorMessageHandler', 'Alt Citizenship')
+            return
+          }
+        }
+      }
+      if (
+        this.nationalityObject.religion === '' ||
+        this.nationalityObject.religion === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'religion')
+        return
+      }
       this.$emit('nationalityHandler')
     },
     changeNationalityHandler(value) {
       this.$emit('updateNationalityDetails', value)
+    },
+    dualCitizenshipHandler(value) {
+      this.$emit('dualCitizenshipHandler', value)
     },
   },
 }

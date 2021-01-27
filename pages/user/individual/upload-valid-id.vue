@@ -6,7 +6,7 @@
     />
     <br />
     <div>
-      <!-- <AppSelect
+      <!-- <AppSelectHybrid
         v-model="idObject.idType"
         label="Id Type"
         placeholder="Select Identification Type"
@@ -79,14 +79,14 @@
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-// import AppSelect from '@/components/UI/AppSelect'
+// import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppUpload from '@/components/UI/AppUpload'
 import AppButton from '@/components/UI/AppButton'
 import AppInput from '@/components/UI/AppInput'
 export default {
   components: {
     AppTitleComponent,
-    // AppSelect,
+    // AppSelectHybrid,
     AppUpload,
     AppButton,
     AppInput,
@@ -122,7 +122,7 @@ export default {
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)
-        formData.append('issuedDate', this.idObject.expiryDate)
+        formData.append('issuedDate', this.idObject.issuedDate)
         formData.append('expiryDate', this.idObject.expiryDate)
         await this.$axios.$post('/individual/idCardUpload', formData)
         this.$router.replace('/user/individual/upload-utility')

@@ -108,6 +108,7 @@
                 value: resp,
               })
             "
+            disabled
           />
         </div>
       </div>
@@ -140,6 +141,76 @@ export default {
   },
   methods: {
     submitBasicInformationHandler() {
+      if (
+        this.personalInfoObject.title === '' ||
+        this.personalInfoObject.title === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Title')
+        return
+      }
+      if (
+        this.personalInfoObject.surname === '' ||
+        this.personalInfoObject.surname === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Surname')
+        return
+      }
+      if (
+        this.personalInfoObject.firstName === '' ||
+        this.personalInfoObject.firstName === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'First Name')
+        return
+      }
+      if (
+        this.personalInfoObject.middleName === '' ||
+        this.personalInfoObject.middleName === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Middle Name')
+        return
+      }
+      if (
+        this.personalInfoObject.maritalStatus === '' ||
+        this.personalInfoObject.maritalStatus === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Marital Status')
+        return
+      }
+      if (
+        this.personalInfoObject.gender === '' ||
+        this.personalInfoObject.gender === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Gender')
+        return
+      }
+      if (
+        this.personalInfoObject.maidenName === '' ||
+        this.personalInfoObject.maidenName === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Maiden Name')
+        return
+      }
+      if (
+        this.personalInfoObject.dateOfBirth === '' ||
+        this.personalInfoObject.dateOfBirth === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Date of Birth')
+        return
+      }
+      if (
+        this.personalInfoObject.occupation === '' ||
+        this.personalInfoObject.occupation === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Occupation')
+        return
+      }
+      if (
+        this.personalInfoObject.currency === '' ||
+        this.personalInfoObject.currency === undefined
+      ) {
+        this.$emit('errorMessageHandler', 'Currency')
+        return
+      }
       this.$emit('basicInfoHandler')
     },
   },
