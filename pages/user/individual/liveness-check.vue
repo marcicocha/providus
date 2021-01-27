@@ -1,23 +1,16 @@
 <template>
   <div class="parent_container">
-    <AppTitleComponent heading="Liveness Check" :description="description" />
-    <br />
-    <AppCaptureInstruction
-      v-if="isCaptureInstruction"
-      @captureInstructionHandler="captureInstructionHandler"
-    />
-    <AppCaptureSelfie v-if="isCapture" />
+    <AppTitleComponent heading="Liveness Check" />
+    <AppLivenessCheck />
   </div>
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppCaptureInstruction from '@/components/user/individual/capture-selfie/AppCaptureInstruction'
-import AppCaptureSelfie from '@/components/user/individual/capture-selfie/AppCaptureSelfie.vue'
+import AppLivenessCheck from '@/components/user/individual/liveness-check/AppLivenessCheck.vue'
 export default {
   components: {
     AppTitleComponent,
-    AppCaptureInstruction,
-    AppCaptureSelfie,
+    AppLivenessCheck,
   },
   data() {
     return {
