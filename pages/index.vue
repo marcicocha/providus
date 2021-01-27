@@ -61,10 +61,10 @@ p {
   padding-top: 50px;
 }
 .parent_container {
-  width: 85%;
+  width: 90%;
   height: 100%;
   position: relative;
-  top: 19%;
+  top: 13%;
 }
 .child-container {
   width: 75%;
@@ -84,6 +84,14 @@ p {
     height: 100%;
     position: relative;
     top: 2%;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .parent_container {
+    width: 85%;
+    height: 100%;
+    position: relative;
+    top: 19%;
   }
 }
 </style>

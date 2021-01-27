@@ -39,15 +39,15 @@ p {
   color: #2e434e;
   letter-spacing: 1px;
 }
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 767px) {
   h1 {
     font-size: 18px;
   }
   p {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 768px) {
   h1 {
     font-size: 23px;
   }
@@ -55,7 +55,15 @@ p {
     font-size: 16px;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1025px) {
+  h1 {
+    font-size: 23px;
+  }
+  p {
+    font-size: 16px;
+  }
+}
+@media only screen and (min-width: 1600px) {
   h1 {
     font-size: 25px;
   }

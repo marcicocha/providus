@@ -27,13 +27,13 @@ export default {
   justify-content: center;
   text-align: center;
   width: 100%;
-  height: 200px;
+  height: 150px;
   cursor: pointer;
   border: 1.5px solid #eaeaea;
   box-sizing: border-box;
   p {
     margin-top: 20px;
-    font-size: 17px;
+    font-size: 14px;
     font-family: 'GothamLight', sans-serif;
     font-weight: bold;
   }
@@ -47,12 +47,34 @@ export default {
       brightness(105%) contrast(99%);
   }
 }
-@media only screen and (max-width: 991px) {
+@media only screen and (min-width: 767px) {
   .card {
-    height: 150px;
+    height: 200px;
     p {
       margin-top: 20px;
-      font-size: 14px;
+      font-size: 17px;
+      font-family: 'GothamLight', sans-serif;
+      font-weight: bold;
+    }
+  }
+}
+@media only screen and (min-width: 1025px) {
+  .card {
+    height: 180px;
+    p {
+      margin-top: 20px;
+      font-size: 17px;
+      font-family: 'GothamLight', sans-serif;
+      font-weight: bold;
+    }
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .card {
+    height: 200px;
+    p {
+      margin-top: 20px;
+      font-size: 17px;
       font-family: 'GothamLight', sans-serif;
       font-weight: bold;
     }
