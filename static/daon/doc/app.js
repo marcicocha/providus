@@ -7,7 +7,7 @@ const videoSelect = document.querySelector('select#videoSource')
 const selectors = [videoSelect]
 let queryParams = {}
 
-const video
+let video = null
 const canvas = document.querySelector('canvas')
 
 let doc_type = 'PASSPORT'
@@ -21,6 +21,8 @@ const dc = new Daon.DocumentCapture({
 })
 dc.startCamera().then(({ videoEl }) => {
   document.querySelector('.container').appendChild(videoEl)
+  const vid = document.querySelector('video')
+  vid.classList.add('screenie')
   videoEl.onloadedmetadata = function () {
     canvas.width = videoEl.videoWidth
     canvas.height = videoEl.videoHeight
