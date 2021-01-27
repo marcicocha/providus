@@ -37,7 +37,7 @@ startButton.disabled = true // until 3DFL is ready
 startButton.onclick = function () {
   startButton.disabled = true
   const scoreElem = document.getElementById('score3dfl')
-  scoreElem.textContent = 'Liveness: --'
+  scoreElem.textContent = 'Liveness:'
   scoreElem.style.color = 'black'
   outlineImage = outlineImageRed
   outlineCanvasCtx.setTransform(1, 0, 0, 1, 0, 0)
@@ -88,8 +88,8 @@ navigator.mediaDevices
   .getUserMedia({
     audio: false,
     video: {
-      width: { ideal: 640 },
-      height: { ideal: 480 },
+      width: { ideal: 380 },
+      height: { ideal: 400 },
       facingMode: 'user',
     },
   })
