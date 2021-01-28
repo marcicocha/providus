@@ -62,7 +62,36 @@ export default {
         }
         await this.$axios.$put('/individual/kinDetails', kinInfoObject)
         this.$router.replace('/user/individual/capture-selfie')
-      } catch (err) {}
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === []) {
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
     },
     errorMessageHandler(message) {
       this.message =
@@ -87,6 +116,18 @@ export default {
   align-content: center;
   span {
     margin-left: 5px;
+  }
+}
+@media only screen and (min-width: 1536px) {
+  @media only screen and (min-height: 730px) {
+    .back-button {
+      font-size: 13px !important;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .back-button {
+      font-size: 1em;
+    }
   }
 }
 </style>

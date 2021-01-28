@@ -31,6 +31,7 @@ export default {
   cursor: pointer;
   border: 1.5px solid #eaeaea;
   box-sizing: border-box;
+  padding: 40px;
   p {
     margin-top: 20px;
     font-size: 14px;
@@ -69,7 +70,7 @@ export default {
     }
   }
 }
-@media only screen and (min-width: 1600px) {
+@media only screen and (min-width: 1536px) {
   .card {
     height: 200px;
     p {
@@ -77,6 +78,28 @@ export default {
       font-size: 17px;
       font-family: 'GothamLight', sans-serif;
       font-weight: bold;
+    }
+  }
+  @media only screen and (min-height: 730px) {
+    .card {
+      height: 180px;
+      p {
+        margin-top: 20px;
+        font-size: 15px;
+        font-family: 'GothamLight', sans-serif;
+        font-weight: bold;
+      }
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .card {
+      height: 200px;
+      p {
+        margin-top: 20px;
+        font-size: 17px;
+        font-family: 'GothamLight', sans-serif;
+        font-weight: bold;
+      }
     }
   }
 }

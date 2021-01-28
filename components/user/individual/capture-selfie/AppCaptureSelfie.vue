@@ -130,9 +130,7 @@ export default {
         this.loading = false
         this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
           this.$loadScript('/daon/face/auto.js').then(() => {
-            setTimeout(() => {
-              document.querySelector('.startcam').click()
-            }, 500)
+            document.querySelector('.startcam').click()
           })
         })
       })
@@ -209,15 +207,16 @@ select {
   z-index: 5;
   transform: scaleX(-1);
 }
+.mbtn,
 #controls {
-  display: block;
-  position: relative;
-}
-.mbtn {
   width: auto !important;
   display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
   float: left;
   font-size: 9px;
+  visibility: hidden;
 }
 .sl,
 #face-coord {

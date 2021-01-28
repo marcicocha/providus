@@ -30,9 +30,26 @@ export default {
   },
   data() {
     return {
+      window: {
+        width: 0,
+        height: 0,
+      },
       description:
         'Welcome to Future Forward Banking. We believe that the New World of fast, smart, personal and borderless banking relationship is here. Now let’s guide you through the process of creating your very own Future Forward Bank account.',
     }
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  methods: {
+    handleResize() {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
+    },
   },
 }
 </script>
@@ -92,6 +109,40 @@ p {
     height: 100%;
     position: relative;
     top: 19%;
+  }
+}
+@media only screen and (min-width: 1536px) {
+  @media only screen and (min-height: 730px) {
+    .parent_container {
+      width: 90%;
+      top: 14%;
+    }
+
+    .reference {
+      font-size: 14px;
+    }
+
+    .child-container {
+      width: 80%;
+    }
+    .homepage_button__padding {
+      padding-top: 30px;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .parent_container {
+      width: 85%;
+      top: 19%;
+    }
+    .child-container {
+      width: 75%;
+    }
+    .homepage_button__padding {
+      padding-top: 50px;
+    }
+    .reference {
+      font-size: 16px;
+    }
   }
 }
 </style>

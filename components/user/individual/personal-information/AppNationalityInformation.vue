@@ -109,7 +109,6 @@
         "
       />
     </div>
-    <br />
     <AppButton title="Continue" @click="submitNationalityInfoHandler" />
   </div>
 </template>

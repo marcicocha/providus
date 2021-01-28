@@ -397,7 +397,7 @@ hr {
     position: relative;
   }
 }
-@media only screen and (min-width: 1600px) {
+@media only screen and (min-width: 1536px) {
   .account-info__block {
     width: 80%;
     //padding-top: 30px;
@@ -406,6 +406,48 @@ hr {
   .parent-container {
     width: 90%;
     position: relative;
+  }
+  .back-button {
+    font-size: 1em;
+  }
+  @media only screen and (min-height: 730px) {
+    hr {
+      margin: 1rem 0 !important;
+    }
+    .back-button {
+      font-size: 13px !important;
+    }
+    .account-info__block {
+      padding-top: 0;
+      width: 85%;
+    }
+    .notification {
+      bottom: 0;
+      font-size: 13px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    hr {
+      margin: 2rem 0 !important;
+    }
+    .back-button {
+      font-size: 1em;
+    }
+    .account-info__block {
+      padding-top: 10px;
+      width: 80%;
+    }
+    .notification {
+      position: absolute;
+      bottom: 5%;
+      font-size: 15px;
+    }
+    h2 {
+      font-size: 18px;
+    }
   }
 }
 @media only screen and (max-width: 991px) {
@@ -444,9 +486,7 @@ hr {
     font-size: 12px;
   }
   .back-button {
-    span {
-      font-size: 13px;
-    }
+    font-size: 13px;
   }
 }
 </style>
