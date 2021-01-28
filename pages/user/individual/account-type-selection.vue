@@ -401,7 +401,7 @@ hr {
   .account-info__block {
     width: 80%;
     //padding-top: 30px;
-    padding-top: 20px;
+    padding-top: 10px;
   }
   .parent-container {
     width: 90%;
@@ -441,7 +441,12 @@ hr {
   .notification {
     position: absolute;
     bottom: 0;
-    font-size: 13px;
+    font-size: 12px;
+  }
+  .back-button {
+    span {
+      font-size: 13px;
+    }
   }
 }
 </style>
