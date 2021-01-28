@@ -75,6 +75,7 @@
       <div class="columns is-mobile">
         <div class="column">
           <AppSelectHybrid
+            :key="kinInfoObject.residentCountry"
             v-model="kinInfoObject.residentState"
             label="State"
             placeholder="Select Option"
@@ -89,6 +90,7 @@
         </div>
         <div class="column">
           <AppSelectHybrid
+            :key="kinInfoObject.residentState"
             v-model="kinInfoObject.residentLga"
             label="LGA"
             placeholder="Select Option"
@@ -126,7 +128,67 @@ export default {
   },
   methods: {
     kinsContactDetailsHandler() {
-      if (!this.kinInfoObject) {
+      if (
+        this.kinInfoObject.email === undefined ||
+        this.kinInfoObject.email === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Email')
+        return
+      }
+      if (
+        this.kinInfoObject.phoneNumber === undefined ||
+        this.kinInfoObject.phoneNumber === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Phone Number')
+        return
+      }
+      if (
+        this.kinInfoObject.houseNo === undefined ||
+        this.kinInfoObject.houseNo === ''
+      ) {
+        this.$emit('errorMessageHandler', 'House Number')
+        return
+      }
+      if (
+        this.kinInfoObject.landMark === undefined ||
+        this.kinInfoObject.landMark === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Landmark')
+        return
+      }
+      if (
+        this.kinInfoObject.streetName === undefined ||
+        this.kinInfoObject.streetName === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Street Name')
+        return
+      }
+      if (
+        this.kinInfoObject.city === undefined ||
+        this.kinInfoObject.city === ''
+      ) {
+        this.$emit('errorMessageHandler', 'City')
+        return
+      }
+      if (
+        this.kinInfoObject.residentCountry === undefined ||
+        this.kinInfoObject.residentCountry === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Country')
+        return
+      }
+      if (
+        this.kinInfoObject.residentState === undefined ||
+        this.kinInfoObject.residentState === ''
+      ) {
+        this.$emit('errorMessageHandler', 'State')
+        return
+      }
+      if (
+        this.kinInfoObject.residentLga === undefined ||
+        this.kinInfoObject.residentLga === ''
+      ) {
+        this.$emit('errorMessageHandler', 'LGA')
         return
       }
       this.$emit('kinsContactDetailsHandler', this.kinInfoObject)

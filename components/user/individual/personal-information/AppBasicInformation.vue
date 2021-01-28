@@ -211,6 +211,13 @@ export default {
         this.$emit('errorMessageHandler', 'Currency')
         return
       }
+      const year = this.personalInfoObject.dateOfBirth.substring(0, 4)
+      const newDate = new Date()
+      const currentYear = newDate.getFullYear()
+      if (currentYear - year < 18) {
+        this.$emit('errorMessageHandler', 'Year')
+        return
+      }
       this.$emit('basicInfoHandler')
     },
   },
