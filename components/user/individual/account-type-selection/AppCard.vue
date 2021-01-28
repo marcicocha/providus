@@ -31,6 +31,7 @@ export default {
   cursor: pointer;
   border: 1.5px solid #eaeaea;
   box-sizing: border-box;
+  padding: 40px;
   p {
     margin-top: 20px;
     font-size: 14px;

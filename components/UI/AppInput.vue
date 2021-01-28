@@ -116,13 +116,25 @@ input {
   @media only screen and (min-height: 730px) {
     input {
       font-size: 12px !important;
-      line-height: 195%;
+      line-height: 100%;
+    }
+    .full-input {
+      height: 50px;
+    }
+    label {
+      font-size: 11px !important;
     }
   }
   @media only screen and (min-height: 900px) {
     input {
       font-size: 14px !important;
       line-height: 195%;
+    }
+    .full-input {
+      height: 60px;
+    }
+    label {
+      font-size: 13px !important;
     }
   }
 }
