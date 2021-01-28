@@ -97,8 +97,7 @@ export default {
       this.message =
         message === 'Year' ? `Must be 18 and Above` : `${message} is compulsory`
       this.$toast.open({
-        message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${this.message}</p>`,
+        message: `<p class="toast-msg"> ${this.message}</p>`,
         type: 'error',
         duration: 4000,
         dismissible: true,

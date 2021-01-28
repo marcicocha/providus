@@ -209,8 +209,7 @@ export default {
     },
     errorHandler(err) {
       this.$toast.open({
-        message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${err} is Compulsory</p>`,
+        message: `<p class="toast-msg"> ${err} is Compulsory</p>`,
         type: 'error',
         duration: 4000,
         dismissible: true,
