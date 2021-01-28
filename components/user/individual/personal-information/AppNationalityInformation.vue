@@ -28,6 +28,7 @@
           </div>
           <div class="column is-6">
             <AppSelectHybrid
+              :key="nationalityObject.stateOfOrigin"
               v-model="nationalityObject.lga"
               label="LGA"
               placeholder="Select Option"

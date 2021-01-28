@@ -71,10 +71,11 @@ export default {
       this.isNationalityInfo = true
     },
     errorMessageHandler(message) {
-      this.message = `${message} field is compulsory`
+      this.message =
+        message === 'Year' ? `Must be 18 and Above` : `${message} is compulsory`
       this.$toast.open({
         message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${message} is Compulsory</p>`,
+                    <p class="toast-msg"> ${this.message} is Compulsory</p>`,
         type: 'error',
         duration: 4000,
         dismissible: true,
