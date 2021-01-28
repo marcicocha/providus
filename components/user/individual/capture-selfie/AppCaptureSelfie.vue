@@ -2,6 +2,7 @@
   <div v-if="!loading">
     <div class="container">
       <video id="" autoplay playsinline style="width: 100%"></video>
+      <img v-show="selfieCapture" class="animated fadeIn" id="image" />
       <canvas id="face-detected-cv" class="canvas"></canvas>
     </div>
 
@@ -40,16 +41,26 @@
       </span>
     </div>
     <pre id="settings" class="mbtn"></pre>
-    <img id="image" />
     <!-- Hidden UI Please dont touch-->
 
-    <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
+    <AppButton
+      v-if="!selfieCapture"
+      title="Capture Selfie"
+      @click="submitCaptureHandler"
+    />
+    <div v-if="selfieCapture" class="columns is-mobile">
+      <div class="column">
+        <AppButton title="Recapture" color="secondary" @click="returnHandler" />
+      </div>
+      <div class="column">
+        <AppButton title="Continue" @click="nextHandler" />
+      </div>
+    </div>
     <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
   </div>
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
-
 export default {
   name: 'AppCaptureSelfie',
   components: {
@@ -58,6 +69,7 @@ export default {
   data() {
     return {
       loading: true,
+      selfieCapture: false,
       imgSrc: '',
     }
   },
@@ -82,11 +94,17 @@ export default {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
+      this.selfieCapture = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#image').src
         console.log('Image Source', this.imgSrc)
       }, 500)
     },
+    returnHandler() {
+      this.imgSrc = ''
+      this.selfieCapture = false
+    },
+    nextHandler() {},
     getImage(data) {
       console.log(data, 'IMAGE DATA')
     },
@@ -162,5 +180,12 @@ select {
   width: 100%;
   height: auto;
   font-size: 10px;
+}
+#image {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scaleX(-1);
 }
 </style>
