@@ -87,7 +87,7 @@ function captureSingle() {
     document.querySelector('#image').src = URL.createObjectURL(blob)
   }).catch(error => {
     console.log(error);
-  })
+  }) // this is the catch we added
 }
 
 function findFace() {
