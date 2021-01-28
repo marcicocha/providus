@@ -1,5 +1,9 @@
 <template>
   <div>
+    <a class="back-button" @click="backButtonHandler"
+      ><img src="~assets/images/back-arrow.svg" alt="back-button" />
+      <span>Back</span></a
+    >
     <AppTitleComponent :heading="heading" />
 
     <AppKinForm
@@ -40,6 +44,15 @@ export default {
       this.heading = 'Next of Kin Contact information'
       this.isBasicDetails = false
     },
+    backButtonHandler() {
+      if (this.isBasicDetails) {
+        this.$router.replace('/user/individual/contact-information')
+        return
+      }
+      if (!this.isBasicDetails) {
+        this.isBasicDetails = true
+      }
+    },
     async kinsContactDetailsHandler() {
       try {
         const response = this.$cookies.get('requestId')
@@ -68,3 +81,12 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.back-button {
+  display: inline-flex;
+  align-content: center;
+  span {
+    margin-left: 5px;
+  }
+}
+</style>
