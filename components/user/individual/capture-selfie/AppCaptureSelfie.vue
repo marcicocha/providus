@@ -155,9 +155,11 @@ export default {
       //  this.$emit('submitCapturehandler')
       // document.querySelector('#start-capture-single').click()
       window.captureSingle()
-      const ref = this.$refs.imageRef
-      const imgHolder = ref.currentSrc
-      console.log(imgHolder, 'image holder')
+      setTimeout(() => {
+        const ref = this.$refs.imageRef
+        const imgHolder = ref.currentSrc
+        console.log(imgHolder, 'image holder')
+      }, 1000)
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
