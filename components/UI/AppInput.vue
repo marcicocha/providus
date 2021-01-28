@@ -112,4 +112,18 @@ input {
     font-size: 10px !important;
   }
 }
+@media only screen and (min-width: 1536px) {
+  @media only screen and (min-height: 730px) {
+    input {
+      font-size: 12px !important;
+      line-height: 195%;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    input {
+      font-size: 14px !important;
+      line-height: 195%;
+    }
+  }
+}
 </style>

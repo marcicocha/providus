@@ -94,4 +94,38 @@ p {
     top: 19%;
   }
 }
+@media only screen and (min-width: 1536px) {
+  @media only screen and (min-height: 730px) {
+    .parent_container {
+      width: 90%;
+      top: 14%;
+    }
+
+    .reference {
+      font-size: 14px;
+    }
+
+    .child-container {
+      width: 80%;
+    }
+    .homepage_button__padding {
+      padding-top: 30px;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .parent_container {
+      width: 85%;
+      top: 19%;
+    }
+    .child-container {
+      width: 75%;
+    }
+    .homepage_button__padding {
+      padding-top: 50px;
+    }
+    .reference {
+      font-size: 16px;
+    }
+  }
+}
 </style>

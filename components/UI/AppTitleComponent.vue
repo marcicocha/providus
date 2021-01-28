@@ -63,12 +63,28 @@ p {
     font-size: 16px;
   }
 }
-@media only screen and (min-width: 1600px) {
+@media only screen and (min-width: 1536px) {
   h1 {
     font-size: 25px;
   }
   p {
     font-size: 17px;
+  }
+  @media only screen and (min-height: 730px) {
+    h1 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 15px;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    h1 {
+      font-size: 25px;
+    }
+    p {
+      font-size: 17px;
+    }
   }
 }
 // Dika's Entries
