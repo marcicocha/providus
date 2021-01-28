@@ -425,6 +425,9 @@ hr {
       bottom: 0;
       font-size: 13px;
     }
+    h2 {
+      font-size: 16px;
+    }
   }
   @media only screen and (min-height: 900px) {
     hr {
@@ -441,6 +444,9 @@ hr {
       position: absolute;
       bottom: 5%;
       font-size: 15px;
+    }
+    h2 {
+      font-size: 18px;
     }
   }
 }
