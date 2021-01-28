@@ -4,45 +4,46 @@
       <video id="" autoplay playsinline style="width: 100%"></video>
       <canvas id="face-detected-cv" class="canvas"></canvas>
     </div>
+
+    <!-- Hidden UI Please dont touch-->
     <div id="controls">
       <p id="video-settings" style="width: 100%; overflow: hidden"></p>
       <p id="feedback" style="width: 100%; overflow: hidden"></p>
-
       <div class="btn-control">
         <button id="start-camera" class="mbtn startcam" onclick="startCamera()">
           Start Camera
         </button>
-        <!-- <button id="start-capture" class="mbtn" onclick="capture()">
+        <button id="start-capture" class="mbtn" onclick="capture()">
           Start Capture
-        </button> -->
-        <!-- <button id="find-face" class="mbtn" onclick="findFace()" disabled>
-          Find face
         </button>
+        <button
+          id="start-capture-single"
+          class="mbtn"
+          onclick="captureSingle()"
+        >
+          Capture
+        </button>
+        <button id="find-face" onclick="findFace()" disabled>Find face</button>
         <button id="stop-capture" class="mbtn" onclick="stopCapture()">
           STOP
-        </button> -->
+        </button>
       </div>
-
-      <!-- <div class="video-source select">
+      <div class="mbtn video-source select">
         <label class="sl" for="videoSource">Video source: </label
         ><select id="videoSource" onchange="restart()"></select>
-      </div> -->
+      </div>
     </div>
-    <!-- <div id="face-coord">
+    <div id="face-coord" class="mbtn">
       <span
         >Face coords:
         <pre id="face-coords"></pre>
       </span>
     </div>
-
+    <pre id="settings" class="mbtn"></pre>
     <img id="image" />
+    <!-- Hidden UI Please dont touch-->
 
-    <pre id="settings"></pre> -->
-    <AppButton
-      id="start-capture-single"
-      title="Capture Selfie"
-      @click="submitCaptureHandler"
-    />
+    <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
     <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
   </div>
 </template>
@@ -57,6 +58,7 @@ export default {
   data() {
     return {
       loading: true,
+      imgSrc: '',
     }
   },
   mounted() {
@@ -66,6 +68,7 @@ export default {
         this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
           this.$loadScript('/daon/face/auto.js').then(() => {
             document.querySelector('.startcam').click()
+            document.querySelector('#find-face').click()
           })
         })
       })
@@ -79,6 +82,10 @@ export default {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
+      setTimeout(() => {
+        this.imgSrc = document.querySelector('#image').src
+        console.log('Image Source', this.imgSrc)
+      }, 500)
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
