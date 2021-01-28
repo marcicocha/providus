@@ -100,4 +100,25 @@ button {
     font-size: 13px !important;
   }
 }
+@media only screen and (min-width: 1536px) {
+  .button {
+    padding-top: 1.7em !important;
+    padding-bottom: 1.7em !important;
+  }
+  @media only screen and (min-height: 730px) {
+    .button {
+      padding-top: 1.5em !important;
+      padding-bottom: 1.5em !important;
+    }
+    button {
+      font-size: 13px !important;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .button {
+      padding-top: 1.7em !important;
+      padding-bottom: 1.7em !important;
+    }
+  }
+}
 </style>
