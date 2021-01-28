@@ -1,16 +1,22 @@
 <template>
   <div>
+    <a class="back-button" @click="backButtonHandler"
+      ><img src="~assets/images/back-arrow.svg" alt="back-button" />
+      <span>Back</span></a
+    >
     <AppTitleComponent :heading="heading" />
 
     <AppKinForm
       v-if="isBasicDetails"
       :kin-info-object="kinInfoObject"
       @kinDetailsHandler="kinDetailsHandler"
+      @errorMessageHandler="errorMessageHandler"
     />
     <AppKinContactForm
       v-if="!isBasicDetails"
       :kin-info-object="kinInfoObject"
       @kinsContactDetailsHandler="kinsContactDetailsHandler"
+      @errorMessageHandler="errorMessageHandler"
     />
   </div>
 </template>
@@ -30,12 +36,22 @@ export default {
       kinInfoObject: {},
       isBasicDetails: true,
       heading: 'Next of Kin information',
+      message: '',
     }
   },
   methods: {
     kinDetailsHandler() {
       this.heading = 'Next of Kin Contact information'
       this.isBasicDetails = false
+    },
+    backButtonHandler() {
+      if (this.isBasicDetails) {
+        this.$router.replace('/user/individual/contact-information')
+        return
+      }
+      if (!this.isBasicDetails) {
+        this.isBasicDetails = true
+      }
     },
     async kinsContactDetailsHandler() {
       try {
@@ -48,9 +64,29 @@ export default {
         this.$router.replace('/user/individual/capture-selfie')
       } catch (err) {}
     },
+    errorMessageHandler(message) {
+      this.message =
+        message === 'Year' ? `Must be 18 and Above` : `${message} is compulsory`
+      this.$toast.open({
+        message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${this.message}</p>`,
+        type: 'error',
+        duration: 4000,
+        dismissible: true,
+      })
+    },
     ...mapActions({
       submitKinInfoHandler: 'individualModule/POST_KINS_INFORMATION',
     }),
   },
 }
 </script>
+<style lang="scss" scoped>
+.back-button {
+  display: inline-flex;
+  align-content: center;
+  span {
+    margin-left: 5px;
+  }
+}
+</style>

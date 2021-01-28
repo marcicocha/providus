@@ -1,5 +1,9 @@
 <template>
   <div>
+    <a v-if="!isBasicInformation" class="back-button" @click="backButtonHandler"
+      ><img src="~assets/images/back-arrow.svg" alt="back-button" />
+      <span>Back</span></a
+    >
     <AppTitleComponent heading="Personal Information" />
     <div>
       <AppBasicInformation
@@ -66,15 +70,27 @@ export default {
         altCitizenship: '',
       }
     },
+    backButtonHandler() {
+      if (this.isNationalityInfo) {
+        this.isNationalityInfo = false
+        this.isBasicInformation = true
+        return
+      }
+      if (this.isIdentificationInfo) {
+        this.isIdentificationInfo = false
+        this.isBasicInformation = true
+      }
+    },
     basicInfoHandler() {
       this.isBasicInformation = false
       this.isNationalityInfo = true
     },
     errorMessageHandler(message) {
-      this.message = `${message} field is compulsory`
+      this.message =
+        message === 'Year' ? `Must be 18 and Above` : `${message} is compulsory`
       this.$toast.open({
         message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${message} is Compulsory</p>`,
+                    <p class="toast-msg"> ${this.message} is Compulsory</p>`,
         type: 'error',
         duration: 4000,
         dismissible: true,
@@ -120,3 +136,12 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.back-button {
+  display: inline-flex;
+  align-content: center;
+  span {
+    margin-left: 5px;
+  }
+}
+</style>

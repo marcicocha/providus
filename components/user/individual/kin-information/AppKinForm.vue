@@ -26,14 +26,14 @@
           </div>
         </div>
         <div class="columns is-mobile">
-          <div class="column small-right-padding">
+          <div class="column is-6">
             <AppInput
               v-model="kinInfoObject.firstName"
               label="First Name"
               placeholder="First Name"
             />
           </div>
-          <div class="column small-left-padding">
+          <div class="column is-6">
             <AppInput
               v-model="kinInfoObject.middleName"
               label="Middle Name"
@@ -127,6 +127,78 @@ export default {
   },
   methods: {
     kinDetailsHandler() {
+      if (
+        this.kinInfoObject.title === undefined ||
+        this.kinInfoObject.title === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Title')
+        return
+      }
+      if (
+        this.kinInfoObject.surname === undefined ||
+        this.kinInfoObject.surname === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Surname')
+        return
+      }
+      if (
+        this.kinInfoObject.firstName === undefined ||
+        this.kinInfoObject.firstName === ''
+      ) {
+        this.$emit('errorMessageHandler', 'First Name')
+        return
+      }
+      if (
+        this.kinInfoObject.middleName === undefined ||
+        this.kinInfoObject.middleName === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Middle Name')
+        return
+      }
+      if (
+        this.kinInfoObject.relationship === undefined ||
+        this.kinInfoObject.relationship === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Relationship')
+        return
+      }
+      if (
+        this.kinInfoObject.maritalStatus === undefined ||
+        this.kinInfoObject.maritalStatus === ''
+      ) {
+        this.$emit('errorMessageHandler', 'MaritalStatus')
+        return
+      }
+      if (
+        this.kinInfoObject.gender === undefined ||
+        this.kinInfoObject.gender === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Gender')
+        return
+      }
+      if (
+        this.kinInfoObject.dateOfBirth === undefined ||
+        this.kinInfoObject.dateOfBirth === ''
+      ) {
+        this.$emit('errorMessageHandler', 'Date of Birth')
+        return
+      }
+      if (
+        this.kinInfoObject.bvn === undefined ||
+        this.kinInfoObject.bvn === ''
+      ) {
+        this.$emit('errorMessageHandler', 'BVN')
+        return
+      }
+      const year = this.kinInfoObject.dateOfBirth.substring(0, 4)
+      const newDate = new Date()
+      const currentYear = newDate.getFullYear()
+      if (currentYear - year < 18) {
+        this.$emit('errorMessageHandler', 'Year')
+        return
+      }
+      // const year = this.kinInfoObject.dateOfBirth.getYear()
+      // console.log(year)
       this.$emit('kinDetailsHandler')
     },
   },

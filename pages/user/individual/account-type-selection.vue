@@ -1,5 +1,9 @@
 <template>
   <div class="parent-container">
+    <a v-if="!isAccountCategory" class="back-button" @click="backButtonHandler"
+      ><img src="~assets/images/back-arrow.svg" alt="back-button" />
+      <span>Back</span></a
+    >
     <AppTitleComponent
       heading="Open an Account"
       description="Welcome to Future Forward Banking. We believe that the New World of fast, smart, personal and borderless banking relationship is here."
@@ -151,6 +155,22 @@ export default {
   methods: {
     getImgUrl(pic) {
       return `data:image/png;base64,${pic}`
+    },
+    backButtonHandler() {
+      if (this.isAccountType) {
+        this.isAccountType = false
+        this.isAccountCategory = true
+        return
+      }
+      if (this.isBvn) {
+        this.isBvn = false
+        this.isAccountType = true
+        return
+      }
+      if (this.isBvnDetails) {
+        this.isBvnDetails = false
+        this.isBvn = true
+      }
     },
     onClickHandler(value) {
       if (value === 'Individual') {
@@ -315,6 +335,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.back-button {
+  display: inline-flex;
+  align-content: center;
+  span {
+    margin-left: 5px;
+  }
+}
 h2 {
   font-family: 'GothamMedium', sans-serif;
   color: #fdb813;
@@ -374,7 +401,7 @@ hr {
   .account-info__block {
     width: 80%;
     //padding-top: 30px;
-    padding-top: 20px;
+    padding-top: 10px;
   }
   .parent-container {
     width: 90%;
@@ -414,7 +441,12 @@ hr {
   .notification {
     position: absolute;
     bottom: 0;
-    font-size: 13px;
+    font-size: 12px;
+  }
+  .back-button {
+    span {
+      font-size: 13px;
+    }
   }
 }
 </style>
