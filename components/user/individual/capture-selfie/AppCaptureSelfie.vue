@@ -137,8 +137,12 @@ select {
 .mbtn {
   width: auto !important;
   display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
   float: left;
   font-size: 9px;
+  visibility: hidden;
 }
 .sl,
 #face-coord {
