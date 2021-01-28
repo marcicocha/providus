@@ -119,13 +119,27 @@ export default {
         if (err.hasOwnProperty('response')) {
           const res = err.response
           errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === []) {
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
           })
         }
       }
