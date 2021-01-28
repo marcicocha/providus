@@ -84,7 +84,7 @@
       </span>
     </div>
 
-    <img id="image" />
+    <img id="image" ref="imageRef" />
 
     <pre id="settings"></pre>
     <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
@@ -102,7 +102,27 @@ export default {
     return {
       loading: true,
       cus_btn: false,
+      imgHolder: '',
+      source: '',
     }
+  },
+  computed: {
+    imageWatch() {
+      return this.$refs.data
+    },
+  },
+  watch: {
+    imgHolder: {
+      handler(newVal, oldVal) {
+        if (newVal !== '') {
+          console.log(newVal, '::newVal:newVal:newVal', this.source)
+          console.log(newVal, 'before string')
+          console.log(newVal.src, 'to string')
+          // this.getBaseImage(newVal.src)
+        }
+      },
+      immediate: true,
+    },
   },
   mounted() {
     this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
@@ -123,9 +143,23 @@ export default {
       })
   },
   methods: {
+    getBaseImage(img) {
+      const reader = new FileReader()
+      reader.readAsDataURL(img)
+      reader.onloadend = () => {
+        const base64data = reader.result
+        console.log(base64data, '::: hi ::::')
+        return base64data
+      }
+      // return dataURL.replace(/^data:image\/(png|jpg);base64,/, '')
+    },
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
-      document.querySelector('#start-capture-single').click()
+      // document.querySelector('#start-capture-single').click()
+      window.captureSingle()
+      const ref = this.$refs.imageRef
+      const imgHolder = ref.currentSrc
+      console.log(imgHolder, 'image holder')
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
