@@ -1,49 +1,93 @@
 <template>
   <div v-if="!loading">
+    <div>
+      <!--      <canvas id="capture" width="320" height="240"></canvas>-->
+
+      <!--      <canvas id="face-detected-cv" width="320"></canvas>-->
+      <!--      <video-->
+      <!--        id="videoElement"-->
+      <!--        video-->
+      <!--        autoplay="true"-->
+      <!--        style="width: 100%; height: 240px"-->
+      <!--      ></video>-->
+      <!--      <img id="image" />-->
+      <!--      <div class="controls">-->
+      <!--        <button id="start-cam" class="start-cam" onclick="startCamera()">-->
+      <!--          Start Camera-->
+      <!--        </button>-->
+      <!--        <button id="start-capture" onclick="capture()" disabled>-->
+      <!--          Start Capture-->
+      <!--        </button>-->
+      <!--        <button id="stop-capture" class="stopcam" onclick="stopCapture()">-->
+      <!--          STOP-->
+      <!--        </button>-->
+      <!--        <button id="capture-single" class="selfie" onclick="captureSingle()">-->
+      <!--          Capture-->
+      <!--        </button>-->
+      <!--        <button id="find-face" onclick="findFace()" disabled>Find face</button>-->
+      <!--      </div>-->
+    </div>
+
     <div class="container">
       <video id="" autoplay playsinline style="width: 100%"></video>
       <canvas id="face-detected-cv" class="canvas"></canvas>
     </div>
     <div id="controls">
-      <p id="video-settings" style="width: 100%; overflow: hidden"></p>
-      <p id="feedback" style="width: 100%; overflow: hidden"></p>
+      <!--      <p id="video-settings" style="width: 100%; overflow: hidden"></p>-->
+      <!--      <p id="feedback" style="width: 100%; overflow: hidden"></p>-->
 
-      <div class="btn-control">
-        <button id="start-camera" class="mbtn startcam" onclick="startCamera()">
-          Start Camera
-        </button>
-        <!-- <button id="start-capture" class="mbtn" onclick="capture()">
-          Start Capture
-        </button> -->
-        <!-- <button id="find-face" class="mbtn" onclick="findFace()" disabled>
-          Find face
-        </button>
-        <button id="stop-capture" class="mbtn" onclick="stopCapture()">
-          STOP
-        </button> -->
-      </div>
-
-      <!-- <div class="video-source select">
-        <label class="sl" for="videoSource">Video source: </label
+      <!--      <div class="btn-control">-->
+      <!--        <button id="start-camera" class="mbtn startcam" onclick="startCamera()">-->
+      <!--          Start Camera-->
+      <!--        </button>-->
+      <!--        <button id="start-capture" class="mbtn" onclick="capture()">-->
+      <!--          Start Capture-->
+      <!--        </button>-->
+      <!--        <button-->
+      <!--          id="start-capture-single"-->
+      <!--          class="mbtn"-->
+      <!--          onclick="captureSingle()"-->
+      <!--        >-->
+      <!--          Capture-->
+      <!--        </button>-->
+      <!--        <button id="find-face" class="mbtn" onclick="findFace()" disabled>-->
+      <!--          Find face-->
+      <!--        </button>-->
+      <!--        <button id="stop-capture" class="mbtn" onclick="stopCapture()">-->
+      <!--          STOP-->
+      <!--        </button>-->
+      <!--      </div>-->
+      <button
+        v-show="cus_btn"
+        id="start-capture-single"
+        class="mbtn"
+        onclick="captureSingle()"
+      >
+        Capture
+      </button>
+      <button
+        v-show="cus_btn"
+        id="start-camera"
+        class="mbtn startcam"
+        onclick="startCamera()"
+      >
+        Start Camera
+      </button>
+      <div class="video-source select">
+        <label class="sl" for="videoSource">Camera source: </label
         ><select id="videoSource" onchange="restart()"></select>
-      </div> -->
+      </div>
     </div>
-    <!-- <div id="face-coord">
-      <span
-        >Face coords:
-        <pre id="face-coords"></pre>
+    <div id="face-coord">
+      <span>
+        <div id="face-coords"></div>
       </span>
     </div>
 
     <img id="image" />
 
-    <pre id="settings"></pre> -->
-    <AppButton
-      id="start-capture-single"
-      title="Capture Selfie"
-      @click="submitCaptureHandler"
-    />
-    <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
+    <pre id="settings"></pre>
+    <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
   </div>
 </template>
 <script>
@@ -57,6 +101,7 @@ export default {
   data() {
     return {
       loading: true,
+      cus_btn: false,
     }
   },
   mounted() {
@@ -67,7 +112,7 @@ export default {
           this.$loadScript('/daon/face/auto.js').then(() => {
             setTimeout(() => {
               document.querySelector('.startcam').click()
-            }, 1000)
+            }, 500)
           })
         })
       })
