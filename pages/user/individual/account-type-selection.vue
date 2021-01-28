@@ -247,6 +247,20 @@ export default {
         this.fetching = false
 
         let errorMessage = ''
+
+        // Network Error
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
         const error = err.response.data.errorMessage
         // BVN Already Exists
         if (error.includes('already exist')) {
@@ -280,19 +294,6 @@ export default {
           if (nextWorkFlow === 'LIVE_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
-          return
-        }
-
-        // Network Error
-        if (String(err).includes('Network')) {
-          errorMessage = err
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
           return
         }
 

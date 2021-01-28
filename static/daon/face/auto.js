@@ -85,9 +85,7 @@ function stopCapture() {
 function captureSingle() {
   fc.captureFrame().then((blob) => {
     document.querySelector('#image').src = URL.createObjectURL(blob)
-  }).catch(error => {
-    console.log(error);
-  }) // this is the catch we added
+  })
 }
 
 function findFace() {
@@ -115,7 +113,6 @@ const videoSelect = document.querySelector('select#videoSource')
 const selectors = [videoSelect]
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
-
 video.onloadedmetadata = function () {
   document.querySelector('#start-capture').disabled = false
   document.querySelector('#find-face').disabled = false
