@@ -9,7 +9,7 @@
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppCaptureUtility from '@/components/user/individual/capture-utility/AppCaptureUtility.vue'
+import AppCaptureUtility from '@/components/user/individual/capture/AppCaptureUtility'
 
 export default {
   components: {
