@@ -6,6 +6,7 @@
       <div>
         <AppUpload
           label="Reference Form"
+          extension="pdf"
           @fileUploadHandler="fileUploadReferenceHandler"
           @errorMessagehandler="errorMessagehandler"
         />

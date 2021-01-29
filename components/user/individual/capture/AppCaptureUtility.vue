@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading">
     <div>
-      <div>
+      <div class="form_field">
         <label
           >Doc type:
           <select id="doc-type" onchange="onSelectChange(this.value)">
@@ -24,7 +24,7 @@
           />
         </label>
       </div>
-      <div class="container">
+      <div v-if="!isCaptured" class="container">
         <canvas></canvas>
       </div>
       <div class="select">
@@ -32,16 +32,29 @@
         ><select id="videoSource" onchange="restart()"></select>
       </div>
 
-      <p>Response:</p>
+      <!-- <p>Response:</p>
       <pre></pre>
-      <p>Sent image:</p>
-      <img id="img-sent" />
-      <p>Processed image from server:</p>
-      <img id="img-processed" />
+      <p>Sent image:</p> -->
+      <img v-if="isCaptured" id="img-sent" />
+      <!-- <p>Processed image from server:</p>
+      <img id="img-processed" /> -->
     </div>
 
     <button id="buttonscontainer" onclick="capture()">Capture</button>
-    <AppButton title="Capture" @click="submitCaptureHandler" />
+    <AppButton
+      v-if="!isCaptured"
+      title="Capture"
+      @click="submitCaptureHandler"
+    />
+
+    <div v-if="isCaptured" class="columns is-mobile">
+      <div class="column">
+        <AppButton title="Recapture" color="secondary" @click="returnHandler" />
+      </div>
+      <div class="column">
+        <AppButton title="Continue" @click="nextHandler" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -55,6 +68,8 @@ export default {
   data() {
     return {
       loading: true,
+      isCaptured: false,
+      imgSrc: '',
     }
   },
   mounted() {
@@ -73,13 +88,53 @@ export default {
         console.log(error)
       })
   },
+  destroyed() {
+    clearTimeout()
+  },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#buttonscontainer').click()
+      this.isCaptured = true
+      setTimeout(() => {
+        this.imgSrc = document.querySelector('#img-sent').src
+        console.log('Image Source', this.imgSrc)
+      }, 500)
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
+    },
+    returnHandler() {
+      this.imgSrc = ''
+      this.isCaptured = false
+    },
+    async nextHandler() {
+      try {
+        const file = new File([this.imgSrc], 'selfie.jpg', {
+          lastModified: new Date().getTime(),
+          type: 'image/jpeg',
+        })
+        const requestId = this.$cookies.get('requestId')
+        console.log(file, 'FILE')
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('requestId', requestId)
+        await this.$axios.$post('/individual/utilityBillUpload', formData)
+        this.$router.replace('/user/individual/upload-document')
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
     },
   },
 }
@@ -101,6 +156,11 @@ label {
 .container {
   position: relative;
   width: 100%;
+}
+.form_field {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
 }
 img {
   width: 100%;
@@ -155,6 +215,9 @@ pre {
   z-index: 4;
   margin-top: 6px;
 }
+.select {
+  visibility: hidden;
+}
 #buttonscontainer {
   text-align: left;
   visibility: hidden;
@@ -163,5 +226,15 @@ pre {
   top: 0;
   height: 0;
   z-index: -1;
+}
+#img-sent {
+  display: inline-block;
+  width: 100%;
+
+  /* position: absolute;
+  left: 0;
+  top: 0; */
+
+  transform: scaleX(-1);
 }
 </style>

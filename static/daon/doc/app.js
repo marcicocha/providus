@@ -135,15 +135,23 @@ imgSent.onload = function () {
 }
 
 function capture() {
-  document.querySelector('pre').innerText = ''
+  // document.querySelector('pre').innerText = ''
+  // dc.captureFrame()
+  //   .then((blob) => {
+  //     const src = URL.createObjectURL(blob)
+  //     document.querySelector('#img-sent').src = src
+  //     return dc.assessQuality(blob, queryParams)
+  //   })
+  //   .then(onServerFeedback)
+  //   .catch(onServerError)
+
+  // Marcia edit
   dc.captureFrame()
     .then((blob) => {
       const src = URL.createObjectURL(blob)
       document.querySelector('#img-sent').src = src
       return dc.assessQuality(blob, queryParams)
     })
-    .then(onServerFeedback)
-    .catch(onServerError)
 }
 
 function onServerFeedback(response) {
