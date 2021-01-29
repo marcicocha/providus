@@ -50,8 +50,8 @@ export default {
       default: '',
     },
     extension: {
-      type: String,
-      default: 'jpg',
+      type: Array,
+      default: () => ['.jpeg', '.jpg', '.png'],
     },
   },
   data() {
@@ -60,27 +60,39 @@ export default {
     }
   },
   methods: {
+    extensionHandler(fileName) {
+      const extensionStatus = this.extension.find((ext) =>
+        fileName.includes(ext)
+      )
+      return extensionStatus
+    },
     newHandleChange() {
       const file = this.$refs.file.files[0]
       if (file === undefined) {
         return
       }
-      if (file.name.includes(this.extension) && file.size < 634593) {
+      const extensionStatus = this.extensionHandler(file.name)
+      console.log(extensionStatus, 'EXTENSION STATUS')
+      if (extensionStatus && file.size < 634593) {
         this.file = file
         console.log(this.file)
         this.$emit('fileUploadHandler', this.file)
       } else if (file.size > 634593) {
         this.file = null
-        this.$emit(
-          'errorMessagehandler',
-          'Input File must not be Larger than 635KB'
-        )
-      } else if (!file.name.includes(this.extension)) {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Input File must not be Larger than 635KB' </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+      } else if (!extensionStatus) {
         this.file = null
-        this.$emit(
-          'errorMessagehandler',
-          `You can only upload ${this.extension} file`
-        )
+        this.$toast.open({
+          message: `<p class="toast-msg"> You can only upload ${this.extension.toString()} file </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
       }
     },
   },

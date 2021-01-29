@@ -183,20 +183,6 @@ export default {
         this.$emit('errorMessageHandler', 'Date of Birth')
         return
       }
-      if (
-        this.kinInfoObject.bvn === undefined ||
-        this.kinInfoObject.bvn === ''
-      ) {
-        this.$emit('errorMessageHandler', 'BVN')
-        return
-      }
-      const year = this.kinInfoObject.dateOfBirth.substring(0, 4)
-      const newDate = new Date()
-      const currentYear = newDate.getFullYear()
-      if (currentYear - year < 18) {
-        this.$emit('errorMessageHandler', 'Year')
-        return
-      }
       // const year = this.kinInfoObject.dateOfBirth.getYear()
       // console.log(year)
       this.$emit('kinDetailsHandler')
