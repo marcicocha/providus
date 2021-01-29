@@ -106,7 +106,7 @@ export default {
           } else if (!this.isNumber && !this.isText && this.isPhone) {
             this.innerValue = String(newVal)
               .toUpperCase()
-              .slice(0, this.maxLength)
+              .slice(0, 11)
               .replace(this.numberOnlyRegex, '')
           } else {
             this.innerValue = String(newVal)
