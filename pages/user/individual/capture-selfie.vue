@@ -11,8 +11,8 @@
 </template>
 <script>
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
-import AppCaptureInstruction from '@/components/user/individual/capture-selfie/AppCaptureInstruction'
-import AppCaptureSelfie from '@/components/user/individual/capture-selfie/AppCaptureSelfie.vue'
+import AppCaptureInstruction from '@/components/user/individual/capture/AppCaptureInstruction'
+import AppCaptureSelfie from '@/components/user/individual/capture/AppCaptureSelfie.vue'
 export default {
   components: {
     AppTitleComponent,
