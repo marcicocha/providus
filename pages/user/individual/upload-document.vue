@@ -5,15 +5,18 @@
       <hr />
       <div>
         <AppUpload
-          label="Reference Form"
-          extension="pdf"
-          @fileUploadHandler="fileUploadReferenceHandler"
-          @errorMessagehandler="errorMessagehandler"
+          label="Reference Form 1 (optional)"
+          :extension="['.docx', '.pdf']"
+          @fileUploadHandler="fileUploadReference1Handler"
+        />
+        <AppUpload
+          label="Reference Form 2 (optional)"
+          :extension="['.docx', '.pdf']"
+          @fileUploadHandler="fileUploadReference2Handler"
         />
         <AppUpload
           label="Signature"
           @fileUploadHandler="fileUploadSignatureHandler"
-          @errorMessagehandler="errorMessagehandler"
         />
         <AppButton
           title="Continue"
@@ -37,31 +40,37 @@ export default {
   },
   data() {
     return {
-      referenceFile: null,
+      referenceFile1: null,
+      referenceFile2: null,
       signatureFile: null,
-      message: '',
     }
   },
   methods: {
-    fileUploadReferenceHandler(file) {
-      this.referenceFile = file
-      this.message = ''
+    fileUploadReference1Handler(file) {
+      this.referenceFile1 = file
+    },
+    fileUploadReference2Handler(file) {
+      this.referenceFile2 = file
     },
     fileUploadSignatureHandler(file) {
       this.signatureFile = file
-      this.message = ''
-    },
-    errorMessagehandler(message) {
-      this.message = message
     },
     async submitDocumentHandler() {
+      if (!this.signatureFile) {
+        return
+      }
       try {
         this.message = ''
         const response = this.$cookies.get('requestId')
         console.log(response, 'COOKIE response')
         console.log('clicked')
         const formData = new FormData()
-        formData.append('referenceForm1', this.referenceFile)
+        if (this.referenceFile1) {
+          formData.append('referenceForm1', this.referenceFile1)
+        }
+        if (this.referenceFile2) {
+          formData.append('referenceForm2', this.referenceFile2)
+        }
         formData.append('signature', this.signatureFile)
         formData.append('requestId', response)
         await this.$axios.$post(
@@ -70,7 +79,18 @@ export default {
         )
         this.$router.replace('/user/individual/liveness-check')
       } catch (err) {
-        this.message = err.response.data.errorMessage
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       }
     },
   },
