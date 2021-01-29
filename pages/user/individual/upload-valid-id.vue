@@ -100,18 +100,8 @@ export default {
   },
   methods: {
     async submitUploadHandler() {
-      if (
-        this.idObject.expiryDate === undefined ||
-        this.idObject.expiryDate === ''
-      ) {
-        this.message = 'Expiry date is Compulsory'
-        return
-      }
-      if (
-        this.idObject.issuedDate === '' ||
-        this.idObject.issuedDate === undefined
-      ) {
-        this.message = 'Issued Date is Compulsory'
+      const validationResponse = this.validationHandler()
+      if (validationResponse) {
         return
       }
       try {
@@ -130,7 +120,39 @@ export default {
         // this.message = err.response.data.errorMessage
       }
     },
+    validationHandler() {
+      if (
+        this.idObject.expiryDate === undefined ||
+        this.idObject.expiryDate === ''
+      ) {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Expiry date is Compulsory </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
+      if (
+        this.idObject.issuedDate === '' ||
+        this.idObject.issuedDate === undefined
+      ) {
+        this.$toast.open({
+          message: `<p class="toast-msg">Issue Date is Compulsory</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
+      return false
+    },
     capturePageHandler() {
+      const validationResponse = this.validationHandler()
+      if (validationResponse) {
+        return
+      }
+      this.$cookies.set('idObject', this.idObject)
       this.$router.replace('/user/individual/capture-id')
     },
     fileUploadHandler(file) {
