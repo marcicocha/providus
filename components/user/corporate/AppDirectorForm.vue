@@ -6,6 +6,7 @@
           v-model="directorDetailsObject.firstName"
           label="First Name"
           placeholder="Type First Name"
+          isText
         />
       </div>
       <div class="column">
@@ -13,6 +14,7 @@
           v-model="directorDetailsObject.surname"
           label="Surname"
           placeholder="Type Surname"
+          isText
         />
       </div>
     </div>
@@ -25,6 +27,7 @@
       v-model="directorDetailsObject.bvn"
       label="BVN"
       placeholder="Enter Director's Bank Verification Number"
+      isNumber
     />
   </div>
 </template>

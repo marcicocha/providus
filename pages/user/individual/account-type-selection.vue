@@ -45,6 +45,7 @@
             label="BVN"
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
+            isNumber
           />
           <div style="height: 20px"></div>
           <AppButton

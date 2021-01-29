@@ -15,6 +15,7 @@
             v-model="contactDetails.phoneNumber"
             label="Phone Number"
             placeholder="Enter Number"
+            isPhone
           />
         </div>
         <div class="column small-left-padding">
@@ -22,6 +23,7 @@
             v-model="contactDetails.altPhoneNumber"
             label="Alt. Phone Number"
             placeholder="Enter Number"
+            isPhone
           />
         </div>
       </div>
@@ -31,6 +33,7 @@
             v-model="contactDetails.houseNo"
             label="House No."
             placeholder="Enter No."
+            isNumber
           />
         </div>
         <div class="column is-8 small-left-padding">
@@ -38,6 +41,7 @@
             v-model="contactDetails.landmark"
             label="Closest Landmark"
             placeholder="Enter Closest Landmark"
+            isText
           />
         </div>
       </div>
@@ -47,6 +51,7 @@
             v-model="contactDetails.streetName"
             label="Street Name"
             placeholder="Enter Street Name"
+            isText
           />
         </div>
         <div class="column small-left-padding">
@@ -54,6 +59,7 @@
             v-model="contactDetails.residentCity"
             label="City/Town"
             placeholder="Enter City or Town"
+            isText
           />
         </div>
       </div>
