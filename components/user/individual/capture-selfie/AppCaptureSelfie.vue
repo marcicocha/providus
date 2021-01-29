@@ -1,98 +1,66 @@
 <template>
   <div v-if="!loading">
-    <div>
-      <!--      <canvas id="capture" width="320" height="240"></canvas>-->
-
-      <!--      <canvas id="face-detected-cv" width="320"></canvas>-->
-      <!--      <video-->
-      <!--        id="videoElement"-->
-      <!--        video-->
-      <!--        autoplay="true"-->
-      <!--        style="width: 100%; height: 240px"-->
-      <!--      ></video>-->
-      <!--      <img id="image" />-->
-      <!--      <div class="controls">-->
-      <!--        <button id="start-cam" class="start-cam" onclick="startCamera()">-->
-      <!--          Start Camera-->
-      <!--        </button>-->
-      <!--        <button id="start-capture" onclick="capture()" disabled>-->
-      <!--          Start Capture-->
-      <!--        </button>-->
-      <!--        <button id="stop-capture" class="stopcam" onclick="stopCapture()">-->
-      <!--          STOP-->
-      <!--        </button>-->
-      <!--        <button id="capture-single" class="selfie" onclick="captureSingle()">-->
-      <!--          Capture-->
-      <!--        </button>-->
-      <!--        <button id="find-face" onclick="findFace()" disabled>Find face</button>-->
-      <!--      </div>-->
-    </div>
-
     <div class="container">
       <video id="" autoplay playsinline style="width: 100%"></video>
+      <img v-show="selfieCapture" class="animated fadeIn" id="image" />
       <canvas id="face-detected-cv" class="canvas"></canvas>
     </div>
-    <div id="controls">
-      <!--      <p id="video-settings" style="width: 100%; overflow: hidden"></p>-->
-      <!--      <p id="feedback" style="width: 100%; overflow: hidden"></p>-->
 
-      <!--      <div class="btn-control">-->
-      <!--        <button id="start-camera" class="mbtn startcam" onclick="startCamera()">-->
-      <!--          Start Camera-->
-      <!--        </button>-->
-      <!--        <button id="start-capture" class="mbtn" onclick="capture()">-->
-      <!--          Start Capture-->
-      <!--        </button>-->
-      <!--        <button-->
-      <!--          id="start-capture-single"-->
-      <!--          class="mbtn"-->
-      <!--          onclick="captureSingle()"-->
-      <!--        >-->
-      <!--          Capture-->
-      <!--        </button>-->
-      <!--        <button id="find-face" class="mbtn" onclick="findFace()" disabled>-->
-      <!--          Find face-->
-      <!--        </button>-->
-      <!--        <button id="stop-capture" class="mbtn" onclick="stopCapture()">-->
-      <!--          STOP-->
-      <!--        </button>-->
-      <!--      </div>-->
-      <button
-        v-show="cus_btn"
-        id="start-capture-single"
-        class="mbtn"
-        onclick="captureSingle()"
-      >
-        Capture
-      </button>
-      <button
-        v-show="cus_btn"
-        id="start-camera"
-        class="mbtn startcam"
-        onclick="startCamera()"
-      >
-        Start Camera
-      </button>
-      <div class="video-source select">
-        <label class="sl" for="videoSource">Camera source: </label
+    <!-- Hidden UI Please dont touch-->
+    <div id="controls">
+      <p id="video-settings" style="width: 100%; overflow: hidden"></p>
+      <p id="feedback" style="width: 100%; overflow: hidden"></p>
+      <div class="btn-control">
+        <button id="start-camera" class="mbtn startcam" onclick="startCamera()">
+          Start Camera
+        </button>
+        <button id="start-capture" class="mbtn" onclick="capture()">
+          Start Capture
+        </button>
+        <button
+          id="start-capture-single"
+          class="mbtn"
+          onclick="captureSingle()"
+        >
+          Capture
+        </button>
+        <button id="find-face" onclick="findFace()" disabled>Find face</button>
+        <button id="stop-capture" class="mbtn" onclick="stopCapture()">
+          STOP
+        </button>
+      </div>
+      <div class="mbtn video-source select">
+        <label class="sl" for="videoSource">Video source: </label
         ><select id="videoSource" onchange="restart()"></select>
       </div>
     </div>
-    <div id="face-coord">
-      <span>
-        <div id="face-coords"></div>
+    <div id="face-coord" class="mbtn">
+      <span
+        >Face coords:
+        <pre id="face-coords"></pre>
       </span>
     </div>
+    <pre id="settings" class="mbtn"></pre>
+    <!-- Hidden UI Please dont touch-->
 
-    <img id="image" ref="imageRef" />
-
-    <pre id="settings"></pre>
-    <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
+    <AppButton
+      v-if="!selfieCapture"
+      title="Capture Selfie"
+      @click="submitCaptureHandler"
+    />
+    <div v-if="selfieCapture" class="columns is-mobile">
+      <div class="column">
+        <AppButton title="Recapture" color="secondary" @click="returnHandler" />
+      </div>
+      <div class="column">
+        <AppButton title="Continue" @click="nextHandler" />
+      </div>
+    </div>
+    <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
   </div>
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
-
 export default {
   name: 'AppCaptureSelfie',
   components: {
@@ -101,28 +69,9 @@ export default {
   data() {
     return {
       loading: true,
-      cus_btn: false,
-      imgHolder: '',
-      source: '',
+      selfieCapture: false,
+      imgSrc: '',
     }
-  },
-  computed: {
-    imageWatch() {
-      return this.$refs.data
-    },
-  },
-  watch: {
-    imgHolder: {
-      handler(newVal, oldVal) {
-        if (newVal !== '') {
-          console.log(newVal, '::newVal:newVal:newVal', this.source)
-          console.log(newVal, 'before string')
-          console.log(newVal.src, 'to string')
-          // this.getBaseImage(newVal.src)
-        }
-      },
-      immediate: true,
-    },
   },
   mounted() {
     this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
@@ -131,6 +80,7 @@ export default {
         this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
           this.$loadScript('/daon/face/auto.js').then(() => {
             document.querySelector('.startcam').click()
+            document.querySelector('#find-face').click()
           })
         })
       })
@@ -140,27 +90,24 @@ export default {
         console.log(error)
       })
   },
+  destroyed() {
+    clearTimeout()
+  },
   methods: {
-    getBaseImage(img) {
-      const reader = new FileReader()
-      reader.readAsDataURL(img)
-      reader.onloadend = () => {
-        const base64data = reader.result
-        console.log(base64data, '::: hi ::::')
-        return base64data
-      }
-      // return dataURL.replace(/^data:image\/(png|jpg);base64,/, '')
-    },
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
-      // document.querySelector('#start-capture-single').click()
-      window.captureSingle()
+      document.querySelector('#start-capture-single').click()
+      this.selfieCapture = true
       setTimeout(() => {
-        const ref = this.$refs.imageRef
-        const imgHolder = ref.currentSrc
-        console.log(imgHolder, 'image holder')
-      }, 1000)
+        this.imgSrc = document.querySelector('#image').src
+        console.log('Image Source', this.imgSrc)
+      }, 500)
     },
+    returnHandler() {
+      this.imgSrc = ''
+      this.selfieCapture = false
+    },
+    nextHandler() {},
     getImage(data) {
       console.log(data, 'IMAGE DATA')
     },
@@ -236,5 +183,12 @@ select {
   width: 100%;
   height: auto;
   font-size: 10px;
+}
+#image {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scaleX(-1);
 }
 </style>
