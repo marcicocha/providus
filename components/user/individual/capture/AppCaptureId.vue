@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading">
     <div>
-      <div>
+      <!-- <div>
         <label
           >Doc type:
           <select id="doc-type" onchange="onSelectChange(this.value)">
@@ -23,10 +23,12 @@
             onchange="onWidthChange(this.value)"
           />
         </label>
-      </div>
+      </div> -->
       <div class="container">
         <canvas></canvas>
       </div>
+      <img id="img-processed" />
+
       <div class="select">
         <label for="videoSource">Video source: </label
         ><select id="videoSource" onchange="restart()"></select>
@@ -154,6 +156,9 @@ pre {
   right: 1.125em;
   z-index: 4;
   margin-top: 6px;
+}
+.select {
+  visibility: hidden;
 }
 #buttonscontainer {
   text-align: left;
