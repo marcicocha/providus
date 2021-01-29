@@ -9,6 +9,8 @@
       name="name"
       :placeholder="placeholder"
       :disabled="disabled"
+      :min="inputType === 'date' ? minDate : ''"
+      :max="inputType === 'date' ? maxDate : ''"
       @blur="blurHandler"
     />
   </div>
@@ -72,6 +74,14 @@ export default {
     maxLength: {
       type: Number,
       default: 20,
+    },
+    minDate: {
+      type: String,
+      default: '',
+    },
+    maxDate: {
+      type: String,
+      default: '',
     },
   },
   data() {
