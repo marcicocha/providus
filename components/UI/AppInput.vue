@@ -98,25 +98,23 @@ export default {
               .toUpperCase()
               .slice(0, this.maxLength)
               .replace(this.numberOnlyRegex, '')
-            this.$emit('input', this.innerValue)
           } else if (!this.isNumber && this.isText && !this.isPhone) {
             this.innerValue = String(newVal)
               .toUpperCase()
               .slice(0, this.maxLength)
               .replace(this.textOnlyRegex, '')
-            this.$emit('input', this.innerValue)
           } else if (!this.isNumber && !this.isText && this.isPhone) {
             this.innerValue = String(newVal)
               .toUpperCase()
               .slice(0, this.maxLength)
               .replace(this.numberOnlyRegex, '')
-            this.$emit('input', this.innerValue)
           } else {
             this.innerValue = String(newVal)
               .toUpperCase()
               .slice(0, this.maxLength)
           }
         }
+        this.$emit('input', this.innerValue)
       },
       immediate: true,
     },
