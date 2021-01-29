@@ -1,9 +1,19 @@
 <template>
   <div v-if="!loading">
     <div class="container">
-      <video id="" autoplay playsinline style="width: 100%"></video>
-      <img v-show="selfieCapture" class="animated fadeIn" id="image" />
-      <canvas id="face-detected-cv" class="canvas"></canvas>
+      <video
+        v-show="!selfieCapture"
+        id=""
+        autoplay
+        playsinline
+        style="width: 100%"
+      ></video>
+      <img v-show="selfieCapture" id="image" class="animated fadeIn" />
+      <canvas
+        v-show="!selfieCapture"
+        id="face-detected-cv"
+        class="canvas"
+      ></canvas>
     </div>
 
     <!-- Hidden UI Please dont touch-->
@@ -107,7 +117,34 @@ export default {
       this.imgSrc = ''
       this.selfieCapture = false
     },
-    nextHandler() {},
+    async nextHandler() {
+      try {
+        const file = new File([this.imgSrc], 'selfie.jpg', {
+          lastModified: new Date().getTime(),
+          type: 'image/jpeg',
+        })
+        const requestId = this.$cookies.get('requestId')
+        console.log(file, 'FILE')
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('requestId', requestId)
+        await this.$axios.$post('/individual/selfieUpload', formData)
+        this.$router.replace('/user/individual/upload-valid-id')
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
     },
@@ -186,9 +223,12 @@ select {
 }
 #image {
   display: inline-block;
-  position: absolute;
+  width: 100%;
+
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
+
   transform: scaleX(-1);
 }
 </style>
