@@ -16,7 +16,7 @@
           <div class="column">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column">
+          <div class="column opaque">
             <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
           </div>
         </div>
@@ -182,8 +182,9 @@ export default {
         }
       }
       if (value === 'Corporate') {
-        this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
-        this.$router.replace('/user/corporate/representative-details')
+        // Disable Coperate until we're ready
+        // this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
+        // this.$router.replace('/user/corporate/representative-details')
       }
       if (value === 'Savings') {
         this.accountInformation = {
@@ -336,6 +337,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.opaque *,
+.opaque *:hover {
+  opacity: 0.2 !important;
+  border: none !important;
+}
 .back-button {
   display: inline-flex;
   align-content: center;
