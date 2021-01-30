@@ -3,11 +3,11 @@ const elWidth = document.querySelector('#width')
 const elUrl = document.querySelector('#url')
 elUrl.value =
   'http://localhost:5000/https://emea.identityx-cloud.com:8087/rest/v1/quality/assessments'
-const videoSelect = document.querySelector('select#videoSource')
-const selectors = [videoSelect]
+let videoSelectNew = document.querySelector('select#videoSource')
+const selectorsNew = [videoSelectNew]
 let queryParams = {}
 
-let video = null
+let videoNew = null
 const canvas = document.querySelector('canvas')
 
 let doc_type = 'PASSPORT'
@@ -34,8 +34,8 @@ dc.startCamera().then(({ videoEl }) => {
 
 function gotDevices(deviceInfos) {
   // Handles being called several times to update labels. Preserve values.
-  const values = selectors.map((select) => select.value)
-  selectors.forEach((select) => {
+  const values = selectorsNew.map((select) => select.value)
+  selectorsNew.forEach((select) => {
     while (select.firstChild) {
       select.removeChild(select.firstChild)
     }
@@ -46,11 +46,11 @@ function gotDevices(deviceInfos) {
     option.value = deviceInfo.deviceId
 
     if (deviceInfo.kind === 'videoinput') {
-      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`
-      videoSelect.appendChild(option)
+      option.text = deviceInfo.label || `camera ${videoSelectNew.length + 1}`
+      videoSelectNew.appendChild(option)
     }
   }
-  selectors.forEach((select, selectorIndex) => {
+  selectorsNew.forEach((select, selectorIndex) => {
     if (
       Array.prototype.slice
         .call(select.childNodes)
@@ -62,7 +62,7 @@ function gotDevices(deviceInfos) {
 }
 
 function startCamera() {
-  dc.startCamera(video)
+  dc.startCamera(videoNew)
 }
 
 function handleError(error) {
@@ -77,8 +77,12 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 
 function restart() {
   dc.stopCamera()
-  const videoSource = videoSelect.value
-  dc.startCamera(video, videoSource)
+  const videoSource = videoSelectNew.value
+  dc.startCamera(videoNew, videoSource)
+}
+
+function stopCamera() {
+  dc.stopCamera()
 }
 
 function draw() {

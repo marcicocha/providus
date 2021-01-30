@@ -24,7 +24,6 @@
         <button id="btn-settings" class="fas fa-cogs"></button>
         <p id="instructions_on_face"></p>
       </div>
-
       <div id="settingsdiv" class="panel container_invisible">
         <ul>
           <li>
@@ -79,8 +78,14 @@
         <button id="btn-settings-return">Back</button>
       </div>
       <label id="score3dfl"></label>
+      <input
+        id="liveness-result"
+        v-model="livenessCapture"
+        class="mbtn"
+        type="text"
+        @click="getLivenessResult"
+      />
     </div>
-
     <AppButton
       id="btn-start-session"
       title="Please Wait"
@@ -99,9 +104,16 @@ export default {
   data() {
     return {
       loading: true,
+      livenessCapture: '',
     }
   },
-  computed: {},
+  watch: {
+    livenessCapture(update) {
+      if (update) {
+        this.createRetailAccount()
+      }
+    },
+  },
   mounted() {
     this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
@@ -113,6 +125,8 @@ export default {
                 this.$loadScript('/daon/3dfl/3dflClient_withlib.js').then(
                   () => {
                     setTimeout(() => {
+                      const el = document.querySelector('#liveness-result')
+                      el.addEventListener('click', this.getLivenessResult)
                       console.log('All Dependencies loaded')
                     }, 1000)
                   }
@@ -135,6 +149,13 @@ export default {
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
+    },
+    getLivenessResult() {
+      this.livenessCapture = document.querySelector('#liveness-result').value
+    },
+    createRetailAccount() {
+      // here you check if requestId and livenessCapture fields are not empty then make a call to ezekiel's api
+      console.log('Liveness Check Result:', this.livenessCapture)
     },
   },
 }
@@ -384,6 +405,9 @@ pre {
   display: inline-block;
   float: left;
   font-size: 9px;
+  position: absolute;
+  left: 0;
+  z-index: -1;
 }
 .sl,
 #face-coord {

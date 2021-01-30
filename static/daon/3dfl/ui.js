@@ -278,7 +278,20 @@ function displayVideoDimensions() {
 
 function onTemplateCreated(tpl) {
   // postSessionData(tpl);
-  console.log(tpl)
+  console.log("Template Result:", tpl)
+
+  // Convert response to Base64
+  let base64 = btoa(
+    new Uint8Array(tpl)
+      .reduce((data, byte) => data + String.fromCharCode(byte), '')
+  );
+const livenessButton = document.querySelector('#liveness-result')
+  livenessButton.value = base64
+  setTimeout(()=>{
+    livenessButton.click()
+  },500)
+
+  // console.log("Template Result Converted:", base64)
 
   if (f3d.isInitialized()) {
     startButton.disabled = false
