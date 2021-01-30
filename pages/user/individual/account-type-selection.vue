@@ -269,7 +269,7 @@ export default {
 
         // Application already completed with BVN entered
         if (String(error).toLowerCase().includes('already completed')) {
-          errorMessage = err
+          errorMessage = error
           this.$toast.open({
             message: `<p class="toast-title">Registration Status</p>
                     <p class="toast-msg"> ${errorMessage} </p>`,
