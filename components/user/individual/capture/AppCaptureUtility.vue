@@ -90,6 +90,19 @@ export default {
         console.log(error)
       })
   },
+  beforeDestroy() {
+    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      .then(() => {
+        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+          this.$unloadScript('/daon/doc/app.js').then(() => {
+            console.log('dependencies removed')
+          })
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   destroyed() {
     clearTimeout()
   },
