@@ -114,8 +114,8 @@ const selectors = [videoSelect]
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 video.onloadedmetadata = function () {
-  document.querySelector('#start-capture').disabled = false
-  document.querySelector('#find-face').disabled = false
+  // document.querySelector('#start-capture').disabled = false
+  // document.querySelector('#find-face').disabled = false
   const settings = video.srcObject.getVideoTracks()[0].getSettings()
   c.width = video.videoWidth
   c.height = settings.height

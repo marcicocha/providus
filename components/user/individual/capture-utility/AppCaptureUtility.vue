@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading">
     <div>
-      <div id="control">
+      <div>
         <label
           >Doc type:
           <select id="doc-type" onchange="onSelectChange(this.value)">
@@ -23,39 +23,25 @@
             onchange="onWidthChange(this.value)"
           />
         </label>
-        <div class="select">
-          <label for="videoSource">Video source: </label
-          ><select id="videoSource" onchange="restart()"></select>
-        </div>
-        <p>Response:</p>
-        <pre></pre>
-        <p>Sent image:</p>
-        <p>Processed image from server:</p>
-        <img id="img-processed" />
-        <button id="restartvideo" onclick="restart()">Restart</button>
-        <button id="stopcamera" onclick="restart()">Stop Camera</button>
-        <button id="buttonscontainer" onclick="capture()">Capture</button>
       </div>
       <div class="container">
         <canvas></canvas>
-        <img v-show="isCaptured" id="img-sent" />
       </div>
+      <div class="select">
+        <label for="videoSource">Video source: </label
+        ><select id="videoSource" onchange="restart()"></select>
+      </div>
+
+      <p>Response:</p>
+      <pre></pre>
+      <p>Sent image:</p>
+      <img id="img-sent" />
+      <p>Processed image from server:</p>
+      <img id="img-processed" />
     </div>
 
-    <AppButton
-      v-if="!isCaptured"
-      title="Capture"
-      @click="submitCaptureHandler"
-    />
-
-    <div v-if="isCaptured" class="columns is-mobile">
-      <div class="column">
-        <AppButton title="Recapture" color="secondary" @click="returnHandler" />
-      </div>
-      <div class="column">
-        <AppButton title="Continue" @click="nextHandler" />
-      </div>
-    </div>
+    <button id="buttonscontainer" onclick="capture()">Capture</button>
+    <AppButton title="Capture" @click="submitCaptureHandler" />
   </div>
 </template>
 <script>
@@ -69,8 +55,6 @@ export default {
   data() {
     return {
       loading: true,
-      isCaptured: false,
-      imgSrc: '',
     }
   },
   mounted() {
@@ -80,7 +64,6 @@ export default {
         this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
           this.$loadScript('/daon/doc/app.js').then(() => {
             console.log('dependencies loaded')
-            document.querySelector('#restartvideo').click()
           })
         })
       })
@@ -90,55 +73,13 @@ export default {
         console.log(error)
       })
   },
-  destroyed() {
-    clearTimeout()
-  },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#buttonscontainer').click()
-      this.isCaptured = true
-      setTimeout(() => {
-        this.imgSrc = document.querySelector('#img-sent').src
-        console.log('Image Source', this.imgSrc)
-      }, 500)
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
-    },
-    returnHandler() {
-      this.imgSrc = ''
-      this.isCaptured = false
-      document.querySelector('#restartvideo').click()
-    },
-    async nextHandler() {
-      try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        await this.$axios.$post('/individual/utilityBillUpload', formData)
-        document.querySelector('#stopcamera').click()
-        this.$router.replace('/user/individual/upload-document')
-      } catch (err) {
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
     },
   },
 }
@@ -160,11 +101,6 @@ label {
 .container {
   position: relative;
   width: 100%;
-}
-.form_field {
-  visibility: hidden;
-  position: absolute;
-  top: 0;
 }
 img {
   width: 100%;
@@ -219,11 +155,7 @@ pre {
   z-index: 4;
   margin-top: 6px;
 }
-.select {
-  visibility: hidden;
-}
-#buttonscontainer,
-#control {
+#buttonscontainer {
   text-align: left;
   visibility: hidden;
   position: absolute;
@@ -231,14 +163,5 @@ pre {
   top: 0;
   height: 0;
   z-index: -1;
-}
-#img-sent {
-  position: absolute;
-  display: inline-block;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  transform: scaleX(-1);
 }
 </style>
