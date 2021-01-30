@@ -78,7 +78,7 @@ export default {
       .then(() => {
         this.loading = false
         this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {
+          this.$loadScript('/daon/doc/utility.js').then(() => {
             console.log('dependencies loaded')
             document.querySelector('#restartvideo').click()
           })
@@ -94,7 +94,7 @@ export default {
     this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
         this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/app.js').then(() => {
+          this.$unloadScript('/daon/doc/utility.js').then(() => {
             console.log('dependencies removed')
           })
         })

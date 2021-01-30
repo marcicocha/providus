@@ -204,15 +204,16 @@ export default {
       }
     },
     async createAccount() {
-      let id = this.$cookies.get('requestId')
-      id = id.substring(1)
+      const id = this.$cookies.get('requestId')
       const createUrl = `/individual/accountNumber?requestId=${String(id)}`
 
       try {
         const response = await this.$axios.$get(createUrl)
 
+        console.log(response)
+
         if (response.hasError === false) {
-          this.accountNumberHandler(response.response)
+          this.accountNumberHandler(response.data.response)
           this.$router.replace('/user/individual/weldone')
         }
       } catch (err) {

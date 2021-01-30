@@ -105,7 +105,7 @@ const ctx = c.getContext('2d')
 const width = 1280
 const height = 720
 
-const video = document.querySelector('video')
+let video = document.querySelector('video')
 const text = document.querySelector('#video-settings')
 const feedback = document.querySelector('#feedback')
 

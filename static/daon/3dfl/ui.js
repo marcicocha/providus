@@ -1,4 +1,4 @@
-let mWidth, mHeight, video
+let mWidth, mHeight
 
 const startButton = document.querySelector('#btn-start-session')
 const renderCanvas = document.querySelector('#rendercanvas')
