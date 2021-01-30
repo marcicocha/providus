@@ -22,7 +22,7 @@
               v-model="kinInfoObject.surname"
               label="Surname"
               placeholder="Type Surname"
-              isText
+              is-text
             />
           </div>
         </div>
@@ -32,7 +32,7 @@
               v-model="kinInfoObject.firstName"
               label="First Name"
               placeholder="First Name"
-              isText
+              is-text
             />
           </div>
           <div class="column is-6">
@@ -40,7 +40,7 @@
               v-model="kinInfoObject.middleName"
               label="Middle Name"
               placeholder="Middle Name"
-              isText
+              is-text
             />
           </div>
         </div>
@@ -102,7 +102,7 @@
               v-model="kinInfoObject.bvn"
               label="BVN"
               placeholder="Enter BVN"
-              isNumber
+              is-number
             />
           </div>
         </div>

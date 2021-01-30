@@ -121,7 +121,7 @@ export default {
           const validationError = res.data.fieldValidationErrors
             ? res.data.fieldValidationErrors
             : []
-          if (validationError === []) {
+          if (validationError === [] || !validationError) {
             this.$toast.open({
               message: `<p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
