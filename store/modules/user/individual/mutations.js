@@ -3,6 +3,7 @@ import {
   POST_PERSONAL_INFORMATION,
   POST_CONTACT_INFORMATION,
   POST_KINS_INFORMATION,
+  SAVE_ACCOUNT_NUMBER,
 } from '@/utils/mutation-types/user/individual'
 
 export default {
@@ -17,5 +18,8 @@ export default {
   },
   [POST_KINS_INFORMATION](state, payload) {
     state.kinObjInfo = payload
+  },
+  [SAVE_ACCOUNT_NUMBER](state, payload) {
+    state.accountNumber = payload
   },
 }

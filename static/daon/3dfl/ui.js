@@ -1,4 +1,4 @@
-let mWidth, mHeight
+let mWidth, mHeight, video
 
 const startButton = document.querySelector('#btn-start-session')
 const renderCanvas = document.querySelector('#rendercanvas')
@@ -16,7 +16,7 @@ const timingTrackerElem = document.getElementById('timingTracker')
 const timingAnalysisElem = document.getElementById('timingAnalysis')
 
 const showExtraInfoCheckBox = document.getElementById('showextrainfo')
-const video = document.querySelector('video')
+video = document.querySelector('video')
 
 let faceBox = null
 
@@ -278,18 +278,20 @@ function displayVideoDimensions() {
 
 function onTemplateCreated(tpl) {
   // postSessionData(tpl);
-  console.log("Template Result:", tpl)
+  console.log('Template Result:', tpl)
 
   // Convert response to Base64
   let base64 = btoa(
-    new Uint8Array(tpl)
-      .reduce((data, byte) => data + String.fromCharCode(byte), '')
-  );
-const livenessButton = document.querySelector('#liveness-result')
+    new Uint8Array(tpl).reduce(
+      (data, byte) => data + String.fromCharCode(byte),
+      ''
+    )
+  )
+  const livenessButton = document.querySelector('#liveness-result')
   livenessButton.value = base64
-  setTimeout(()=>{
+  setTimeout(() => {
     livenessButton.click()
-  },500)
+  }, 500)
 
   // console.log("Template Result Converted:", base64)
 

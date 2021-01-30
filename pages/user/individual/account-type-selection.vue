@@ -45,7 +45,7 @@
             label="BVN"
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
-            isNumber
+            is-number
           />
           <div style="height: 20px"></div>
           <AppButton
@@ -210,7 +210,9 @@ export default {
           `/individual/getRequestIdByBvn?bvn=${value}`
         )
         this.$cookies.set('requestId', response.requestId)
-      } catch (err) {}
+      } catch (err) {
+        console.log(err)
+      }
     },
     async bvnValidationHandler() {
       if (
@@ -264,6 +266,20 @@ export default {
         }
 
         const error = err.response.data.errorMessage
+
+        // Application already completed with BVN entered
+        if (String(error).toLowerCase().includes('already completed')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Registration Status</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'info',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
         // BVN Already Exists
         if (error.includes('already exist')) {
           const { response } = await this.$axios.$get(
@@ -293,7 +309,7 @@ export default {
           if (nextWorkFlow === 'DOC_UPLOAD') {
             this.$router.replace('/user/individual/upload-document')
           }
-          if (nextWorkFlow === 'LIVE_CHECK') {
+          if (nextWorkFlow === 'LIVENESS_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
           return
