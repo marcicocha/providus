@@ -183,7 +183,7 @@ export default {
           const validationError = res.data.fieldValidationErrors
             ? res.data.fieldValidationErrors
             : []
-          if (validationError === []) {
+          if (validationError === [] || !validationError) {
             this.$toast.open({
               message: `<p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
@@ -217,30 +217,15 @@ export default {
           this.$router.replace('/user/individual/weldone')
         }
       } catch (err) {
-        let errorMessage
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          const validationError = res.data.fieldValidationErrors
-            ? res.data.fieldValidationErrors
-            : []
-          if (validationError === []) {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-            return
-          }
-          validationError.forEach((element) => {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${element.message} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
+          const errorMessage = err.response.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
           })
         }
       }
