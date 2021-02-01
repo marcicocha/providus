@@ -186,8 +186,7 @@ export default {
           this.fetching = false
           this.lastFetchId += 1
         })
-        .catch((err) => {
-          console.log(err, 'Error!!')
+        .catch(() => {
           this.fetching = true
         })
     },
