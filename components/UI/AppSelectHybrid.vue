@@ -9,9 +9,23 @@
       @click="searchHandler"
     >
       <div class="selected" :class="{ open: open }" @click="open = !open">
+        <i
+          v-if="fetching"
+          class="fas fa-spinner fa-pulse"
+          style="color: #fdb813"
+        />
         <span>{{ setSelected }}</span>
       </div>
-      <div v-if="remote" class="items" :class="{ selectHide: !open }">
+      <div
+        v-show="remote"
+        ref="lists"
+        class="items"
+        :class="{
+          selectHide: !open,
+          'add-border': dataRemote.length > 0,
+          dropUpClass: !isInViewPort,
+        }"
+      >
         <p
           v-for="(option, i) of dataRemote"
           :key="i"
@@ -25,7 +39,7 @@
           {{ option.text }}
         </p>
       </div>
-      <div v-else class="items" :class="{ selectHide: !open }">
+      <div v-show="!remote" class="items" :class="{ selectHide: !open }">
         <template v-if="data && data.length !== ''">
           <p
             v-for="(option, i) of data"
@@ -42,38 +56,6 @@
         </template>
       </div>
     </div>
-    <!--    <select-->
-    <!--      v-model="innerValue"-->
-    <!--      :name="name"-->
-    <!--      :class="{-->
-    <!--        'is-loading': fetching,-->
-    <!--      }"-->
-    <!--      :disabled="disabled"-->
-    <!--      @blur="blurHandler"-->
-    <!--      @change="changeHandler"-->
-    <!--      @focus="searchHandler"-->
-    <!--      @select="selectHandler"-->
-    <!--    >-->
-    <!--      <template v-if="remote">-->
-    <!--        <template>-->
-    <!--          <option-->
-    <!--            v-for="d in dataRemote"-->
-    <!--            :key="d.value"-->
-    <!--            :title="d.text"-->
-    <!--            :value="d.text"-->
-    <!--          >-->
-    <!--            {{ d.text }}-->
-    <!--          </option>-->
-    <!--        </template>-->
-    <!--      </template>-->
-    <!--      <template v-else>-->
-    <!--        <template v-if="data && data.length !== ''">-->
-    <!--          <option v-for="(i, index) in data" :key="i + '-' + index" :value="i">-->
-    <!--            {{ i }}-->
-    <!--          </option>-->
-    <!--        </template>-->
-    <!--      </template>-->
-    <!--    </select>-->
   </div>
 </template>
 <script>
@@ -131,38 +113,30 @@ export default {
 
       selected: '',
       open: false,
+      listElement: {},
+      isInViewPort: false,
     }
   },
   computed: {
     setSelected() {
       return this.value
     },
+    listComputed() {
+      return this.getPos()
+    },
   },
-  // watch: {
-  //   value: {
-  //     handler(newVal, oldVal) {
-  //       if (newVal && (newVal !== '' || newVal.length > 0)) {
-  //         this.innerValue = newVal
-  //       } else {
-  //         this.innerValue = undefined
-  //       }
-  //     },
-  //     immediate: true,
-  //   },
-  //   innerValue: {
-  //     handler(newVal, oldVal) {
-  //       this.$emit('input', newVal)
-  //     },
-  //     immediate: true,
-  //   },
-  // },
-  // created() {
-  //   if (this.value && this.value.length > 0) {
-  //     this.innerValue = this.value
-  //   } else {
-  //     this.innerValue = undefined
-  //   }
-  // },
+  watch: {
+    open: {
+      handler(newVal, oldVal) {
+        if (newVal && this.$refs.lists && this.dataRemote.length > 0) {
+          this.getPos()
+        } else if (!newVal && this.$refs.lists) {
+          this.$refs.lists.style.display = 'none'
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
     blurHandler(e) {
       this.$emit('blur', e.target.value)
@@ -192,26 +166,41 @@ export default {
             const dataRemote = body.response.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
+              this.getPos()
             })
           } else if (!body.response) {
             const dataRemote = body.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
+              this.getPos()
             })
             // this.dataRemote = dataRemote
           } else {
             const dataRemote = body.response.content.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
+              this.getPos()
             })
             this.dataRemote = dataRemote
           }
           this.fetching = false
           this.lastFetchId += 1
         })
-        .catch(() => {
-          this.fetching = false
+        .catch((err) => {
+          console.log(err, 'Error!!')
+          this.fetching = true
         })
+    },
+    getPos() {
+      if (this.$refs.lists) {
+        const el = this.$refs.lists
+        el.style.display = ''
+        const position = el.getBoundingClientRect()
+          ? el.getBoundingClientRect()
+          : {}
+        const isInViewPort = position.bottom <= window.innerHeight
+        this.isInViewPort = isInViewPort
+      }
     },
   },
 }
@@ -219,11 +208,13 @@ export default {
 <style lang="scss" scoped>
 .full-input {
   display: inline-block;
-  padding: 5px 10px;
   border: 1px solid #eaeaea;
   width: 100%;
   margin-bottom: 10px;
   height: 60px;
+  label {
+    padding: 5px 10px;
+  }
 }
 
 .custom-select {
@@ -251,8 +242,10 @@ export default {
   // padding: 13px 0px;
   padding-top: 5px;
   padding-right: 1em;
+  padding-left: 10px;
   cursor: pointer;
   user-select: none;
+  min-height: 20px;
 }
 // .custom-select .selected.open {
 //  border: 1px solid #ad8225;
@@ -263,7 +256,7 @@ export default {
   position: absolute;
   content: '';
   top: 10%;
-  right: 0em;
+  right: 10px;
   width: 0;
   height: 0;
   border: 5px solid transparent;
@@ -273,18 +266,33 @@ export default {
 .custom-select .items {
   color: #2e434e;
   border-radius: 0px 0px 6px 6px;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-wrap: anywhere;
   position: absolute;
   // background-color: #fff;
   margin: auto 0px;
+  top: 32px;
   left: 0;
   right: 0;
   z-index: 1;
-  max-height: 50vh;
+  max-height: 200px;
+  display: block;
+  &::-webkit-scrollbar {
+    width: 10px;
+    background: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #fdb813;
+    // outline: 1px solid slategrey;
+    border-radius: 10px;
+  }
+}
+.add-border {
   border: 1px solid #eaeaea;
 }
-
+.dropUpClass {
+  top: -80px !important;
+}
 .custom-select .items p {
   color: #2e434e;
   padding-top: 12px;
