@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="columns is-mobile" style="margin-bottom: 0">
+    <div class="columns">
       <div class="column">
         <AppInput
           v-model="directorDetailsObject.firstName"
           label="First Name"
           placeholder="Type First Name"
-          is-text
         />
       </div>
       <div class="column">
@@ -14,7 +13,6 @@
           v-model="directorDetailsObject.surname"
           label="Surname"
           placeholder="Type Surname"
-          is-text
         />
       </div>
     </div>
@@ -27,7 +25,6 @@
       v-model="directorDetailsObject.bvn"
       label="BVN"
       placeholder="Enter Director's Bank Verification Number"
-      is-number
     />
   </div>
 </template>

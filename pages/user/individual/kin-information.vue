@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="back-button" @click="backButtonHandler"
+    <a v-if="!isBasicDetails" class="back-button" @click="backButtonHandler"
       ><img src="~assets/images/back-arrow.svg" alt="back-button" />
       <span>Back</span></a
     >
@@ -45,10 +45,10 @@ export default {
       this.isBasicDetails = false
     },
     backButtonHandler() {
-      if (this.isBasicDetails) {
-        this.$router.replace('/user/individual/contact-information')
-        return
-      }
+      // if (this.isBasicDetails) {
+      //   this.$router.replace('/user/individual/contact-information')
+      //   return
+      // }
       if (!this.isBasicDetails) {
         this.isBasicDetails = true
       }

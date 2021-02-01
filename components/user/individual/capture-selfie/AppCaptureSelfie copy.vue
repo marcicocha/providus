@@ -1,25 +1,41 @@
 <template>
   <div v-if="!loading">
-    <div class="container">
-      <video
-        v-show="!selfieCapture"
-        id=""
-        autoplay
-        playsinline
-        style="width: 100%"
-      ></video>
-      <img v-show="selfieCapture" id="image" class="animated fadeIn" />
-      <canvas
-        v-show="!selfieCapture"
-        id="face-detected-cv"
-        class="canvas"
-      ></canvas>
+    <div>
+      <!--      <canvas id="capture" width="320" height="240"></canvas>-->
+
+      <!--      <canvas id="face-detected-cv" width="320"></canvas>-->
+      <!--      <video-->
+      <!--        id="videoElement"-->
+      <!--        video-->
+      <!--        autoplay="true"-->
+      <!--        style="width: 100%; height: 240px"-->
+      <!--      ></video>-->
+      <!--      <img id="image" />-->
+      <!--      <div class="controls">-->
+      <!--        <button id="start-cam" class="start-cam" onclick="startCamera()">-->
+      <!--          Start Camera-->
+      <!--        </button>-->
+      <!--        <button id="start-capture" onclick="capture()" disabled>-->
+      <!--          Start Capture-->
+      <!--        </button>-->
+      <!--        <button id="stop-capture" class="stopcam" onclick="stopCapture()">-->
+      <!--          STOP-->
+      <!--        </button>-->
+      <!--        <button id="capture-single" class="selfie" onclick="captureSingle()">-->
+      <!--          Capture-->
+      <!--        </button>-->
+      <!--        <button id="find-face" onclick="findFace()" disabled>Find face</button>-->
+      <!--      </div>-->
     </div>
 
-    <!-- Hidden UI Please dont touch-->
+    <div class="container">
+      <video id="" autoplay playsinline style="width: 100%"></video>
+      <canvas id="face-detected-cv" class="canvas"></canvas>
+    </div>
     <div id="controls">
       <p id="video-settings" style="width: 100%; overflow: hidden"></p>
       <p id="feedback" style="width: 100%; overflow: hidden"></p>
+
       <div class="btn-control">
         <button id="start-camera" class="mbtn startcam" onclick="startCamera()">
           Start Camera
@@ -34,43 +50,35 @@
         >
           Capture
         </button>
-        <button id="find-face" onclick="findFace()" disabled>Find face</button>
+        <button id="find-face" class="mbtn" onclick="findFace()" disabled>
+          Find face
+        </button>
         <button id="stop-capture" class="mbtn" onclick="stopCapture()">
           STOP
         </button>
       </div>
-      <div class="mbtn video-source select">
+
+      <div class="video-source select">
         <label class="sl" for="videoSource">Video source: </label
         ><select id="videoSource" onchange="restart()"></select>
       </div>
     </div>
-    <div id="face-coord" class="mbtn">
+    <div id="face-coord">
       <span
         >Face coords:
         <pre id="face-coords"></pre>
       </span>
     </div>
-    <pre id="settings" class="mbtn"></pre>
-    <!-- Hidden UI Please dont touch-->
 
-    <AppButton
-      v-if="!selfieCapture"
-      title="Capture Selfie"
-      @click="submitCaptureHandler"
-    />
-    <div v-if="selfieCapture" class="columns is-mobile">
-      <div class="column">
-        <AppButton title="Recapture" color="secondary" @click="returnHandler" />
-      </div>
-      <div class="column">
-        <AppButton title="Continue" @click="nextHandler" />
-      </div>
-    </div>
-    <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
+    <img id="image" />
+
+    <pre id="settings"></pre>
+    <AppButton title="Capture Selfie" @click="submitCaptureHandler" />
   </div>
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
+
 export default {
   name: 'AppCaptureSelfie',
   components: {
@@ -79,8 +87,6 @@ export default {
   data() {
     return {
       loading: true,
-      selfieCapture: false,
-      imgSrc: '',
     }
   },
   mounted() {
@@ -89,8 +95,9 @@ export default {
         this.loading = false
         this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
           this.$loadScript('/daon/face/auto.js').then(() => {
-            document.querySelector('.startcam').click()
-            document.querySelector('#find-face').click()
+            setTimeout(() => {
+              document.querySelector('.startcam').click()
+            }, 1000)
           })
         })
       })
@@ -100,51 +107,10 @@ export default {
         console.log(error)
       })
   },
-  destroyed() {
-    clearTimeout()
-  },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
-      this.selfieCapture = true
-      setTimeout(() => {
-        this.imgSrc = document.querySelector('#image').src
-        console.log('Image Source', this.imgSrc)
-      }, 500)
-    },
-    returnHandler() {
-      this.imgSrc = ''
-      this.selfieCapture = false
-    },
-    async nextHandler() {
-      try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        document.querySelector('#stop-capture').click()
-        await this.$axios.$post('/individual/selfieUpload', formData)
-        this.$router.replace('/user/individual/upload-valid-id')
-      } catch (err) {
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
     },
     getImage(data) {
       console.log(data, 'IMAGE DATA')
@@ -194,16 +160,15 @@ select {
   z-index: 5;
   transform: scaleX(-1);
 }
-.mbtn,
 #controls {
+  display: block;
+  position: relative;
+}
+.mbtn {
   width: auto !important;
   display: inline-block;
-  position: absolute;
-  top: 0;
-  left: 0;
   float: left;
   font-size: 9px;
-  visibility: hidden;
 }
 .sl,
 #face-coord {
@@ -221,15 +186,5 @@ select {
   width: 100%;
   height: auto;
   font-size: 10px;
-}
-#image {
-  display: inline-block;
-  width: 100%;
-
-  /* position: absolute;
-  left: 0;
-  top: 0; */
-
-  transform: scaleX(-1);
 }
 </style>

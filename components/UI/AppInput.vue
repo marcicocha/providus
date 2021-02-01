@@ -45,6 +45,34 @@ export default {
       type: Boolean,
       default: false,
     },
+    isNumber: {
+      type: Boolean,
+      default: false,
+    },
+    isText: {
+      type: Boolean,
+      default: false,
+    },
+    isPhone: {
+      type: Boolean,
+      default: false,
+    },
+    numberOnlyRegex: {
+      type: RegExp,
+      default: () => /[^0-9]/g,
+    },
+    textOnlyRegex: {
+      type: RegExp,
+      default: () => /[0-9]/g,
+    },
+    phoneOnlyRegex: {
+      type: RegExp,
+      default: () => /^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$/,
+    },
+    maxLength: {
+      type: Number,
+      default: 20,
+    },
   },
   data() {
     return {
@@ -64,14 +92,36 @@ export default {
     },
     innerValue: {
       handler(newVal, oldVal) {
-        this.$emit('input', newVal)
+        if (newVal) {
+          if (this.isNumber && !this.isText && !this.isPhone) {
+            this.innerValue = String(newVal)
+              .toUpperCase()
+              .slice(0, this.maxLength)
+              .replace(this.numberOnlyRegex, '')
+          } else if (!this.isNumber && this.isText && !this.isPhone) {
+            this.innerValue = String(newVal)
+              .toUpperCase()
+              .slice(0, this.maxLength)
+              .replace(this.textOnlyRegex, '')
+          } else if (!this.isNumber && !this.isText && this.isPhone) {
+            this.innerValue = String(newVal)
+              .toUpperCase()
+              .slice(0, 11)
+              .replace(this.numberOnlyRegex, '')
+          } else {
+            this.innerValue = String(newVal)
+              .toUpperCase()
+              .slice(0, this.maxLength)
+          }
+        }
+        this.$emit('input', this.innerValue)
       },
       immediate: true,
     },
   },
   methods: {
     blurHandler(e) {
-      this.$emit('blur', e.target.value)
+      this.$emit('blur', this.innerValue)
     },
   },
 }

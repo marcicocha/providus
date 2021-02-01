@@ -1,19 +1,9 @@
 <template>
   <div v-if="!loading">
     <div class="container">
-      <video
-        v-show="!selfieCapture"
-        id=""
-        autoplay
-        playsinline
-        style="width: 100%"
-      ></video>
+      <video id="" autoplay playsinline style="width: 100%"></video>
       <img v-show="selfieCapture" id="image" class="animated fadeIn" />
-      <canvas
-        v-show="!selfieCapture"
-        id="face-detected-cv"
-        class="canvas"
-      ></canvas>
+      <canvas id="face-detected-cv" class="canvas"></canvas>
     </div>
 
     <!-- Hidden UI Please dont touch-->
@@ -100,9 +90,6 @@ export default {
         console.log(error)
       })
   },
-  destroyed() {
-    clearTimeout()
-  },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
@@ -117,35 +104,7 @@ export default {
       this.imgSrc = ''
       this.selfieCapture = false
     },
-    async nextHandler() {
-      try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        document.querySelector('#stop-capture').click()
-        await this.$axios.$post('/individual/selfieUpload', formData)
-        this.$router.replace('/user/individual/upload-valid-id')
-      } catch (err) {
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
+    nextHandler() {},
     getImage(data) {
       console.log(data, 'IMAGE DATA')
     },
@@ -224,12 +183,9 @@ select {
 }
 #image {
   display: inline-block;
-  width: 100%;
-
-  /* position: absolute;
+  position: absolute;
   left: 0;
-  top: 0; */
-
+  top: 0;
   transform: scaleX(-1);
 }
 </style>

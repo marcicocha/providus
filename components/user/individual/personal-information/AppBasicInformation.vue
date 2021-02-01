@@ -22,6 +22,7 @@
             v-model="personalInfoObject.surname"
             label="Surname"
             placeholder="Type Surname"
+            is-text
           />
         </div>
       </div>
@@ -31,6 +32,7 @@
             v-model="personalInfoObject.firstName"
             label="First Name"
             placeholder="First Name"
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -38,6 +40,7 @@
             v-model="personalInfoObject.middleName"
             label="Middle Name"
             placeholder="Middle Name"
+            is-text
           />
         </div>
       </div>
@@ -77,6 +80,7 @@
             v-model="personalInfoObject.maidenName"
             label="Mother's Maiden Name"
             placeholder="Type Name"
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -94,6 +98,7 @@
             v-model="personalInfoObject.occupation"
             label="Occupation"
             placeholder="Type Occupation"
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">
