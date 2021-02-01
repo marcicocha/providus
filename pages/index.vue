@@ -16,7 +16,7 @@
 
       <p class="reference">
         Have a Reference Number?
-        <a class="bold"><nuxt-link to="/user/reference">Continue</nuxt-link></a>
+        <nuxt-link to="/user/reference" class="bold">Continue</nuxt-link>
       </p>
     </div>
   </div>
@@ -30,26 +30,9 @@ export default {
   },
   data() {
     return {
-      window: {
-        width: 0,
-        height: 0,
-      },
       description:
         'Welcome to Future Forward Banking. We believe that the New World of fast, smart, personal and borderless banking relationship is here. Now let’s guide you through the process of creating your very own Future Forward Bank account.',
     }
-  },
-  mounted() {
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
-  },
-  destroyed() {
-    window.removeEventListener('resize', this.handleResize)
-  },
-  methods: {
-    handleResize() {
-      this.window.width = window.innerWidth
-      this.window.height = window.innerHeight
-    },
   },
 }
 </script>

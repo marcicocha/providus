@@ -13,7 +13,7 @@
         <hr />
         <div>
           <span> Account Number</span>
-          <p>0123456789</p>
+          <p>{{ accountNumber }}</p>
         </div>
       </div>
       <AppButton title="Go back to Website" @click="saveHandler" />
@@ -22,6 +22,7 @@
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
+import { mapState } from 'vuex'
 export default {
   components: {
     AppButton,
@@ -29,7 +30,20 @@ export default {
   data() {
     return {
       name: 'David',
+      accountNumber: '',
     }
+  },
+  computed: {
+    ...mapState({
+      accountNo: (state) => state.individualModule.accountNumber,
+    }),
+  },
+  watch: {
+    accountNo(update) {
+      if (update) {
+        this.accountNumber = update
+      }
+    },
   },
   methods: {
     saveHandler() {

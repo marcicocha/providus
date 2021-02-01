@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading">
+  <div v-show="!loading">
     <div id="clientcontainer">
       <h1 id="instructions">Please center your face so it fills the guide</h1>
       <div id="videocontainer">
@@ -95,6 +95,7 @@
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'AppLivenessCheck',
@@ -105,12 +106,13 @@ export default {
     return {
       loading: true,
       livenessCapture: '',
+      reqId: '',
     }
   },
   watch: {
     livenessCapture(update) {
       if (update) {
-        this.createRetailAccount()
+        this.saveLivenessCheck()
       }
     },
   },
@@ -153,10 +155,84 @@ export default {
     getLivenessResult() {
       this.livenessCapture = document.querySelector('#liveness-result').value
     },
-    createRetailAccount() {
-      // here you check if requestId and livenessCapture fields are not empty then make a call to ezekiel's api
-      console.log('Liveness Check Result:', this.livenessCapture)
+    async saveLivenessCheck() {
+      const payload = {
+        requestId: this.$cookies.get('requestId'),
+        base64Video: this.livenessCapture,
+      }
+
+      console.log('Liveness Check Payload:', payload)
+
+      try {
+        const response = await this.$axios.$post(
+          '/individual/videoFaceEvaluation',
+          payload
+        )
+
+        if (response) {
+          this.createAccount()
+        }
+
+        console.log(response)
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
     },
+    async createAccount() {
+      const id = this.$cookies.get('requestId')
+      const createUrl = `/individual/accountNumber?requestId=${String(id)}`
+
+      try {
+        const response = await this.$axios.$get(createUrl)
+
+        console.log(response)
+
+        if (response.hasError === false) {
+          this.accountNumberHandler(response.data.response)
+          this.$router.replace('/user/individual/weldone')
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const errorMessage = err.response.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
+    ...mapActions({
+      accountNumberHandler: 'individualModule/SAVE_ACCOUNT_NUMBER',
+    }),
   },
 }
 </script>

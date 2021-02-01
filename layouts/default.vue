@@ -31,7 +31,13 @@
           />
         </footer>
         <div class="page_container">
-          <Nuxt />
+          <Nuxt v-if="window.width <= 1199" />
+          <div v-else class="not_available__desktop">
+            <p>
+              This application is not available for desktop use, please use on a
+              mobile device
+            </p>
+          </div>
         </div>
         <footer class="web_footer">
           <img
@@ -66,6 +72,10 @@ export default {
       pageTag: {
         'animated fadeinright': false,
       },
+      window: {
+        width: 0,
+        height: 0,
+      },
     }
   },
   computed: {
@@ -79,6 +89,11 @@ export default {
   },
   mounted() {
     this.initLoader()
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     initLoader() {
@@ -98,12 +113,25 @@ export default {
     goHome() {
       this.$router.push('/')
     },
+    handleResize() {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
+      console.log(this.window, 'window')
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
 .home-icon {
   cursor: pointer !important;
+}
+.not_available__desktop {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: 600;
 }
 .wrapper {
   position: relative;
