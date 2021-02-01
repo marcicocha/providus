@@ -31,7 +31,7 @@
           />
         </footer>
         <div class="page_container">
-          <nuxt />
+          <Nuxt />
           <!-- <Nuxt v-if="window.width <= 1199" />
           <div v-else class="not_available__desktop">
             <p>
