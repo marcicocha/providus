@@ -213,7 +213,7 @@ export default {
         console.log(response)
 
         if (response.hasError === false) {
-          this.accountNumberHandler(response.data.response)
+          this.accountNumberHandler(response.response)
           this.$router.replace('/user/individual/weldone')
         }
       } catch (err) {
