@@ -6,7 +6,7 @@
           v-model="proprietorDetailsObject.firstName"
           label="First Name"
           placeholder="Type First Name"
-          isText
+          is-text
         />
       </div>
       <div class="column">
@@ -14,7 +14,7 @@
           v-model="proprietorDetailsObject.surname"
           label="Surname"
           placeholder="Type Surname"
-          isText
+          is-text
         />
       </div>
     </div>
@@ -27,7 +27,7 @@
       v-model="proprietorDetailsObject.bvn"
       label="BVN"
       placeholder="Enter Proprietor's Bank Verification Number"
-      isNumber
+      is-number
     />
   </div>
 </template>

@@ -15,7 +15,7 @@
                 v-model="representativeDetails.firstName"
                 label="First Name"
                 placeholder="Enter First Name"
-                isText
+                is-text
               />
             </div>
             <div class="column">
@@ -23,7 +23,7 @@
                 v-model="representativeDetails.surname"
                 label="Surname"
                 placeholder="Enter Surname"
-                isText
+                is-text
               />
             </div>
           </div>
@@ -40,7 +40,7 @@
                 v-model="representativeDetails.phoneNumber"
                 label="Phone Number"
                 placeholder="Enter Number"
-                isPhone
+                is-phone
               />
             </div>
             <div class="column">
@@ -48,7 +48,7 @@
                 v-model="representativeDetails.altPhoneNumber"
                 label="Alternate Phone Number"
                 placeholder="Enter Number"
-                isPhone
+                is-phone
               />
             </div>
           </div>

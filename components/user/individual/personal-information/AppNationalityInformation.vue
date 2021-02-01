@@ -92,6 +92,7 @@
               label="If Yes, Specify?"
               placeholder="Select Option"
               :disabled="nationalityObject.dualCitizenship !== 'YES'"
+              is-text
             />
           </div>
         </div>

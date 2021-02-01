@@ -5,7 +5,7 @@
         v-model="companyDetails.nameOfCompany"
         label="Name of Company"
         placeholder="Type Name of Company"
-        isText
+        is-text
       />
       <AppSelect
         v-model="companyDetails.categoryOfBusiness"
@@ -41,7 +41,7 @@
             v-model="companyDetails.phoneNumber"
             label="Company Phone Number"
             placeholder="Type Phone No"
-            isPhone
+            is-phone
           />
         </div>
         <div class="column">
