@@ -13,7 +13,7 @@
         <hr />
         <div>
           <span> Account Number</span>
-          <p>{{ accountNumber }}</p>
+          <p>{{ accountNo }}</p>
         </div>
       </div>
       <AppButton title="Go back to Website" @click="saveHandler" />
@@ -30,20 +30,12 @@ export default {
   data() {
     return {
       name: 'David',
-      accountNumber: '',
     }
   },
   computed: {
     ...mapState({
       accountNo: (state) => state.individualModule.accountNumber,
     }),
-  },
-  watch: {
-    accountNo(update) {
-      if (update) {
-        this.accountNumber = update
-      }
-    },
   },
   methods: {
     saveHandler() {
