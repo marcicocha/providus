@@ -72,10 +72,8 @@ export default {
         return
       }
       const extensionStatus = this.extensionHandler(file.name)
-      console.log(extensionStatus, 'EXTENSION STATUS')
       if (extensionStatus && file.size < 634593) {
         this.file = file
-        console.log(this.file)
         this.$emit('fileUploadHandler', this.file)
       } else if (file.size > 634593) {
         this.file = null

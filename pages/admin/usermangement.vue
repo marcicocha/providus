@@ -210,10 +210,8 @@ export default {
       }
     },
     closeModal() {
-      console.log('close hiii')
       if (this.isModalVisible) {
         this.isModalVisible = false
-        console.log(this.isModalVisible, 'close 233')
       }
     },
     daf() {},
