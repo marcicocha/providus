@@ -145,6 +145,17 @@ export default {
         })
         return true
       }
+      const expiryDate = new Date(this.idObject.expiryDate)
+      const issuedDate = new Date(this.idObject.issuedDate)
+      if (expiryDate <= issuedDate) {
+        this.$toast.open({
+          message: `<p class="toast-msg">Expiry Date should be greater than Issued date</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
       return false
     },
     capturePageHandler() {

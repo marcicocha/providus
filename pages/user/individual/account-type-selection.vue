@@ -46,6 +46,7 @@
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
             is-number
+            maxLength="11"
           />
           <div style="height: 20px"></div>
           <AppButton
