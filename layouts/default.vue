@@ -31,13 +31,14 @@
           />
         </footer>
         <div class="page_container">
-          <Nuxt v-if="window.width <= 1199" />
+          <Nuxt />
+          <!-- <Nuxt v-if="window.width <= 1199" />
           <div v-else class="not_available__desktop">
             <p>
-              This application is not available for desktop use, please use on a
-              mobile device
+              <i style="color: #fdb813" class="fas fa-bell" /> This application
+              is not available for desktop use, please use on a mobile device
             </p>
-          </div>
+          </div> -->
         </div>
         <footer class="web_footer">
           <img
@@ -116,7 +117,6 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth
       this.window.height = window.innerHeight
-      console.log(this.window, 'window')
     },
   },
 }

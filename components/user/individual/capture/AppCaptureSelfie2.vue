@@ -71,19 +71,15 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch(() => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
       })
   },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
-    },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
     },
   },
 }

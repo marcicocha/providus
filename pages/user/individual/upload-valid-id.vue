@@ -107,8 +107,6 @@ export default {
       try {
         this.message = ''
         const response = this.$cookies.get('requestId')
-        console.log(response, 'COOKIE response')
-        console.log('clicked')
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)
@@ -139,6 +137,17 @@ export default {
       ) {
         this.$toast.open({
           message: `<p class="toast-msg">Issue Date is Compulsory</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
+      const expiryDate = new Date(this.idObject.expiryDate)
+      const issuedDate = new Date(this.idObject.issuedDate)
+      if (expiryDate <= issuedDate) {
+        this.$toast.open({
+          message: `<p class="toast-msg">Expiry Date should be greater than Issued date</p>`,
           type: 'error',
           duration: 4000,
           dismissible: true,

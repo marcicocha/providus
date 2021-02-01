@@ -78,29 +78,22 @@ export default {
       .then(() => {
         this.loading = false
         this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {
-            console.log('dependencies loaded')
-          })
+          this.$loadScript('/daon/doc/app.js').then(() => {})
         })
       })
-      .catch((error) => {
+      .catch(() => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
       })
   },
   beforeDestroy() {
     this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
         this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/app.js').then(() => {
-            console.log('dependencies removed')
-          })
+          this.$unloadScript('/daon/doc/app.js').then(() => {})
         })
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch(() => {})
   },
   destroyed() {
     clearTimeout()
@@ -112,12 +105,9 @@ export default {
       this.isCaptured = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#img-sent').src
-        console.log('Image Source', this.imgSrc)
       }, 500)
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
@@ -131,7 +121,6 @@ export default {
         })
         const requestId = this.$cookies.get('requestId')
         const idObject = this.$cookies.get('idObject')
-        console.log(file, 'FILE')
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)

@@ -129,7 +129,6 @@ export default {
                     setTimeout(() => {
                       const el = document.querySelector('#liveness-result')
                       el.addEventListener('click', this.getLivenessResult)
-                      console.log('All Dependencies loaded')
                     }, 1000)
                   }
                 )
@@ -138,19 +137,15 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch(() => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
       })
   },
   methods: {
     livenessCheckHandler() {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#btn-start-session').click()
-    },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
     },
     getLivenessResult() {
       this.livenessCapture = document.querySelector('#liveness-result').value
@@ -161,8 +156,6 @@ export default {
         base64Video: this.livenessCapture,
       }
 
-      console.log('Liveness Check Payload:', payload)
-
       try {
         const response = await this.$axios.$post(
           '/individual/videoFaceEvaluation',
@@ -172,8 +165,6 @@ export default {
         if (response) {
           this.createAccount()
         }
-
-        console.log(response)
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
@@ -209,11 +200,8 @@ export default {
 
       try {
         const response = await this.$axios.$get(createUrl)
-
-        console.log(response)
-
         if (response.hasError === false) {
-          this.accountNumberHandler(response.data.response)
+          this.accountNumberHandler(response.response)
           this.$router.replace('/user/individual/weldone')
         }
       } catch (err) {
