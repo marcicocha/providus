@@ -188,7 +188,6 @@ export default {
         return
       }
       // const year = this.kinInfoObject.dateOfBirth.getYear()
-      // console.log(year)
       this.$emit('kinDetailsHandler')
     },
   },

@@ -107,8 +107,6 @@ export default {
       try {
         this.message = ''
         const response = this.$cookies.get('requestId')
-        console.log(response, 'COOKIE response')
-        console.log('clicked')
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)

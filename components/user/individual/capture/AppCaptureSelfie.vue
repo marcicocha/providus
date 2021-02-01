@@ -94,10 +94,9 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch(() => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
       })
   },
   destroyed() {
@@ -110,7 +109,6 @@ export default {
       this.selfieCapture = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#image').src
-        console.log('Image Source', this.imgSrc)
       }, 500)
     },
     returnHandler() {
@@ -124,7 +122,6 @@ export default {
           type: 'image/jpeg',
         })
         const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)
@@ -145,9 +142,6 @@ export default {
           })
         }
       }
-    },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
     },
   },
 }

@@ -46,7 +46,7 @@
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
             is-number
-            maxLength="11"
+            max-length="11"
           />
           <div style="height: 20px"></div>
           <AppButton
@@ -211,9 +211,7 @@ export default {
           `/individual/getRequestIdByBvn?bvn=${value}`
         )
         this.$cookies.set('requestId', response.requestId)
-      } catch (err) {
-        console.log(err)
-      }
+      } catch (err) {}
     },
     async bvnValidationHandler() {
       if (
@@ -320,7 +318,6 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          console.log(err.response, 'ERROR BLOCK')
           errorMessage = res.data.errorMessage
 
           this.$toast.open({

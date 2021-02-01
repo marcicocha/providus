@@ -62,8 +62,6 @@ export default {
       try {
         this.message = ''
         const response = this.$cookies.get('requestId')
-        console.log(response, 'COOKIE response')
-        console.log('clicked')
         const formData = new FormData()
         if (this.referenceFile1) {
           formData.append('referenceForm1', this.referenceFile1)
