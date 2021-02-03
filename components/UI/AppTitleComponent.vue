@@ -57,10 +57,10 @@ p {
 }
 @media only screen and (min-width: 1025px) {
   h1 {
-    font-size: 23px;
+    font-size: 18px;
   }
   p {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 @media only screen and (min-width: 1536px) {

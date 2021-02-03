@@ -4,6 +4,7 @@
   <div class="full-input">
     <label for="name">{{ label }}</label>
     <input
+      id="name"
       v-model="innerValue"
       :type="inputType"
       name="name"
@@ -70,7 +71,7 @@ export default {
       default: () => /^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$/,
     },
     maxLength: {
-      type: Number,
+      type: [Number, String],
       default: 100,
     },
   },

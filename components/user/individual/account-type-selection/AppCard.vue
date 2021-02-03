@@ -60,11 +60,17 @@ export default {
   }
 }
 @media only screen and (min-width: 1025px) {
+  .reference {
+    font-size: 13px !important;
+  }
+  p {
+    font-size: 13px;
+  }
   .card {
     height: 150px;
     p {
       margin-top: 20px;
-      font-size: 17px;
+      font-size: 14px;
       font-family: 'GothamLight', sans-serif;
       font-weight: bold;
     }

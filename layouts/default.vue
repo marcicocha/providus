@@ -31,14 +31,17 @@
           />
         </footer>
         <div class="page_container">
-          <Nuxt />
-          <!-- <Nuxt v-if="window.width <= 1199" />
+          <!-- Development -->
+          <!-- <Nuxt /> -->
+
+          <!-- Production -->
+          <Nuxt v-if="window.width <= 1200" />
           <div v-else class="not_available__desktop">
             <p>
               <i style="color: #fdb813" class="fas fa-bell" /> This application
               is not available for desktop use, please use on a mobile device
             </p>
-          </div> -->
+          </div>
         </div>
         <footer class="web_footer">
           <img
@@ -59,6 +62,7 @@
 <script>
 import { mapState } from 'vuex'
 import AppLoader from '@/components/UI/AppLoader.vue'
+
 export default {
   components: {
     AppLoader,
@@ -125,6 +129,7 @@ export default {
 .home-icon {
   cursor: pointer !important;
 }
+
 .not_available__desktop {
   display: flex;
   align-items: center;
@@ -133,6 +138,7 @@ export default {
   text-align: center;
   font-weight: 600;
 }
+
 .wrapper {
   position: relative;
   width: auto;
@@ -140,6 +146,7 @@ export default {
   margin: 0 auto;
   height: 100vh;
 }
+
 .page_container {
   padding: 10px 18px;
   // overflow: scroll;
@@ -151,20 +158,24 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .corporate_background {
   background-image: url('../assets/images/corporate-background-image.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 footer {
   width: 100%;
   height: 100%;
+
   img {
     width: 100%;
     height: 100%;
   }
 }
+
 @media only screen and (max-width: 1024px) {
   .web_footer {
     display: none;
@@ -189,11 +200,13 @@ footer {
     padding: 20px;
     padding-bottom: 0px;
     text-align: center;
+
     img {
       height: 100%;
     }
   }
 }
+
 @media only screen and (min-width: 1025px) {
   .wrapper_container {
     display: grid;
@@ -225,6 +238,7 @@ footer {
     display: none;
   }
 }
+
 @media only screen and (min-width: 1536px) {
   .web_footer {
     display: block;
@@ -283,6 +297,7 @@ footer {
     }
   }
 }
+
 @media only screen and (max-width: 596px) {
   footer {
     img {

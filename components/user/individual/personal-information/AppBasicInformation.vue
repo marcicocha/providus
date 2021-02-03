@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="wrap">
       <div class="columns is-gapless is-mobile">
         <div class="column is-4">
           <AppSelectHybrid

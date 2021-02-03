@@ -40,9 +40,14 @@ export default {
     async referenceIdHandler() {
       try {
         this.isLoading = true
-        await this.$axios.$post('/individual', this.referenceId)
-        this.$router.replace('/user/corporate/upload-document')
-        this.isLoading = false
+        const response = await this.$axios.$post(
+          '/individual',
+          this.referenceId
+        )
+        if (response) {
+          this.$router.replace('/user/corporate/upload-document')
+          this.isLoading = false
+        }
       } catch (err) {
         this.isLoading = false
         let errorMessage = ''

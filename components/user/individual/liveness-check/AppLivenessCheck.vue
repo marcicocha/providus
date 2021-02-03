@@ -137,9 +137,25 @@ export default {
           })
         })
       })
-      .catch(() => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   methods: {
@@ -147,6 +163,7 @@ export default {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#btn-start-session').click()
     },
+    getImage(data) {},
     getLivenessResult() {
       this.livenessCapture = document.querySelector('#liveness-result').value
     },
@@ -200,6 +217,7 @@ export default {
 
       try {
         const response = await this.$axios.$get(createUrl)
+
         if (response.hasError === false) {
           this.accountNumberHandler(response.response)
           this.$router.replace('/user/individual/weldone')
