@@ -79,28 +79,55 @@ export default {
         this.loading = false
         this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
           this.$loadScript('/daon/doc/utility.js').then(() => {
-            console.log('dependencies loaded')
             document.querySelector('#restartvideo').click()
           })
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   beforeDestroy() {
     this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
         this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/utility.js').then(() => {
-            console.log('dependencies removed')
-          })
+          this.$unloadScript('/daon/doc/utility.js').then(() => {})
         })
       })
-      .catch((error) => {
-        console.log(error)
+      .catch((err) => {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   destroyed() {
@@ -113,12 +140,9 @@ export default {
       this.isCaptured = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#img-sent').src
-        console.log('Image Source', this.imgSrc)
       }, 500)
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
@@ -131,7 +155,6 @@ export default {
           type: 'image/jpeg',
         })
         const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)

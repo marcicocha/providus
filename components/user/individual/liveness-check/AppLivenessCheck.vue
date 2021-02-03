@@ -129,7 +129,6 @@ export default {
                     setTimeout(() => {
                       const el = document.querySelector('#liveness-result')
                       el.addEventListener('click', this.getLivenessResult)
-                      console.log('All Dependencies loaded')
                     }, 1000)
                   }
                 )
@@ -138,10 +137,25 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   methods: {
@@ -149,9 +163,7 @@ export default {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#btn-start-session').click()
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
     getLivenessResult() {
       this.livenessCapture = document.querySelector('#liveness-result').value
     },
@@ -160,8 +172,6 @@ export default {
         requestId: this.$cookies.get('requestId'),
         base64Video: this.livenessCapture,
       }
-
-      console.log('Liveness Check Payload:', payload)
 
       try {
         const response = await this.$axios.$post(
@@ -172,8 +182,6 @@ export default {
         if (response) {
           this.createAccount()
         }
-
-        console.log(response)
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
@@ -209,8 +217,6 @@ export default {
 
       try {
         const response = await this.$axios.$get(createUrl)
-
-        console.log(response)
 
         if (response.hasError === false) {
           this.accountNumberHandler(response.response)

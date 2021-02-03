@@ -5,7 +5,7 @@
       <span>Back</span></a
     >
     <AppTitleComponent heading="Personal Information" />
-    <div>
+    <div class="wrap">
       <AppBasicInformation
         v-if="isBasicInformation"
         :personal-info-object="personalInfoObject"
@@ -149,12 +149,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }
 }
+
 @media only screen and (min-width: 1536px) {
   @media only screen and (min-height: 730px) {
     .back-button {

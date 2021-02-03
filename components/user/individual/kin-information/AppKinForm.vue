@@ -101,8 +101,10 @@
             <AppInput
               v-model="kinInfoObject.bvn"
               label="BVN"
-              placeholder="Enter BVN"
+              placeholder="Enter Bank Verification Number"
               is-number
+              max-length="11"
+              min-length="11"
             />
           </div>
         </div>
@@ -187,8 +189,38 @@ export default {
         this.$emit('errorMessageHandler', 'Date of Birth')
         return
       }
+
+      if (
+        !this.kinInfoObject.bvn ||
+        this.kinInfoObject.bvn === undefined ||
+        this.kinInfoObject.bvn === ''
+      ) {
+        this.message = 'BVN field is required to proceed,'
+
+        this.$toast.open({
+          message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
+      if (this.kinInfoObject.bvn.length < 11) {
+        this.message = 'The BVN entered is incomplete. BVN length should be 11'
+
+        this.$toast.open({
+          message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
       // const year = this.kinInfoObject.dateOfBirth.getYear()
-      // console.log(year)
       this.$emit('kinDetailsHandler')
     },
   },

@@ -46,7 +46,8 @@
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
             is-number
-            maxLength="11"
+            max-length="11"
+            min-length="11"
           />
           <div style="height: 20px"></div>
           <AppButton
@@ -212,7 +213,22 @@ export default {
         )
         this.$cookies.set('requestId', response.requestId)
       } catch (err) {
-        console.log(err)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       }
     },
     async bvnValidationHandler() {
@@ -221,7 +237,19 @@ export default {
         this.accountInformation.BVN === undefined ||
         this.accountInformation.BVN === ''
       ) {
-        this.message = 'Your BVN seems to be incorrect,'
+        this.message = 'BVN field is required to proceed,'
+        this.$toast.open({
+          message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
+      if (this.accountInformation.BVN.length < 11) {
+        this.message = 'The BVN entered is incomplete. BVN length should be 11'
 
         this.$toast.open({
           message: `<p class="toast-title">BVN Validation Message</p>
@@ -232,6 +260,7 @@ export default {
         })
         return
       }
+
       this.fetching = true
       try {
         this.message = ''
@@ -320,7 +349,6 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          console.log(err.response, 'ERROR BLOCK')
           errorMessage = res.data.errorMessage
 
           this.$toast.open({
@@ -361,27 +389,14 @@ export default {
   border: none !important;
 }
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }
-}
-h2 {
-  font-family: 'GothamMedium', sans-serif;
-  color: #fdb813;
-  font-weight: bold;
-  line-height: 24px;
-  font-size: 18px;
-  margin-bottom: 30px;
 }
 .account-info__block {
   width: 80%;
   //padding-top: 30px;
   padding-top: 20px;
-}
-hr {
-  margin: 2rem 0 !important;
 }
 .bvn-child__block {
   padding-bottom: 15px;

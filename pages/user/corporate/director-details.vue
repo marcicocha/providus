@@ -30,9 +30,7 @@ export default {
     submitDirectorHandler() {
       this.$router.replace('/user/corporate/proprietor-details')
     },
-    addDirectorFormHandler() {
-      console.log('direcor:::')
-    },
+    addDirectorFormHandler() {},
   },
 }
 </script>

@@ -71,10 +71,25 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   methods: {
@@ -82,9 +97,7 @@ export default {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#start-capture-single').click()
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
   },
 }
 </script>

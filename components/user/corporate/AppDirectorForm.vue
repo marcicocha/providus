@@ -25,9 +25,11 @@
     />
     <AppInput
       v-model="directorDetailsObject.bvn"
-      label="BVN"
       placeholder="Enter Director's Bank Verification Number"
+      label="BVN"
       is-number
+      max-length="11"
+      min-length="11"
     />
   </div>
 </template>

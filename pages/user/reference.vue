@@ -40,13 +40,14 @@ export default {
     async referenceIdHandler() {
       try {
         this.isLoading = true
-        const { response } = await this.$axios.$post(
+        const response = await this.$axios.$post(
           '/individual',
           this.referenceId
         )
-        console.log(response, 'RESPONSE')
-        this.$router.replace('/user/corporate/upload-document')
-        this.isLoading = false
+        if (response) {
+          this.$router.replace('/user/corporate/upload-document')
+          this.isLoading = false
+        }
       } catch (err) {
         this.isLoading = false
         let errorMessage = ''
@@ -55,7 +56,6 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          console.log(err.response, 'ERROR BLOCK')
           errorMessage = res.data.errorMessage
 
           this.$toast.open({

@@ -30,9 +30,7 @@ export default {
     submitProprietorHandler() {
       this.$router.replace('/user/corporate/next-step')
     },
-    addProprietorFormHandler() {
-      console.log('THIS:::')
-    },
+    addProprietorFormHandler() {},
   },
 }
 </script>

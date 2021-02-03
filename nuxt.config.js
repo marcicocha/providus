@@ -19,11 +19,19 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/main.scss'],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+  // Plugins to generate: { fallback: true },run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/vueToast.js', ssr: false },
     { src: '~/plugins/loadScript.js', ssr: false },
   ],
+
+  // fallback for static routing
+  publicRuntimeConfig: {
+    // baseURL: process.env.BASE_URL,
+  },
+  mode: 'spa',
+  target: 'static',
+  generate: { fallback: true },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -43,9 +51,9 @@ export default {
     'cookie-universal-nuxt',
   ],
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  // Axios
   axios: {
-    baseURL: 'http://192.168.5.39:60000',
+    baseURL: process.env.BASE_URL,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
