@@ -83,9 +83,25 @@ export default {
           })
         })
       })
-      .catch(() => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   beforeDestroy() {
@@ -95,7 +111,24 @@ export default {
           this.$unloadScript('/daon/doc/utility.js').then(() => {})
         })
       })
-      .catch(() => {})
+      .catch((err) => {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      })
   },
   destroyed() {
     clearTimeout()
@@ -109,6 +142,7 @@ export default {
         this.imgSrc = document.querySelector('#img-sent').src
       }, 500)
     },
+    getImage(data) {},
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false

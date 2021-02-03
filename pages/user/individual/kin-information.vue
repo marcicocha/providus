@@ -109,8 +109,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }

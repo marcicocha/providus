@@ -155,8 +155,24 @@ export default {
           this.fetching = false
           this.lastFetchId += 1
         })
-        .catch(() => {
+        .catch((err) => {
           this.fetching = false
+          let errorMessage = ''
+
+          // Error Message from Backend
+          // eslint-disable-next-line no-prototype-builtins
+          if (err.hasOwnProperty('response')) {
+            const res = err.response
+            errorMessage = res.data.errorMessage
+
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          }
         })
     },
   },
