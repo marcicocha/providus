@@ -13,10 +13,10 @@
       <div v-if="isAccountCategory">
         <h2>Select Account Category</h2>
         <div class="columns is-mobile">
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column opaque">
+          <div class="column is-6">
             <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
           </div>
         </div>
@@ -24,10 +24,10 @@
       <div v-if="isAccountType">
         <h2>Select Account Type</h2>
         <div class="columns is-mobile">
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="savings" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="current" @onClickHandler="onClickHandler" />
           </div>
         </div>
@@ -186,8 +186,8 @@ export default {
       }
       if (value === 'Corporate') {
         // Disable Coperate until we're ready
-        // this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
-        // this.$router.replace('/user/corporate/representative-details')
+        this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
+        this.$router.replace('/user/corporate/representative-details')
       }
       if (value === 'Savings') {
         this.accountInformation = {
