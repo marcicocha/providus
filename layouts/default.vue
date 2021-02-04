@@ -99,6 +99,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
+    this.$cookies.removeAll()
   },
   methods: {
     initLoader() {
