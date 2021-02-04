@@ -1,5 +1,5 @@
 {
-  "name": "account-opener",
+  "name": "providus-onboarding",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,8 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style",
-    "test": "jest"
+    "test": "jest",
+    "dev:host": "nuxt --hostname '0' --port 8000"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -25,16 +26,17 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/bulma": "^1.3.0",
+    "browser-or-node": "^1.3.0",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
+    "cross-env": "^5.2.1",
+    "dayjs": "^1.8.17",
+    "dotenv": "^8.1.0",
     "nuxt": "^2.14.6",
     "vue-capture": "^0.1.7",
     "vue-plugin-load-script": "^1.3.2",
     "vue-simple-accordion": "^0.1.0",
-    "vue-toast-notification": "^0.4.1",
-    "cross-env": "^5.2.1",
-    "dayjs": "^1.8.17",
-    "dotenv": "^8.1.0"
+    "vue-toast-notification": "^0.4.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",

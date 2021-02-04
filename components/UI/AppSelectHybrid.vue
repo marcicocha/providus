@@ -1,6 +1,6 @@
 <template>
   <div class="full-input">
-    <label for="name">{{ label }}</label>
+    <label id="name" for="name">{{ label }}</label>
     <div
       class="custom-select"
       :tabindex="tabindex"

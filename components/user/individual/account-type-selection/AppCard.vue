@@ -48,9 +48,9 @@ export default {
       brightness(105%) contrast(99%);
   }
 }
-@media only screen and (min-width: 767px) {
+@media only screen and (max-width: 767px) {
   .card {
-    height: 200px;
+    height: 185px;
     p {
       margin-top: 20px;
       font-size: 17px;

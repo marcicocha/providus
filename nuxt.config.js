@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'account-onboarding',
+    title: 'providus-onboarding',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,7 +29,9 @@ export default {
   publicRuntimeConfig: {
     // baseURL: process.env.BASE_URL,
   },
-  mode: 'spa',
+
+  // Static Build Configuration for Yarn Generate
+  ssr: false,
   target: 'static',
   generate: { fallback: true },
 
