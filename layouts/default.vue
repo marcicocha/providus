@@ -207,7 +207,7 @@ footer {
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
   .web_footer {
     display: none;
   }
@@ -244,7 +244,7 @@ footer {
   }
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
   .wrapper_container {
     display: grid;
     grid-template-rows: 13% auto 13%;
@@ -259,14 +259,14 @@ footer {
   }
   header {
     text-align: right;
-    padding: 15px 30px;
+    padding: 20px 30px;
     // padding: 17px 30px;
     img {
       height: 100%;
     }
   }
   .card {
-    height: 150px;
+    height: 150px !important;
   }
   .parent-container {
     width: 100% !important;

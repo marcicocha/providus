@@ -399,9 +399,8 @@ export default {
   }
 }
 .account-info__block {
-  width: 80%;
-  //padding-top: 30px;
-  padding-top: 20px;
+  width: 100%;
+  padding-top: 0;
 }
 .bvn-child__block {
   padding-bottom: 15px;
@@ -527,7 +526,7 @@ export default {
   }
   .notification {
     position: absolute;
-    bottom: 0;
+    bottom: 2%;
     font-size: 12px;
   }
   .back-button {
