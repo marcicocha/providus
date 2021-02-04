@@ -16,8 +16,13 @@
           <div class="column is-6">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column is-6">
-            <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
+          <div class="opaque column is-6">
+            <!-- <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />-->
+            <AppCard
+              class="opaque"
+              :card-data="corporate"
+              @onClickHandler="() => {}"
+            />
           </div>
         </div>
       </div>
@@ -394,9 +399,8 @@ export default {
   }
 }
 .account-info__block {
-  width: 80%;
-  //padding-top: 30px;
-  padding-top: 20px;
+  width: 100%;
+  padding-top: 0;
 }
 .bvn-child__block {
   padding-bottom: 15px;
@@ -522,7 +526,7 @@ export default {
   }
   .notification {
     position: absolute;
-    bottom: 0;
+    bottom: 2%;
     font-size: 12px;
   }
   .back-button {
