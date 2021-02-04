@@ -201,6 +201,7 @@ export default {
         }
         this.isBvn = true
         this.isAccountType = false
+        this.$cookies.set('accountType', 'SAVINGS')
       }
       if (value === 'Current') {
         this.accountInformation = {
@@ -209,6 +210,7 @@ export default {
         }
         this.isBvn = true
         this.isAccountType = false
+        this.$cookies.set('accountType', 'CURRENT')
       }
     },
     async getRequestId(value) {

@@ -5,7 +5,7 @@
       <hr />
       <div>
         <AppUpload
-          label="Reference Form 1 (optional)"
+          :label="accountTypeLabel"
           :extension="['.docx', '.pdf']"
           @fileUploadHandler="fileUploadReference1Handler"
         />
@@ -45,6 +45,16 @@ export default {
       signatureFile: null,
     }
   },
+  computed: {
+    accountTypeLabel() {
+      const response = this.$cookies.get('accountType')
+      console.log(response, 'SOME RESPONSE')
+      if (response === 'CURRENT') {
+        return 'Reference Form 1'
+      }
+      return 'Reference Form 1 (optional)'
+    },
+  },
   methods: {
     fileUploadReference1Handler(file) {
       this.referenceFile1 = file
@@ -57,7 +67,25 @@ export default {
     },
     async submitDocumentHandler() {
       if (!this.signatureFile) {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Signature File is Compulsory </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
         return
+      }
+      const response = this.$cookies.get('accountType')
+      if (response === 'CURRENT') {
+        if (this.referenceFile1) {
+          this.$toast.open({
+            message: `<p class="toast-msg"> Reference File 1 is Mandatory </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
       }
       try {
         this.message = ''
