@@ -35,7 +35,7 @@
           <!-- <Nuxt /> -->
 
           <!-- Production -->
-          <Nuxt v-if="window.width <= 1200" />
+          <Nuxt v-if="isMobile" />
           <div v-else class="not_available__desktop">
             <p>
               <i style="color: #fdb813" class="fas fa-bell" /> This application
@@ -87,6 +87,9 @@ export default {
     ...mapState({
       accountCategory: (state) => state.accountCategory,
     }),
+    isMobile() {
+      return this.handleResize()
+    },
   },
   beforeMount() {
     const root = document.querySelector('html')
@@ -119,8 +122,34 @@ export default {
       this.$router.push('/')
     },
     handleResize() {
-      this.window.width = window.innerWidth
-      this.window.height = window.innerHeight
+      const isMobile = {
+        Android() {
+          return navigator.userAgent.match(/Android/i)
+        },
+        BlackBerry() {
+          return navigator.userAgent.match(/BlackBerry/i)
+        },
+        iOS() {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i)
+        },
+        Opera() {
+          return navigator.userAgent.match(/Opera Mini/i)
+        },
+        Windows() {
+          return navigator.userAgent.match(/IEMobile/i)
+        },
+        any() {
+          return (
+            isMobile.Android() ||
+            isMobile.BlackBerry() ||
+            isMobile.iOS() ||
+            isMobile.Opera() ||
+            isMobile.Windows()
+          )
+        },
+      }
+
+      return isMobile.any()
     },
   },
 }
@@ -176,7 +205,7 @@ footer {
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 767px) {
   .web_footer {
     display: none;
   }
@@ -204,6 +233,62 @@ footer {
     img {
       height: 100%;
     }
+  }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: relative;
+    right: 0;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .wrapper_container {
+    display: grid;
+    grid-template-rows: 13% auto 13%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 80px;
+    width: 45vw;
+    height: 85vh;
+    margin: auto;
+    background-color: #fff;
+  }
+  header {
+    text-align: right;
+    padding: 15px 30px;
+    // padding: 17px 30px;
+    img {
+      height: 100%;
+    }
+  }
+  .card {
+    height: 150px;
+  }
+  .parent-container {
+    width: 100% !important;
+    position: relative;
+  }
+  .page_container {
+    padding: 0 30px;
+  }
+  .web_footer {
+    display: block;
+  }
+  .mobile_footer {
+    display: none;
+  }
+  .account-info__block {
+    width: 100%;
+    padding-top: 0;
+  }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: absolute;
+    right: 41px;
+    margin-top: 7px;
   }
 }
 
@@ -236,6 +321,12 @@ footer {
   }
   .mobile_footer {
     display: none;
+  }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: relative;
+    right: 0;
   }
 }
 

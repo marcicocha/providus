@@ -16,8 +16,13 @@
           <div class="column is-6">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column is-6">
-            <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
+          <div class="opaque column is-6">
+            <!-- <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />-->
+            <AppCard
+              class="opaque"
+              :card-data="corporate"
+              @onClickHandler="() => {}"
+            />
           </div>
         </div>
       </div>
