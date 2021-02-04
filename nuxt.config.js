@@ -29,7 +29,9 @@ export default {
   publicRuntimeConfig: {
     // baseURL: process.env.BASE_URL,
   },
-  mode: 'spa',
+
+  // Static Build Configuration for Yarn Generate
+  ssr: false,
   target: 'static',
   generate: { fallback: true },
 

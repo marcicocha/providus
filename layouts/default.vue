@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+import { isBrowser } from 'browser-or-node'
 import { mapState } from 'vuex'
 import AppLoader from '@/components/UI/AppLoader.vue'
 
@@ -122,34 +123,35 @@ export default {
       this.$router.push('/')
     },
     handleResize() {
-      const isMobile = {
-        Android() {
-          return navigator.userAgent.match(/Android/i)
-        },
-        BlackBerry() {
-          return navigator.userAgent.match(/BlackBerry/i)
-        },
-        iOS() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i)
-        },
-        Opera() {
-          return navigator.userAgent.match(/Opera Mini/i)
-        },
-        Windows() {
-          return navigator.userAgent.match(/IEMobile/i)
-        },
-        any() {
-          return (
-            isMobile.Android() ||
-            isMobile.BlackBerry() ||
-            isMobile.iOS() ||
-            isMobile.Opera() ||
-            isMobile.Windows()
-          )
-        },
+      if (isBrowser) {
+        const isMobile = {
+          Android() {
+            return navigator.userAgent.match(/Android/i)
+          },
+          BlackBerry() {
+            return navigator.userAgent.match(/BlackBerry/i)
+          },
+          iOS() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i)
+          },
+          Opera() {
+            return navigator.userAgent.match(/Opera Mini/i)
+          },
+          Windows() {
+            return navigator.userAgent.match(/IEMobile/i)
+          },
+          any() {
+            return (
+              isMobile.Android() ||
+              isMobile.BlackBerry() ||
+              isMobile.iOS() ||
+              isMobile.Opera() ||
+              isMobile.Windows()
+            )
+          },
+        }
+        return isMobile.any()
       }
-
-      return isMobile.any()
     },
   },
 }
