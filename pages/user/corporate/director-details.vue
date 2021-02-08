@@ -4,9 +4,9 @@
     <div>
       <AppAccordion
         v-for="n in noOfDirector"
-        :heading="`Director ${n}`"
         :key="n"
-        :initIsTrue="n === noOfDirector ? true : false"
+        :heading="`Director ${n}`"
+        :init-is-true="n === noOfDirector ? true : false"
       >
         <template slot="content">
           <AppDirectorForm />

@@ -5,9 +5,9 @@
     <div>
       <AppAccordion
         v-for="n in noOfProprietor"
-        :heading="`Proprietor ${n}`"
         :key="n"
-        :initIsTrue="n === noOfProprietor ? true : false"
+        :heading="`Proprietor ${n}`"
+        :init-is-true="n === noOfProprietor ? true : false"
       >
         <template slot="content">
           <AppProprietorForm />
