@@ -1,7 +1,6 @@
 <template>
   <div>
     <AppTitleComponent heading="Company Details" />
-    <br />
     <AppCompanyForm />
   </div>
 </template>

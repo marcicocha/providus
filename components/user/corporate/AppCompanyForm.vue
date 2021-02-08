@@ -86,10 +86,18 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.$put('/corporate/companyDetails', this.companyDetails)
-        await this.submitCompanyDetailsHandler(this.companyDetails)
+        const representativeDetails = await this.$cookies.get(
+          'representativeDetails'
+        )
+        const companyDetails = {
+          ...this.companyDetails,
+          ...representativeDetails,
+        }
+        await this.$axios.$put('/corporate/companyDetails', companyDetails)
+        await this.submitCompanyDetailsHandler(companyDetails)
         this.loading = false
         this.$router.replace('/user/corporate/director-details')
+        this.$cookies.remove('representativeDetails')
       } catch (err) {
         this.loading = false
         this.message = err.response.data.errorMessage

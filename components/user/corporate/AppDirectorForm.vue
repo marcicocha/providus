@@ -31,6 +31,9 @@
       max-length="11"
       min-length="11"
     />
+    <div>
+      <p><a @click="addDirectorFormHandler">+ Add Director</a></p>
+    </div>
   </div>
 </template>
 <script>
@@ -45,5 +48,19 @@ export default {
       directorDetailsObject: {},
     }
   },
+  methods: {
+    addDirectorFormHandler() {
+      this.$emit('addDirectorFormHandler', this.directorDetailsObject)
+    },
+  },
 }
 </script>
+<style lang="scss" scoped>
+@media only screen and (max-width: 600px) {
+  p {
+    a {
+      font-size: 13px !important;
+    }
+  }
+}
+</style>

@@ -3,7 +3,12 @@
     <AppTitleComponent heading="Proprietor Details" />
     <br />
     <div>
-      <AppAccordion heading="Proprietor">
+      <AppAccordion
+        v-for="n in noOfProprietor"
+        :heading="`Proprietor ${n}`"
+        :key="n"
+        :initIsTrue="n === noOfProprietor ? true : false"
+      >
         <template slot="content">
           <AppProprietorForm />
         </template>
@@ -26,11 +31,28 @@ export default {
     AppProprietorForm,
     AppButton,
   },
+  data() {
+    return {
+      noOfProprietor: 1,
+      proprietorList: [],
+    }
+  },
   methods: {
     submitProprietorHandler() {
       this.$router.replace('/user/corporate/next-step')
     },
-    addProprietorFormHandler() {},
+    addProprietorFormHandler() {
+      if (this.noOfProprietor < 5) {
+        this.noOfProprietor++
+      } else {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Only 5 Proprietors can be added</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+      }
+    },
   },
 }
 </script>

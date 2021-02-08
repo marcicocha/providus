@@ -1,14 +1,17 @@
 <template>
   <div>
     <AppTitleComponent heading="Director Details" />
-    <br />
     <div>
-      <AppAccordion heading="Director">
+      <AppAccordion
+        v-for="n in noOfDirector"
+        :heading="`Director ${n}`"
+        :key="n"
+        :initIsTrue="n === noOfDirector ? true : false"
+      >
         <template slot="content">
           <AppDirectorForm />
         </template>
       </AppAccordion>
-      <p><a @click="addDirectorFormHandler">+ Add Director</a></p>
     </div>
     <br />
     <AppButton title="Continue" @click="submitDirectorHandler" />
@@ -26,20 +29,29 @@ export default {
     AppDirectorForm,
     AppButton,
   },
+  data() {
+    return {
+      noOfDirector: 1,
+      directorList: [],
+    }
+  },
   methods: {
     submitDirectorHandler() {
       this.$router.replace('/user/corporate/proprietor-details')
     },
-    addDirectorFormHandler() {},
+    addDirectorFormHandler(obj) {
+      this.directorList.push(obj)
+      if (this.noOfDirector < 5) {
+        this.noOfDirector++
+      } else {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Only 5 Directors can be added</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+      }
+    },
   },
 }
 </script>
-<style lang="scss" scoped>
-@media only screen and (max-width: 600px) {
-  p {
-    a {
-      font-size: 13px !important;
-    }
-  }
-}
-</style>

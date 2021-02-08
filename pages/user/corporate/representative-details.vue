@@ -6,7 +6,24 @@
     />
     <div class="account-info__block">
       <div><hr /></div>
-      <div>
+      <div v-if="isRC">
+        <AppInput
+          v-model="rcNo"
+          label="RC No"
+          placeholder="Enter RC Number"
+          :disabled="isLoading"
+          max-length="11"
+          min-length="11"
+        />
+        <div style="height: 20px"></div>
+        <AppButton
+          title="Submit RC No"
+          :disabled="!rcNo"
+          :loading="isLoading"
+          @click="rcValidationHandler"
+        />
+      </div>
+      <div v-if="isRepresentative">
         <h2>Representative Details</h2>
         <div>
           <div class="columns is-mobile" style="margin-bottom: 5px">
@@ -78,9 +95,131 @@ export default {
     return {
       representativeDetails: {},
       loading: false,
+      isRepresentative: false,
+      isRC: true,
+      rcNo: '',
+      isLoading: false,
     }
   },
   methods: {
+    async getRequestId(value) {
+      try {
+        const { response } = await this.$axios.$get(
+          `/individual/getRequestIdByRcNo?rcNo=${value}`
+        )
+        this.$cookies.set('requestId', response.requestId)
+      } catch (err) {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
+    async rcValidationHandler() {
+      if (!this.rcNo || this.rcNo === undefined || this.rcNo === '') {
+        this.$toast.open({
+          message: `<p class="toast-msg"> RC field is required to proceed </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
+      this.isLoading = true
+      try {
+        this.isLoading = true
+        await this.$axios.$post('/corporate', this.rcNo)
+        await this.submitRcHandler(this.rcNo)
+        this.getRequestId(this.rcNo)
+        this.isRC = false
+        this.isRepresentative = true
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+
+        let errorMessage = ''
+
+        // Network Error
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        const error = err.response.data.errorMessage
+
+        // Application already completed with RC entered
+        if (String(error).toLowerCase().includes('already completed')) {
+          errorMessage = error
+          this.$toast.open({
+            message: `<p class="toast-title">Registration Status</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'info',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        // BVN Already Exists
+        if (error.includes('already exist')) {
+          const { response } = await this.$axios.$get(
+            `/corporate/getCurrentWorkFlow?rcNo=${this.rcNo}`
+          )
+          this.getRequestId(this.rcNo)
+
+          const nextWorkFlow = response.nextWorkFlow
+          if (nextWorkFlow === 'COMPANY_DETAILS') {
+            this.isRC = false
+            this.isRepresentative = true
+          }
+          if (nextWorkFlow === 'DIRECTOR_DETAILS') {
+            this.$router.replace('/user/corporate/director-details')
+          }
+          if (nextWorkFlow === 'PROPRIETOR_DETAILS') {
+            this.$router.replace('/user/corporate/proprietor-details')
+          }
+          if (nextWorkFlow === 'UPLOADS') {
+            this.$router.replace('/user/corporate/upload-document')
+          }
+          return
+        }
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
     async representativeSubmitHandler() {
       const validationResponse = this.validationHandler()
       if (validationResponse) {
@@ -88,44 +227,14 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.$put(
-          '/corporate/representativeDetails',
-          this.representativeDetails
-        )
         await this.submitRepresentativeDetailsHandler(
           this.representativeDetails
         )
+        this.$cookies.set('representativeDetails', this.representativeDetails)
         this.$router.replace('/user/corporate/company-details')
         this.loading = false
       } catch (err) {
         this.loading = false
-        this.message = err.response.data.errorMessage
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          const validationError = res.data.fieldValidationErrors
-            ? res.data.fieldValidationErrors
-            : []
-          if (validationError === [] || !validationError) {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-            return
-          }
-          validationError.forEach((element) => {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${element.message} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-          })
-        }
       }
     },
     validationHandler() {
@@ -170,6 +279,7 @@ export default {
     ...mapActions({
       submitRepresentativeDetailsHandler:
         'corporateModule/POST_REPRESENTATIVE_DETAILS',
+      submitRcHandler: 'individualModule/GET_RC_INFORMATION',
     }),
   },
 }

@@ -4,6 +4,8 @@ import actions from './actions'
 
 const state = () => ({
   companyDetails: {},
+  rcNo: '',
+  representativeDetails: {},
 })
 export default {
   namespaced: true,
