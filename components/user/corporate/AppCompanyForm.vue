@@ -7,12 +7,17 @@
         placeholder="Type Name of Company"
         is-text
       />
-      <AppSelect
+      <AppSelectHybrid
         v-model="companyDetails.bizCat"
-        :remote="false"
         label="Category of Business"
         placeholder="Select the category business fails under"
-        :data="['Lagos']"
+        url="/globalData/data?name=BUSINESS%20CATEGORY"
+        :call-back-func="
+          (resp) => ({
+            text: resp,
+            value: resp,
+          })
+        "
       />
       <AppInput
         v-model="companyDetails.bizAddress"
@@ -38,7 +43,7 @@
       <div class="columns is-mobile">
         <div class="column is-6">
           <AppInput
-            v-model="companyDetails.phoneNumber"
+            v-model="companyDetails.companyPhoneNo"
             label="Company Phone Number"
             placeholder="Type Phone No"
             is-phone
@@ -63,12 +68,12 @@
 <script>
 import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
-import AppSelect from '@/components/UI/AppSelect'
+import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
 export default {
   name: 'AppCompanyForm',
   components: {
-    AppSelect,
+    AppSelectHybrid,
     AppInput,
     AppButton,
   },
@@ -86,10 +91,20 @@ export default {
       }
       try {
         this.loading = true
-        await this.$axios.$put('/corporate/companyDetails', this.companyDetails)
-        await this.submitCompanyDetailsHandler(this.companyDetails)
+        const representativeDetails = await this.$cookies.get(
+          'representativeDetails'
+        )
+        const requestId = await this.$cookies.get('requestId')
+        const companyDetails = {
+          ...this.companyDetails,
+          ...representativeDetails,
+          requestId,
+        }
+        await this.$axios.$put('/corporate/companyDetails', companyDetails)
+        await this.submitCompanyDetailsHandler(companyDetails)
         this.loading = false
         this.$router.replace('/user/corporate/director-details')
+        this.$cookies.remove('representativeDetails')
       } catch (err) {
         this.loading = false
         this.message = err.response.data.errorMessage
@@ -158,8 +173,8 @@ export default {
         return true
       }
       if (
-        this.companyDetails.phoneNumber === '' ||
-        this.companyDetails.phoneNumber === undefined
+        this.companyDetails.companyPhoneNo === '' ||
+        this.companyDetails.companyPhoneNo === undefined
       ) {
         this.errorMessageHandler('Company Phone Number')
         return true

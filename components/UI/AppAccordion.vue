@@ -1,9 +1,9 @@
 <template>
   <div>
-    <vsa-list :init-active="true">
+    <vsa-list :init-active="initIsTrue">
       <vsa-item>
         <vsa-heading
-          ><span class="accordion_heading">{{ `${heading} ${counter}` }}</span>
+          ><span class="accordion_heading">{{ `${heading}` }}</span>
         </vsa-heading>
         <vsa-icon>
           <span class="open"></span>
@@ -36,9 +36,9 @@ export default {
       type: String,
       default: '',
     },
-    counter: {
-      type: Number,
-      default: 1,
+    initIsTrue: {
+      type: Boolean,
+      default: false,
     },
   },
 }

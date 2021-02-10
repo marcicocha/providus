@@ -3,7 +3,6 @@
     <AppTitleComponent heading="Next Step" />
     <div>
       <hr />
-      <br />
       <p>
         Emails will be sent to your Company’s Directors and Signatories with a
         link to the web application where they’ll be required to complete a few

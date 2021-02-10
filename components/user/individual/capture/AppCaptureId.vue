@@ -278,6 +278,7 @@ pre {
   left: 0;
   z-index: 2;
   width: 100%;
-  transform: scaleX(-1);
+
+  /* transform: scaleX(-1); */
 }
 </style>
