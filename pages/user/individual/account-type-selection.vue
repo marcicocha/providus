@@ -16,13 +16,13 @@
           <div class="column is-6">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="opaque column is-6">
-            <!-- <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />-->
-            <AppCard
+          <div class="column is-6">
+            <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
+            <!-- <AppCard
               class="opaque"
               :card-data="corporate"
               @onClickHandler="() => {}"
-            />
+            /> -->
           </div>
         </div>
       </div>
@@ -255,8 +255,8 @@ export default {
         return
       }
 
-      if (this.accountInformation.BVN.length < 11) {
-        this.message = 'The BVN entered is incomplete. BVN length should be 11'
+      if (this.accountInformation.BVN.length !== 11) {
+        this.message = 'BVN length should be 11'
 
         this.$toast.open({
           message: `<p class="toast-title">BVN Validation Message</p>

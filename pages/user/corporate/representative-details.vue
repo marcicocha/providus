@@ -12,8 +12,7 @@
           label="RC No"
           placeholder="Enter RC Number"
           :disabled="isLoading"
-          max-length="11"
-          min-length="11"
+          max-length="10"
         />
         <div style="height: 20px"></div>
         <AppButton
@@ -46,7 +45,7 @@
           </div>
           <div>
             <AppInput
-              v-model="representativeDetails.emailAddress"
+              v-model="representativeDetails.email"
               label="Email Address"
               placeholder="Enter your Email Address"
             />
@@ -105,7 +104,7 @@ export default {
     async getRequestId(value) {
       try {
         const { response } = await this.$axios.$get(
-          `/individual/getRequestIdByRcNo?rcNo=${value}`
+          `/corporate/getRequestIdByRcNo?rcNo=${value}`
         )
         this.$cookies.set('requestId', response.requestId)
       } catch (err) {
@@ -141,7 +140,10 @@ export default {
       this.isLoading = true
       try {
         this.isLoading = true
-        await this.$axios.$post('/corporate', this.rcNo)
+        const rcNo = {
+          rcNo: this.rcNo,
+        }
+        await this.$axios.$post('/corporate', rcNo)
         await this.submitRcHandler(this.rcNo)
         this.getRequestId(this.rcNo)
         this.isRC = false
@@ -253,8 +255,8 @@ export default {
         return true
       }
       if (
-        this.representativeDetails.emailAddress === '' ||
-        this.representativeDetails.emailAddress === undefined
+        this.representativeDetails.email === '' ||
+        this.representativeDetails.email === undefined
       ) {
         this.errorMessageHandler('Email Address')
         return true
