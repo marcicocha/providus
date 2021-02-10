@@ -105,7 +105,7 @@ const ctx = c.getContext('2d')
 const width = 1280
 const height = 720
 
-const video = document.querySelector('video')
+let video = document.querySelector('video')
 const text = document.querySelector('#video-settings')
 const feedback = document.querySelector('#feedback')
 
@@ -114,8 +114,8 @@ const selectors = [videoSelect]
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 video.onloadedmetadata = function () {
-  document.querySelector('#start-capture').disabled = false
-  document.querySelector('#find-face').disabled = false
+  // document.querySelector('#start-capture').disabled = false
+  // document.querySelector('#find-face').disabled = false
   const settings = video.srcObject.getVideoTracks()[0].getSettings()
   c.width = video.videoWidth
   c.height = settings.height

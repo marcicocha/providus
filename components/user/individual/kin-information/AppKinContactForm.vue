@@ -14,7 +14,7 @@
             v-model="kinInfoObject.phoneNumber"
             label="Phone Number"
             placeholder="Enter Number"
-            isPhone
+            is-phone
           />
         </div>
         <div class="column">
@@ -22,7 +22,7 @@
             v-model="kinInfoObject.altPhoneNumber"
             label="Alternate Phone Number"
             placeholder="Enter Number"
-            isPhone
+            is-phone
           />
         </div>
       </div>
@@ -32,7 +32,6 @@
             v-model="kinInfoObject.houseNo"
             label="House No."
             placeholder="Enter No."
-            isNumber
           />
         </div>
         <div class="column is-8">
@@ -40,7 +39,7 @@
             v-model="kinInfoObject.landMark"
             label="Closest Landmark"
             placeholder="Enter Closest Landmark"
-            isText
+            is-text
           />
         </div>
       </div>
@@ -50,7 +49,6 @@
             v-model="kinInfoObject.streetName"
             label="Street Name"
             placeholder="Enter Street Name"
-            isText
           />
         </div>
         <div class="column">
@@ -58,7 +56,7 @@
             v-model="kinInfoObject.city"
             label="City/Town"
             placeholder="Enter City or Town"
-            isText
+            is-text
           />
         </div>
       </div>

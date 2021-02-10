@@ -1,5 +1,5 @@
 {
-  "name": "account-opener",
+  "name": "providus-onboarding",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -26,8 +26,12 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/bulma": "^1.3.0",
+    "browser-or-node": "^1.3.0",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
+    "cross-env": "^5.2.1",
+    "dayjs": "^1.8.17",
+    "dotenv": "^8.1.0",
     "nuxt": "^2.14.6",
     "vue-capture": "^0.1.7",
     "vue-plugin-load-script": "^1.3.2",

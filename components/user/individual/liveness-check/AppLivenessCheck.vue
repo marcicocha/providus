@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading">
+  <div v-show="!loading">
     <div id="clientcontainer">
       <h1 id="instructions">Please center your face so it fills the guide</h1>
       <div id="videocontainer">
@@ -24,7 +24,6 @@
         <button id="btn-settings" class="fas fa-cogs"></button>
         <p id="instructions_on_face"></p>
       </div>
-
       <div id="settingsdiv" class="panel container_invisible">
         <ul>
           <li>
@@ -79,8 +78,14 @@
         <button id="btn-settings-return">Back</button>
       </div>
       <label id="score3dfl"></label>
+      <input
+        id="liveness-result"
+        v-model="livenessCapture"
+        class="mbtn"
+        type="text"
+        @click="getLivenessResult"
+      />
     </div>
-
     <AppButton
       id="btn-start-session"
       title="Please Wait"
@@ -90,6 +95,7 @@
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'AppLivenessCheck',
@@ -99,9 +105,17 @@ export default {
   data() {
     return {
       loading: true,
+      livenessCapture: '',
+      reqId: '',
     }
   },
-  computed: {},
+  watch: {
+    livenessCapture(update) {
+      if (update) {
+        this.saveLivenessCheck()
+      }
+    },
+  },
   mounted() {
     this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
@@ -113,7 +127,8 @@ export default {
                 this.$loadScript('/daon/3dfl/3dflClient_withlib.js').then(
                   () => {
                     setTimeout(() => {
-                      console.log('All Dependencies loaded')
+                      const el = document.querySelector('#liveness-result')
+                      el.addEventListener('click', this.getLivenessResult)
                     }, 1000)
                   }
                 )
@@ -122,10 +137,25 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   methods: {
@@ -133,9 +163,82 @@ export default {
       //  this.$emit('submitCapturehandler')
       document.querySelector('#btn-start-session').click()
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
+    getImage(data) {},
+    getLivenessResult() {
+      this.livenessCapture = document.querySelector('#liveness-result').value
     },
+    async saveLivenessCheck() {
+      const payload = {
+        requestId: this.$cookies.get('requestId'),
+        base64Video: this.livenessCapture,
+      }
+
+      try {
+        const response = await this.$axios.$post(
+          '/individual/videoFaceEvaluation',
+          payload
+        )
+
+        if (response) {
+          this.createAccount()
+        }
+      } catch (err) {
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
+    },
+    async createAccount() {
+      const id = this.$cookies.get('requestId')
+      const createUrl = `/individual/accountNumber?requestId=${String(id)}`
+
+      try {
+        const response = await this.$axios.$get(createUrl)
+
+        if (response.hasError === false) {
+          this.accountNumberHandler(response.response)
+          this.$router.replace('/user/individual/weldone')
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const errorMessage = err.response.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
+    ...mapActions({
+      accountNumberHandler: 'individualModule/SAVE_ACCOUNT_NUMBER',
+    }),
   },
 }
 </script>
@@ -384,6 +487,9 @@ pre {
   display: inline-block;
   float: left;
   font-size: 9px;
+  position: absolute;
+  left: 0;
+  z-index: -1;
 }
 .sl,
 #face-coord {

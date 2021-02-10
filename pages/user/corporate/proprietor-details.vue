@@ -3,15 +3,33 @@
     <AppTitleComponent heading="Proprietor Details" />
     <br />
     <div>
-      <AppAccordion heading="Proprietor">
+      <AppAccordion
+        v-for="(item, index) in proprietorList"
+        :key="index"
+        :heading="`Proprietor ${index + 1}`"
+        :init-is-true="false"
+      >
         <template slot="content">
-          <AppProprietorForm />
+          <AppProprietorForm
+            :proprietor-details-object="item"
+            :is-added-to-list="true"
+            @editProprietorFormHandler="editProprietorFormHandler(item)"
+            @removeProprietorFormHandler="removeProprietorFormHandler(item)"
+          />
         </template>
       </AppAccordion>
-      <p><a @click="addProprietorFormHandler">+ Add Proprietor</a></p>
+      <AppProprietorForm
+        v-if="proprietorList.length < 5"
+        :proprietor-details-object="proprietorDetailsObject"
+        @addProprietorFormHandler="addProprietorFormHandler"
+      />
     </div>
     <br />
-    <AppButton title="Continue" @click="submitProprietorHandler" />
+    <AppButton
+      v-if="proprietorList.length !== 0"
+      title="Continue"
+      @click="submitProprietorHandler"
+    />
   </div>
 </template>
 <script>
@@ -26,22 +44,87 @@ export default {
     AppProprietorForm,
     AppButton,
   },
+  data() {
+    return {
+      proprietorList: [],
+      proprietorDetailsObject: {},
+      loading: false,
+    }
+  },
   methods: {
-    submitProprietorHandler() {
-      this.$router.replace('/user/corporate/next-step')
+    async submitProprietorHandler() {
+      try {
+        this.loading = true
+        await this.$axios.$put(
+          '/corporate/proprietorDetails',
+          this.proprietorList
+        )
+        this.loading = false
+        this.$router.replace('/user/corporate/next-step')
+      } catch (err) {
+        this.loading = false
+        this.message = err.response.data.errorMessage
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
+    },
+    editProprietorFormHandler(obj, index) {
+      this.proprietorList = this.proprietorList.map((proprietor) => {
+        return proprietor.key === obj.key ? obj : proprietor
+      })
     },
     addProprietorFormHandler() {
-      console.log('THIS:::')
+      if (this.proprietorList.length <= 5) {
+        const requestId = this.$cookies.get('requestId')
+        const obj = {
+          ...this.proprietorDetailsObject,
+          requestId,
+          key: Date.now(),
+        }
+        console.log(obj, 'OBJECT')
+        this.proprietorList.push(obj)
+      } else {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Only 5 proprietors can be added</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+      this.proprietorDetailsObject = {}
+    },
+    removeProprietorFormHandler(obj) {
+      const newArray = this.proprietorList.filter(
+        (proprietor) => proprietor.key !== obj.key
+      )
+      this.proprietorList = newArray
+      console.log(this.proprietorList)
     },
   },
 }
 </script>
-<style lang="scss" scoped>
-@media only screen and (max-width: 600px) {
-  p {
-    a {
-      font-size: 13px !important;
-    }
-  }
-}
-</style>

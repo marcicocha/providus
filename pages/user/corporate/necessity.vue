@@ -3,7 +3,6 @@
     <AppTitleComponent heading="What you'll need" />
     <div>
       <hr />
-      <br />
       <div>
         <ol type="a">
           <li>

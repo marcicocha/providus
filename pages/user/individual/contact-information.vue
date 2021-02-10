@@ -1,9 +1,9 @@
 <template>
   <div>
-    <a class="back-button" @click="backButtonHandler"
+    <!-- <a class="back-button" @click="backButtonHandler"
       ><img src="~assets/images/back-arrow.svg" alt="back-button" />
       <span>Back</span></a
-    >
+    > -->
     <AppTitleComponent heading="Contact Details" />
     <AppContactForm />
   </div>
@@ -17,16 +17,14 @@ export default {
     AppContactForm,
   },
   methods: {
-    backButtonHandler() {
-      this.$router.replace('/user/individual/personal-information')
-    },
+    // backButtonHandler() {
+    //   this.$router.replace('/user/individual/personal-information')
+    // },
   },
 }
 </script>
 <style lang="scss" scoped>
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a class="back-button" @click="backButtonHandler"
+    <a v-if="!isBasicDetails" class="back-button" @click="backButtonHandler"
       ><img src="~assets/images/back-arrow.svg" alt="back-button" />
       <span>Back</span></a
     >
@@ -45,10 +45,10 @@ export default {
       this.isBasicDetails = false
     },
     backButtonHandler() {
-      if (this.isBasicDetails) {
-        this.$router.replace('/user/individual/contact-information')
-        return
-      }
+      // if (this.isBasicDetails) {
+      //   this.$router.replace('/user/individual/contact-information')
+      //   return
+      // }
       if (!this.isBasicDetails) {
         this.isBasicDetails = true
       }
@@ -71,7 +71,7 @@ export default {
           const validationError = res.data.fieldValidationErrors
             ? res.data.fieldValidationErrors
             : []
-          if (validationError === []) {
+          if (validationError === [] || !validationError) {
             this.$toast.open({
               message: `<p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
@@ -109,8 +109,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }

@@ -92,6 +92,7 @@
               label="If Yes, Specify?"
               placeholder="Select Option"
               :disabled="nationalityObject.dualCitizenship !== 'YES'"
+              is-text
             />
           </div>
         </div>
@@ -198,6 +199,17 @@ export default {
             this.$emit('errorMessageHandler', 'Alt Citizenship')
             return
           }
+        }
+        const expiryDate = new Date(this.nationalityObject.permitExpiryDate)
+        const issuedDate = new Date(this.nationalityObject.permitIssueDate)
+        if (expiryDate <= issuedDate) {
+          this.$toast.open({
+            message: `<p class="toast-msg">Expiry Date should be greater than Issued date</p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
         }
       }
       if (

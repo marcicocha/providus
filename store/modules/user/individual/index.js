@@ -7,6 +7,7 @@ const state = () => ({
   personalInfoObj: {},
   contactInfoObj: {},
   kinObjInfo: {},
+  accountNumber: '',
 })
 export default {
   namespaced: true,

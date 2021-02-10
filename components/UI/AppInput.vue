@@ -4,6 +4,7 @@
   <div class="full-input">
     <label for="name">{{ label }}</label>
     <input
+      id="name"
       v-model="innerValue"
       :type="inputType"
       name="name"
@@ -72,8 +73,8 @@ export default {
       default: () => /^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$/,
     },
     maxLength: {
-      type: Number,
-      default: 20,
+      type: [Number, String],
+      default: 100,
     },
     minDate: {
       type: String,
@@ -105,23 +106,18 @@ export default {
         if (newVal) {
           if (this.isNumber && !this.isText && !this.isPhone) {
             this.innerValue = String(newVal)
-              .toUpperCase()
               .slice(0, this.maxLength)
               .replace(this.numberOnlyRegex, '')
           } else if (!this.isNumber && this.isText && !this.isPhone) {
             this.innerValue = String(newVal)
-              .toUpperCase()
               .slice(0, this.maxLength)
               .replace(this.textOnlyRegex, '')
           } else if (!this.isNumber && !this.isText && this.isPhone) {
             this.innerValue = String(newVal)
-              .toUpperCase()
               .slice(0, 11)
               .replace(this.numberOnlyRegex, '')
           } else {
-            this.innerValue = String(newVal)
-              .toUpperCase()
-              .slice(0, this.maxLength)
+            this.innerValue = String(newVal).slice(0, this.maxLength)
           }
         }
         this.$emit('input', this.innerValue)
@@ -165,7 +161,6 @@ input,
 input::before,
 input::after {
   -webkit-user-select: initial;
-  -khtml-user-select: initial;
   -moz-user-select: initial;
   -ms-user-select: initial;
   user-select: initial;

@@ -1,6 +1,6 @@
 <template>
   <div class="full-input">
-    <label for="name">{{ label }}</label>
+    <label id="name" for="name">{{ label }}</label>
     <div
       class="custom-select"
       :tabindex="tabindex"
@@ -210,8 +210,23 @@ export default {
           this.lastFetchId += 1
         })
         .catch((err) => {
-          console.log(err, 'Error!!')
           this.fetching = false
+          let errorMessage = ''
+
+          // Error Message from Backend
+          // eslint-disable-next-line no-prototype-builtins
+          if (err.hasOwnProperty('response')) {
+            const res = err.response
+            errorMessage = res.data.errorMessage
+
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          }
         })
     },
   },

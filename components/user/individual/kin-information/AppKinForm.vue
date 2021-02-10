@@ -22,7 +22,7 @@
               v-model="kinInfoObject.surname"
               label="Surname"
               placeholder="Type Surname"
-              isText
+              is-text
             />
           </div>
         </div>
@@ -32,7 +32,7 @@
               v-model="kinInfoObject.firstName"
               label="First Name"
               placeholder="First Name"
-              isText
+              is-text
             />
           </div>
           <div class="column is-6">
@@ -40,7 +40,7 @@
               v-model="kinInfoObject.middleName"
               label="Middle Name"
               placeholder="Middle Name"
-              isText
+              is-text
             />
           </div>
         </div>
@@ -101,8 +101,10 @@
             <AppInput
               v-model="kinInfoObject.bvn"
               label="BVN"
-              placeholder="Enter BVN"
-              isNumber
+              placeholder="Enter Bank Verification Number"
+              is-number
+              max-length="11"
+              min-length="11"
             />
           </div>
         </div>
@@ -187,22 +189,24 @@ export default {
         this.$emit('errorMessageHandler', 'Date of Birth')
         return
       }
-      if (
-        this.kinInfoObject.bvn === undefined ||
-        this.kinInfoObject.bvn === ''
-      ) {
-        this.$emit('errorMessageHandler', 'BVN')
-        return
+
+      if (this.kinInfoObject.bvn) {
+        if (this.kinInfoObject.bvn.length < 11) {
+          this.message =
+            'The BVN entered is incomplete. BVN length should be 11'
+
+          this.$toast.open({
+            message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
       }
-      const year = this.kinInfoObject.dateOfBirth.substring(0, 4)
-      const newDate = new Date()
-      const currentYear = newDate.getFullYear()
-      if (currentYear - year < 18) {
-        this.$emit('errorMessageHandler', 'Year')
-        return
-      }
+
       // const year = this.kinInfoObject.dateOfBirth.getYear()
-      // console.log(year)
       this.$emit('kinDetailsHandler')
     },
   },

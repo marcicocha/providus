@@ -1,7 +1,7 @@
 <template>
   <div v-if="!loading">
     <div>
-      <div class="form_field">
+      <div id="control">
         <label
           >Doc type:
           <select id="doc-type" onchange="onSelectChange(this.value)">
@@ -23,24 +23,25 @@
             onchange="onWidthChange(this.value)"
           />
         </label>
+        <div class="select">
+          <label for="videoSource">Video source: </label
+          ><select id="videoSource" onchange="restart()"></select>
+        </div>
+        <p>Response:</p>
+        <pre></pre>
+        <p>Sent image:</p>
+        <p>Processed image from server:</p>
+        <img id="img-processed" />
+        <button id="restartvideo" onclick="restart()">Restart</button>
+        <button id="stopcamera" onclick="restart()">Stop Camera</button>
+        <button id="buttonscontainer" onclick="capture()">Capture</button>
       </div>
-      <div v-if="!isCaptured" class="container">
+      <div class="container">
         <canvas></canvas>
+        <img v-show="isCaptured" id="img-sent" />
       </div>
-      <div class="select">
-        <label for="videoSource">Video source: </label
-        ><select id="videoSource" onchange="restart()"></select>
-      </div>
-
-      <!-- <p>Response:</p>
-      <pre></pre>
-      <p>Sent image:</p> -->
-      <img v-if="isCaptured" id="img-sent" />
-      <!-- <p>Processed image from server:</p>
-      <img id="img-processed" /> -->
     </div>
 
-    <button id="buttonscontainer" onclick="capture()">Capture</button>
     <AppButton
       v-if="!isCaptured"
       title="Capture"
@@ -77,15 +78,54 @@ export default {
       .then(() => {
         this.loading = false
         this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {
-            console.log('dependencies loaded')
-          })
+          this.$loadScript('/daon/doc/app.js').then(() => {})
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      })
+  },
+  beforeDestroy() {
+    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      .then(() => {
+        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+          this.$unloadScript('/daon/doc/app.js').then(() => {})
+        })
+      })
+      .catch((err) => {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   destroyed() {
@@ -98,15 +138,13 @@ export default {
       this.isCaptured = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#img-sent').src
-        console.log('Image Source', this.imgSrc)
       }, 500)
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
+      document.querySelector('#restartvideo').click()
     },
     async nextHandler() {
       try {
@@ -116,13 +154,15 @@ export default {
         })
         const requestId = this.$cookies.get('requestId')
         const idObject = this.$cookies.get('idObject')
-        console.log(file, 'FILE')
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)
         formData.append('issuedDate', idObject.issuedDate)
         formData.append('expiryDate', idObject.expiryDate)
         await this.$axios.$post('/individual/idCardUpload', formData)
+
+        document.querySelector('#stopcamera').click()
+
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
         let errorMessage
@@ -221,7 +261,8 @@ pre {
 .select {
   visibility: hidden;
 }
-#buttonscontainer {
+#buttonscontainer,
+#control {
   text-align: left;
   visibility: hidden;
   position: absolute;
@@ -231,13 +272,13 @@ pre {
   z-index: -1;
 }
 #img-sent {
+  position: absolute;
   display: inline-block;
+  top: 0;
+  left: 0;
+  z-index: 2;
   width: 100%;
 
-  /* position: absolute;
-  left: 0;
-  top: 0; */
-
-  transform: scaleX(-1);
+  /* transform: scaleX(-1); */
 }
 </style>

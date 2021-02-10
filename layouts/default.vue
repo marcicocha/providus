@@ -31,7 +31,17 @@
           />
         </footer>
         <div class="page_container">
-          <Nuxt />
+          <!-- Development -->
+          <!-- <Nuxt /> -->
+
+          <!-- Production -->
+          <Nuxt v-if="isMobile" />
+          <div v-else class="not_available__desktop">
+            <p>
+              <i style="color: #fdb813" class="fas fa-bell" /> This application
+              is not available for desktop use, please use on a mobile device
+            </p>
+          </div>
         </div>
         <footer class="web_footer">
           <img
@@ -50,8 +60,10 @@
   </div>
 </template>
 <script>
+import { isBrowser } from 'browser-or-node'
 import { mapState } from 'vuex'
 import AppLoader from '@/components/UI/AppLoader.vue'
+
 export default {
   components: {
     AppLoader,
@@ -66,12 +78,19 @@ export default {
       pageTag: {
         'animated fadeinright': false,
       },
+      window: {
+        width: 0,
+        height: 0,
+      },
     }
   },
   computed: {
     ...mapState({
       accountCategory: (state) => state.accountCategory,
     }),
+    isMobile() {
+      return this.handleResize()
+    },
   },
   beforeMount() {
     const root = document.querySelector('html')
@@ -79,6 +98,12 @@ export default {
   },
   mounted() {
     this.initLoader()
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
+    this.$cookies.removeAll()
   },
   methods: {
     initLoader() {
@@ -98,6 +123,37 @@ export default {
     goHome() {
       this.$router.push('/')
     },
+    handleResize() {
+      if (isBrowser) {
+        const isMobile = {
+          Android() {
+            return navigator.userAgent.match(/Android/i)
+          },
+          BlackBerry() {
+            return navigator.userAgent.match(/BlackBerry/i)
+          },
+          iOS() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i)
+          },
+          Opera() {
+            return navigator.userAgent.match(/Opera Mini/i)
+          },
+          Windows() {
+            return navigator.userAgent.match(/IEMobile/i)
+          },
+          any() {
+            return (
+              isMobile.Android() ||
+              isMobile.BlackBerry() ||
+              isMobile.iOS() ||
+              isMobile.Opera() ||
+              isMobile.Windows()
+            )
+          },
+        }
+        return isMobile.any()
+      }
+    },
   },
 }
 </script>
@@ -105,6 +161,16 @@ export default {
 .home-icon {
   cursor: pointer !important;
 }
+
+.not_available__desktop {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-weight: 600;
+}
+
 .wrapper {
   position: relative;
   width: auto;
@@ -112,6 +178,7 @@ export default {
   margin: 0 auto;
   height: 100vh;
 }
+
 .page_container {
   padding: 10px 18px;
   // overflow: scroll;
@@ -123,21 +190,25 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .corporate_background {
   background-image: url('../assets/images/corporate-background-image.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 footer {
   width: 100%;
   height: 100%;
+
   img {
     width: 100%;
     height: 100%;
   }
 }
-@media only screen and (max-width: 1024px) {
+
+@media only screen and (max-width: 768px) {
   .web_footer {
     display: none;
   }
@@ -161,11 +232,69 @@ footer {
     padding: 20px;
     padding-bottom: 0px;
     text-align: center;
+
     img {
       height: 100%;
     }
   }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: relative;
+    right: 0;
+  }
 }
+
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  .wrapper_container {
+    display: grid;
+    grid-template-rows: 13% auto 13%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 80px;
+    width: 45vw;
+    height: 85vh;
+    margin: auto;
+    background-color: #fff;
+  }
+  header {
+    text-align: right;
+    padding: 20px 30px;
+    // padding: 17px 30px;
+    img {
+      height: 100%;
+    }
+  }
+  .card {
+    height: 150px !important;
+  }
+  .parent-container {
+    width: 100% !important;
+    position: relative;
+  }
+  .page_container {
+    padding: 0 30px;
+  }
+  .web_footer {
+    display: block;
+  }
+  .mobile_footer {
+    display: none;
+  }
+  .account-info__block {
+    width: 100%;
+    padding-top: 0;
+  }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: absolute;
+    right: 41px;
+    margin-top: 7px;
+  }
+}
+
 @media only screen and (min-width: 1025px) {
   .wrapper_container {
     display: grid;
@@ -196,7 +325,14 @@ footer {
   .mobile_footer {
     display: none;
   }
+  .back-button {
+    display: inline;
+    align-content: center;
+    position: relative;
+    right: 0;
+  }
 }
+
 @media only screen and (min-width: 1536px) {
   .web_footer {
     display: block;
@@ -255,6 +391,7 @@ footer {
     }
   }
 }
+
 @media only screen and (max-width: 596px) {
   footer {
     img {

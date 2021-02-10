@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="wrap">
       <div class="columns is-gapless is-mobile">
         <div class="column is-4">
           <AppSelectHybrid
@@ -22,7 +22,7 @@
             v-model="personalInfoObject.surname"
             label="Surname"
             placeholder="Type Surname"
-            isText
+            is-text
           />
         </div>
       </div>
@@ -32,7 +32,7 @@
             v-model="personalInfoObject.firstName"
             label="First Name"
             placeholder="First Name"
-            isText
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -40,7 +40,7 @@
             v-model="personalInfoObject.middleName"
             label="Middle Name"
             placeholder="Middle Name"
-            isText
+            is-text
           />
         </div>
       </div>
@@ -80,7 +80,7 @@
             v-model="personalInfoObject.maidenName"
             label="Mother's Maiden Name"
             placeholder="Type Name"
-            isText
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -98,7 +98,7 @@
             v-model="personalInfoObject.occupation"
             label="Occupation"
             placeholder="Type Occupation"
-            isText
+            is-text
           />
         </div>
         <div class="column is-6 small-left-padding">

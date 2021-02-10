@@ -1,17 +1,35 @@
 <template>
   <div>
     <AppTitleComponent heading="Director Details" />
-    <br />
     <div>
-      <AppAccordion heading="Director">
+      <AppAccordion
+        v-for="(item, index) in directorList"
+        :key="index"
+        :heading="`Director ${index + 1}`"
+        :init-is-true="false"
+      >
         <template slot="content">
-          <AppDirectorForm />
+          <AppDirectorForm
+            :director-details-object="item"
+            :is-added-to-list="true"
+            @editDirectorFormHandler="editDirectorFormHandler(item)"
+            @removeDirectorFormHandler="removeDirectorFormHandler(item)"
+          />
         </template>
       </AppAccordion>
-      <p><a @click="addDirectorFormHandler">+ Add Director</a></p>
+      <AppDirectorForm
+        v-if="directorList.length < 5"
+        :director-details-object="directorDetailsObject"
+        @addDirectorFormHandler="addDirectorFormHandler"
+      />
     </div>
     <br />
-    <AppButton title="Continue" @click="submitDirectorHandler" />
+    <AppButton
+      v-if="directorList.length !== 0"
+      title="Continue"
+      :loading="loading"
+      @click="submitDirectorHandler"
+    />
   </div>
 </template>
 <script>
@@ -26,22 +44,84 @@ export default {
     AppDirectorForm,
     AppButton,
   },
+  data() {
+    return {
+      directorList: [],
+      directorDetailsObject: {},
+      loading: false,
+    }
+  },
   methods: {
-    submitDirectorHandler() {
-      this.$router.replace('/user/corporate/proprietor-details')
+    async submitDirectorHandler() {
+      try {
+        this.loading = true
+        await this.$axios.$put('/corporate/directorDetails', this.directorList)
+        this.loading = false
+        this.$router.replace('/user/corporate/proprietor-details')
+      } catch (err) {
+        this.loading = false
+        this.message = err.response.data.errorMessage
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
+    },
+    editDirectorFormHandler(obj, index) {
+      this.directorList = this.directorList.map((director) => {
+        return director.key === obj.key ? obj : director
+      })
     },
     addDirectorFormHandler() {
-      console.log('direcor:::')
+      if (this.directorList.length <= 5) {
+        const requestId = this.$cookies.get('requestId')
+        const obj = {
+          ...this.directorDetailsObject,
+          requestId,
+          key: Date.now(),
+        }
+        console.log(obj, 'OBJECT')
+        this.directorList.push(obj)
+      } else {
+        this.$toast.open({
+          message: `<p class="toast-msg"> Only 5 Directors can be added</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+      this.directorDetailsObject = {}
+    },
+    removeDirectorFormHandler(obj) {
+      const newArray = this.directorList.filter(
+        (director) => director.key !== obj.key
+      )
+      this.directorList = newArray
+      console.log(this.directorList)
     },
   },
 }
 </script>
-<style lang="scss" scoped>
-@media only screen and (max-width: 600px) {
-  p {
-    a {
-      font-size: 13px !important;
-    }
-  }
-}
-</style>

@@ -6,7 +6,23 @@
     />
     <div class="account-info__block">
       <div><hr /></div>
-      <div>
+      <div v-if="isRC">
+        <AppInput
+          v-model="rcNo"
+          label="RC No"
+          placeholder="Enter RC Number"
+          :disabled="isLoading"
+          max-length="10"
+        />
+        <div style="height: 20px"></div>
+        <AppButton
+          title="Submit RC No"
+          :disabled="!rcNo"
+          :loading="isLoading"
+          @click="rcValidationHandler"
+        />
+      </div>
+      <div v-if="isRepresentative">
         <h2>Representative Details</h2>
         <div>
           <div class="columns is-mobile" style="margin-bottom: 5px">
@@ -15,7 +31,7 @@
                 v-model="representativeDetails.firstName"
                 label="First Name"
                 placeholder="Enter First Name"
-                isText
+                is-text
               />
             </div>
             <div class="column">
@@ -23,13 +39,13 @@
                 v-model="representativeDetails.surname"
                 label="Surname"
                 placeholder="Enter Surname"
-                isText
+                is-text
               />
             </div>
           </div>
           <div>
             <AppInput
-              v-model="representativeDetails.emailAddress"
+              v-model="representativeDetails.email"
               label="Email Address"
               placeholder="Enter your Email Address"
             />
@@ -40,7 +56,7 @@
                 v-model="representativeDetails.phoneNumber"
                 label="Phone Number"
                 placeholder="Enter Number"
-                isPhone
+                is-phone
               />
             </div>
             <div class="column">
@@ -48,18 +64,23 @@
                 v-model="representativeDetails.altPhoneNumber"
                 label="Alternate Phone Number"
                 placeholder="Enter Number"
-                isPhone
+                is-phone
               />
             </div>
           </div>
         </div>
         <div style="height: 20px"></div>
-        <AppButton title="Continue" @click="representativeSubmitHandler" />
+        <AppButton
+          title="Continue"
+          :loading="loading"
+          @click="representativeSubmitHandler"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import AppTitleComponent from '@/components/UI/AppTitleComponent'
 import AppInput from '@/components/UI/AppInput'
 import AppButton from '@/components/UI/AppButton'
@@ -72,12 +93,196 @@ export default {
   data() {
     return {
       representativeDetails: {},
+      loading: false,
+      isRepresentative: false,
+      isRC: true,
+      rcNo: '',
+      isLoading: false,
     }
   },
   methods: {
-    representativeSubmitHandler() {
-      this.$router.replace('/user/corporate/company-details')
+    async getRequestId(value) {
+      try {
+        const { response } = await this.$axios.$get(
+          `/corporate/getRequestIdByRcNo?rcNo=${value}`
+        )
+        this.$cookies.set('requestId', response.requestId)
+      } catch (err) {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
     },
+    async rcValidationHandler() {
+      if (!this.rcNo || this.rcNo === undefined || this.rcNo === '') {
+        this.$toast.open({
+          message: `<p class="toast-msg"> RC field is required to proceed </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
+      this.isLoading = true
+      try {
+        this.isLoading = true
+        const rcNo = {
+          rcNo: this.rcNo,
+        }
+        await this.$axios.$post('/corporate', rcNo)
+        await this.submitRcHandler(this.rcNo)
+        this.getRequestId(this.rcNo)
+        this.isRC = false
+        this.isRepresentative = true
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+
+        let errorMessage = ''
+
+        // Network Error
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        const error = err.response.data.errorMessage
+
+        // Application already completed with RC entered
+        if (String(error).toLowerCase().includes('already completed')) {
+          errorMessage = error
+          this.$toast.open({
+            message: `<p class="toast-title">Registration Status</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'info',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
+        // BVN Already Exists
+        if (error.includes('already exist')) {
+          const { response } = await this.$axios.$get(
+            `/corporate/getCurrentWorkFlow?rcNo=${this.rcNo}`
+          )
+          this.getRequestId(this.rcNo)
+
+          const nextWorkFlow = response.nextWorkFlow
+          if (nextWorkFlow === 'COMPANY_DETAILS') {
+            this.isRC = false
+            this.isRepresentative = true
+          }
+          if (nextWorkFlow === 'DIRECTOR_DETAILS') {
+            this.$router.replace('/user/corporate/director-details')
+          }
+          if (nextWorkFlow === 'PROPRIETOR_DETAILS') {
+            this.$router.replace('/user/corporate/proprietor-details')
+          }
+          if (nextWorkFlow === 'UPLOADS') {
+            this.$router.replace('/user/corporate/upload-document')
+          }
+          return
+        }
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
+    async representativeSubmitHandler() {
+      const validationResponse = this.validationHandler()
+      if (validationResponse) {
+        return
+      }
+      try {
+        this.loading = true
+        await this.submitRepresentativeDetailsHandler(
+          this.representativeDetails
+        )
+        this.$cookies.set('representativeDetails', this.representativeDetails)
+        this.$router.replace('/user/corporate/company-details')
+        this.loading = false
+      } catch (err) {
+        this.loading = false
+      }
+    },
+    validationHandler() {
+      if (
+        this.representativeDetails.firstName === '' ||
+        this.representativeDetails.firstName === undefined
+      ) {
+        this.errorMessageHandler('First Name')
+        return true
+      }
+      if (
+        this.representativeDetails.surname === '' ||
+        this.representativeDetails.surname === undefined
+      ) {
+        this.errorMessageHandler('Surname')
+        return true
+      }
+      if (
+        this.representativeDetails.email === '' ||
+        this.representativeDetails.email === undefined
+      ) {
+        this.errorMessageHandler('Email Address')
+        return true
+      }
+      if (
+        this.representativeDetails.phoneNumber === '' ||
+        this.representativeDetails.phoneNumber === undefined
+      ) {
+        this.errorMessageHandler('Phone Number')
+        return true
+      }
+      return false
+    },
+    errorMessageHandler(message) {
+      this.$toast.open({
+        message: `<p class="toast-msg"> ${message}</p>`,
+        type: 'error',
+        duration: 4000,
+        dismissible: true,
+      })
+    },
+    ...mapActions({
+      submitRepresentativeDetailsHandler:
+        'corporateModule/POST_REPRESENTATIVE_DETAILS',
+      submitRcHandler: 'individualModule/GET_RC_INFORMATION',
+    }),
   },
 }
 </script>

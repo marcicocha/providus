@@ -13,21 +13,26 @@
       <div v-if="isAccountCategory">
         <h2>Select Account Category</h2>
         <div class="columns is-mobile">
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="individual" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column opaque">
+          <div class="column is-6">
             <AppCard :card-data="corporate" @onClickHandler="onClickHandler" />
+            <!-- <AppCard
+              class="opaque"
+              :card-data="corporate"
+              @onClickHandler="() => {}"
+            /> -->
           </div>
         </div>
       </div>
       <div v-if="isAccountType">
         <h2>Select Account Type</h2>
         <div class="columns is-mobile">
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="savings" @onClickHandler="onClickHandler" />
           </div>
-          <div class="column">
+          <div class="column is-6">
             <AppCard :card-data="current" @onClickHandler="onClickHandler" />
           </div>
         </div>
@@ -45,7 +50,9 @@
             label="BVN"
             placeholder="Enter Bank Verification Number"
             :disabled="isLoading"
-            isNumber
+            is-number
+            max-length="11"
+            min-length="11"
           />
           <div style="height: 20px"></div>
           <AppButton
@@ -184,8 +191,8 @@ export default {
       }
       if (value === 'Corporate') {
         // Disable Coperate until we're ready
-        // this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
-        // this.$router.replace('/user/corporate/representative-details')
+        this.$store.dispatch('SET_ACCOUNT_CATEGORY', 'corporate')
+        this.$router.replace('/user/corporate/representative-details')
       }
       if (value === 'Savings') {
         this.accountInformation = {
@@ -194,6 +201,7 @@ export default {
         }
         this.isBvn = true
         this.isAccountType = false
+        this.$cookies.set('accountType', 'SAVINGS')
       }
       if (value === 'Current') {
         this.accountInformation = {
@@ -202,6 +210,7 @@ export default {
         }
         this.isBvn = true
         this.isAccountType = false
+        this.$cookies.set('accountType', 'CURRENT')
       }
     },
     async getRequestId(value) {
@@ -210,7 +219,24 @@ export default {
           `/individual/getRequestIdByBvn?bvn=${value}`
         )
         this.$cookies.set('requestId', response.requestId)
-      } catch (err) {}
+      } catch (err) {
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
     },
     async bvnValidationHandler() {
       if (
@@ -218,7 +244,19 @@ export default {
         this.accountInformation.BVN === undefined ||
         this.accountInformation.BVN === ''
       ) {
-        this.message = 'Your BVN seems to be incorrect,'
+        this.message = 'BVN field is required to proceed,'
+        this.$toast.open({
+          message: `<p class="toast-title">BVN Validation Message</p>
+                    <p class="toast-msg"> ${this.message} </p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return
+      }
+
+      if (this.accountInformation.BVN.length !== 11) {
+        this.message = 'BVN length should be 11'
 
         this.$toast.open({
           message: `<p class="toast-title">BVN Validation Message</p>
@@ -229,6 +267,7 @@ export default {
         })
         return
       }
+
       this.fetching = true
       try {
         this.message = ''
@@ -264,6 +303,20 @@ export default {
         }
 
         const error = err.response.data.errorMessage
+
+        // Application already completed with BVN entered
+        if (String(error).toLowerCase().includes('already completed')) {
+          errorMessage = error
+          this.$toast.open({
+            message: `<p class="toast-title">Registration Status</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'info',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+
         // BVN Already Exists
         if (error.includes('already exist')) {
           const { response } = await this.$axios.$get(
@@ -293,7 +346,7 @@ export default {
           if (nextWorkFlow === 'DOC_UPLOAD') {
             this.$router.replace('/user/individual/upload-document')
           }
-          if (nextWorkFlow === 'LIVE_CHECK') {
+          if (nextWorkFlow === 'LIVENESS_CHECK') {
             this.$router.replace('/user/individual/liveness-check')
           }
           return
@@ -303,7 +356,6 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          console.log(err.response, 'ERROR BLOCK')
           errorMessage = res.data.errorMessage
 
           this.$toast.open({
@@ -344,27 +396,13 @@ export default {
   border: none !important;
 }
 .back-button {
-  display: inline-flex;
-  align-content: center;
   span {
     margin-left: 5px;
   }
 }
-h2 {
-  font-family: 'GothamMedium', sans-serif;
-  color: #fdb813;
-  font-weight: bold;
-  line-height: 24px;
-  font-size: 18px;
-  margin-bottom: 30px;
-}
 .account-info__block {
-  width: 80%;
-  //padding-top: 30px;
-  padding-top: 20px;
-}
-hr {
-  margin: 2rem 0 !important;
+  width: 100%;
+  padding-top: 0;
 }
 .bvn-child__block {
   padding-bottom: 15px;
@@ -490,7 +528,7 @@ hr {
   }
   .notification {
     position: absolute;
-    bottom: 0;
+    bottom: 2%;
     font-size: 12px;
   }
   .back-button {

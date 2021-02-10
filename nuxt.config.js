@@ -1,7 +1,7 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'account-onboarding',
+    title: 'providus-onboarding',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,11 +19,21 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/main.scss'],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+  // Plugins to generate: { fallback: true },run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/vueToast.js', ssr: false },
     { src: '~/plugins/loadScript.js', ssr: false },
   ],
+
+  // fallback for static routing
+  publicRuntimeConfig: {
+    // baseURL: process.env.BASE_URL,
+  },
+
+  // Static Build Configuration for Yarn Generate
+  ssr: false,
+  target: 'static',
+  generate: { fallback: true },
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -43,9 +53,9 @@ export default {
     'cookie-universal-nuxt',
   ],
 
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  // Axios
   axios: {
-    baseURL: 'http://192.168.5.53:8089',
+    baseURL: process.env.BASE_URL,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

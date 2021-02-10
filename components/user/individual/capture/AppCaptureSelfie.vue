@@ -94,10 +94,25 @@ export default {
           })
         })
       })
-      .catch((error) => {
+      .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        console.log(error)
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       })
   },
   destroyed() {
@@ -110,7 +125,6 @@ export default {
       this.selfieCapture = true
       setTimeout(() => {
         this.imgSrc = document.querySelector('#image').src
-        console.log('Image Source', this.imgSrc)
       }, 500)
     },
     returnHandler() {
@@ -124,10 +138,10 @@ export default {
           type: 'image/jpeg',
         })
         const requestId = this.$cookies.get('requestId')
-        console.log(file, 'FILE')
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)
+        document.querySelector('#stop-capture').click()
         await this.$axios.$post('/individual/selfieUpload', formData)
         this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {
@@ -145,9 +159,7 @@ export default {
         }
       }
     },
-    getImage(data) {
-      console.log(data, 'IMAGE DATA')
-    },
+    getImage(data) {},
   },
 }
 </script>
