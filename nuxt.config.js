@@ -1,5 +1,6 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  // target: 'static',
   head: {
     title: 'providus-onboarding',
     meta: [
@@ -15,6 +16,9 @@ export default {
           'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
       },
     ],
+  },
+  server: {
+    host: '0', // default: localhost
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/main.scss'],
@@ -56,6 +60,8 @@ export default {
   // Axios
   axios: {
     baseURL: process.env.BASE_URL,
+    // baseURL: 'https://154.113.165.51/api',
+    // baseURL: 'https://customeronline.providusbank.com/api',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
