@@ -35,13 +35,14 @@
           <!-- <Nuxt /> -->
 
           <!-- Production -->
-          <Nuxt v-if="isMobile" />
-          <div v-else class="not_available__desktop">
+          <Nuxt />
+          <!-- <Nuxt v-if="isMobile" /> -->
+          <!-- <div v-else class="not_available__desktop">
             <p>
               <i style="color: #fdb813" class="fas fa-bell" /> This application
               is not available for desktop use, please use on a mobile device
             </p>
-          </div>
+          </div> -->
         </div>
         <footer class="web_footer">
           <img

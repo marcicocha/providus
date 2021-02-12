@@ -1,5 +1,6 @@
 <template>
   <div v-if="!loading">
+    <i class="fa fa-download" @click="pdfMethod">Download</i>
     <div class="container">
       <video
         v-show="!selfieCapture"
@@ -71,6 +72,7 @@
 </template>
 <script>
 import AppButton from '@/components/UI/AppButton'
+import { jsPDF as PdfClass } from 'jspdf'
 export default {
   name: 'AppCaptureSelfie',
   components: {
@@ -131,6 +133,12 @@ export default {
       this.imgSrc = ''
       this.selfieCapture = false
     },
+    pdfMethod(data) {
+      console.log(data, '::: pdf data :::')
+      const doc = new PdfClass()
+      doc.text(data.toString(), 10, 10)
+      doc.save('a4.pdf')
+    },
     async nextHandler() {
       try {
         const file = new File([this.imgSrc], 'selfie.jpg', {
@@ -142,6 +150,7 @@ export default {
         formData.append('file', file)
         formData.append('requestId', requestId)
         document.querySelector('#stop-capture').click()
+        this.pdfMethod(formData)
         await this.$axios.$post('/individual/selfieUpload', formData)
         this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {

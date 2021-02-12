@@ -1,5 +1,6 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  // target: 'static',
   head: {
     title: 'providus-onboarding',
     meta: [
@@ -56,6 +57,7 @@ export default {
   // Axios
   axios: {
     baseURL: process.env.BASE_URL,
+    // baseURL: 'https://154.113.165.51/api',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
