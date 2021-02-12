@@ -17,6 +17,9 @@ export default {
       },
     ],
   },
+  server: {
+    host: '0', // default: localhost
+  },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/main.scss'],
 
@@ -58,6 +61,7 @@ export default {
   axios: {
     baseURL: process.env.BASE_URL,
     // baseURL: 'https://154.113.165.51/api',
+    // baseURL: 'https://customeronline.providusbank.com/api',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

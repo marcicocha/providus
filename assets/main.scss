@@ -6,22 +6,22 @@
 
 @font-face {
   font-family: GothamMedium;
-  src: url('./fonts/GothamMedium_1.ttf');
+  src: url('./fonts/iCiel-Medium.ttf');
 }
 
 @font-face {
   font-family: GothamLight;
-  src: url('./fonts/GothamLight.ttf');
+  src: url('./fonts/iCiel-Thin.ttf');
 }
 
 @font-face {
   font-family: GothamThin;
-  src: url('./fonts/Gotham-Thin.otf');
+  src: url('./fonts/iCiel-Thin.ttf');
 }
 
 @font-face {
   font-family: GothamBold;
-  src: url('./fonts/Gotham-Bold.otf');
+  src: url('./fonts/HomepageBaukasten-Bold.ttf');
 }
 
 .dropdown-trigger {
@@ -381,7 +381,7 @@ label {
     font-size: 15px;
   }
   hr {
-    margin: 1.9em auto
+    margin: 1.9em auto;
   }
   .reference {
     font-size: 13px !important;
@@ -482,6 +482,5 @@ label {
     width: 100% !important;
   }
 }
-
 
 //Dika's Global Entries
