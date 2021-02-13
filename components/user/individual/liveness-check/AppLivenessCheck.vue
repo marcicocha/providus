@@ -174,14 +174,13 @@ export default {
       }
 
       try {
-        const response = await this.$axios.$post(
+        const { response } = await this.$axios.$post(
           '/individual/videoFaceEvaluation',
           payload
         )
 
-        if (response) {
-          this.createAccount()
-        }
+        this.accountNumberHandler(response)
+        this.$router.replace('/user/individual/weldone')
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
@@ -211,31 +210,31 @@ export default {
         }
       }
     },
-    async createAccount() {
-      const id = this.$cookies.get('requestId')
-      const createUrl = `/individual/accountNumber?requestId=${String(id)}`
+    // async createAccount() {
+    //   const id = this.$cookies.get('requestId')
+    //   const createUrl = `/individual/accountNumber?requestId=${String(id)}`
 
-      try {
-        const response = await this.$axios.$get(createUrl)
+    //   try {
+    //     const response = await this.$axios.$get(createUrl)
 
-        if (response.hasError === false) {
-          this.accountNumberHandler(response.response)
-          this.$router.replace('/user/individual/weldone')
-        }
-      } catch (err) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const errorMessage = err.response.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
+    //     if (response.hasError === false) {
+    //       this.accountNumberHandler(response.response)
+    //       this.$router.replace('/user/individual/weldone')
+    //     }
+    //   } catch (err) {
+    //     // eslint-disable-next-line no-prototype-builtins
+    //     if (err.hasOwnProperty('response')) {
+    //       const errorMessage = err.response.data.errorMessage
+    //       this.$toast.open({
+    //         message: `<p class="toast-title">Error Message</p>
+    //                 <p class="toast-msg"> ${errorMessage} </p>`,
+    //         type: 'error',
+    //         duration: 4000,
+    //         dismissible: true,
+    //       })
+    //     }
+    //   }
+    // },
     ...mapActions({
       accountNumberHandler: 'individualModule/SAVE_ACCOUNT_NUMBER',
     }),
