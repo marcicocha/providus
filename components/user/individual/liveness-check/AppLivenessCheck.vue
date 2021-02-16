@@ -181,31 +181,17 @@ export default {
         this.accountNumberHandler(response)
         this.$router.replace('/user/individual/weldone')
       } catch (err) {
-        let errorMessage
-        console.log(err, 'ERROR:::::')
+        const res = err.response
+        const errorMessage = res.data.errorMessage
+        const hasError = res.data.hasError
         // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          const validationError = res.data.fieldValidationErrors
-            ? res.data.fieldValidationErrors
-            : []
-          if (validationError === [] || !validationError) {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-            return
-          }
-          validationError.forEach((element) => {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${element.message} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
+
+        if (hasError) {
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
           })
         }
       }
