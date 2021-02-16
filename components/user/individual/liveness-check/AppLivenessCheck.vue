@@ -178,11 +178,11 @@ export default {
           '/individual/videoFaceEvaluation',
           payload
         )
-
         this.accountNumberHandler(response)
         this.$router.replace('/user/individual/weldone')
       } catch (err) {
         let errorMessage
+        console.log(err, 'ERROR:::::')
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

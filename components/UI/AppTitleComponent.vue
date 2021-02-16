@@ -34,7 +34,7 @@ h1 {
 p {
   font-family: 'GothamLight', sans-serif;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 150%;
   color: #2e434e;
   letter-spacing: 1px;
