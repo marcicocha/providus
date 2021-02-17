@@ -23,6 +23,7 @@
             label="Surname"
             placeholder="Type Surname"
             is-text
+            max-length="30"
           />
         </div>
       </div>
@@ -33,6 +34,7 @@
             label="First Name"
             placeholder="First Name"
             is-text
+            max-length="30"
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -41,6 +43,7 @@
             label="Middle Name"
             placeholder="Middle Name"
             is-text
+            max-length="30"
           />
         </div>
       </div>
