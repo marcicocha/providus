@@ -112,7 +112,8 @@ export default {
         formData.append('requestId', response)
         formData.append('issuedDate', this.idObject.issuedDate)
         formData.append('expiryDate', this.idObject.expiryDate)
-        await this.$axios.$post('/individual/idCardUpload', formData)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post('/individual/idCardUpload', formData, config)
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
         // this.message = err.response.data.errorMessage
