@@ -150,7 +150,12 @@ export default {
     },
     async nextHandler() {
       try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
+        // const file = new File([this.imgSrc], 'selfie.jpg', {
+        //   lastModified: new Date().getTime(),
+        //   type: 'image/jpeg',
+        // })
+        const blob = document.blob
+        const file = new File([blob], 'selfie.jpg', {
           lastModified: new Date().getTime(),
           type: 'image/jpeg',
         })
@@ -158,7 +163,12 @@ export default {
         const formData = new FormData()
         formData.append('file', file)
         formData.append('requestId', requestId)
-        await this.$axios.$post('/individual/utilityBillUpload', formData)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post(
+          '/individual/utilityBillUpload',
+          formData,
+          config
+        )
         document.querySelector('#stopcamera').click()
         this.$router.replace('/user/individual/upload-document')
       } catch (err) {

@@ -106,13 +106,20 @@ export default {
       }
       try {
         this.message = ''
+        console.log(this.identityFile, 'IDENTITY FILE')
+        const reader = new FileReader()
+        reader.readAsDataURL(this.identityFile)
+        reader.onload = function () {
+          console.log(reader.result)
+        }
         const response = this.$cookies.get('requestId')
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)
         formData.append('issuedDate', this.idObject.issuedDate)
         formData.append('expiryDate', this.idObject.expiryDate)
-        await this.$axios.$post('/individual/idCardUpload', formData)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post('/individual/idCardUpload', formData, config)
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
         // this.message = err.response.data.errorMessage
