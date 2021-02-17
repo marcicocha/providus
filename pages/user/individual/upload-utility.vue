@@ -72,7 +72,12 @@ export default {
         const formData = new FormData()
         formData.append('file', this.identityFile)
         formData.append('requestId', response)
-        await this.$axios.$post('/individual/utilityBillUpload', formData)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post(
+          '/individual/utilityBillUpload',
+          formData,
+          config
+        )
         this.$router.replace('/user/individual/upload-document')
       } catch (err) {
         // this.message = err.response.data.errorMessage

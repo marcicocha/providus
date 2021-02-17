@@ -159,7 +159,8 @@ export default {
         formData.append('requestId', requestId)
         formData.append('issuedDate', idObject.issuedDate)
         formData.append('expiryDate', idObject.expiryDate)
-        await this.$axios.$post('/individual/idCardUpload', formData)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post('/individual/idCardUpload', formData, config)
 
         document.querySelector('#stopcamera').click()
 
