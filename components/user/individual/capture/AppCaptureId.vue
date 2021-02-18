@@ -146,12 +146,26 @@ export default {
       this.isCaptured = false
       document.querySelector('#restartvideo').click()
     },
+    toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (error) => reject(error)
+      })
+    },
     async nextHandler() {
       try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
+        // const file = new File([this.imgSrc], 'selfie.jpeg', {
+        //   lastModified: new Date().getTime(),
+        //   type: 'image/jpeg',
+        // })
+        const blob = document.blob
+        const file = new File([blob], 'selfie.jpg', {
           lastModified: new Date().getTime(),
           type: 'image/jpeg',
         })
+        // console.log(await this.toBase64(file), 'FILE', { document })
         const requestId = this.$cookies.get('requestId')
         const idObject = this.$cookies.get('idObject')
         const formData = new FormData()

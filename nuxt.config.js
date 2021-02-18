@@ -19,7 +19,9 @@ export default {
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['~/assets/main.scss'],
-
+  server: {
+    host: '0.0.0.0',
+  },
   // Plugins to generate: { fallback: true },run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/vueToast.js', ssr: false },

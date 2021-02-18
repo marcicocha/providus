@@ -142,8 +142,7 @@ export default {
         formData.append('file', file)
         formData.append('requestId', requestId)
         document.querySelector('#stop-capture').click()
-        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-        await this.$axios.$post('/individual/selfieUpload', formData, config)
+        await this.$axios.$post('/individual/selfieUpload', formData)
         this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {
         let errorMessage

@@ -106,6 +106,12 @@ export default {
       }
       try {
         this.message = ''
+        console.log(this.identityFile, 'IDENTITY FILE')
+        const reader = new FileReader()
+        reader.readAsDataURL(this.identityFile)
+        reader.onload = function () {
+          console.log(reader.result)
+        }
         const response = this.$cookies.get('requestId')
         const formData = new FormData()
         formData.append('file', this.identityFile)

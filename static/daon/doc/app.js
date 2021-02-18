@@ -152,6 +152,7 @@ function capture() {
     .then((blob) => {
       const src = URL.createObjectURL(blob)
       document.querySelector('#img-sent').src = src
+      document.blob = blob;
       return dc.assessQuality(blob, queryParams)
     })
 }
