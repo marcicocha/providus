@@ -133,7 +133,12 @@ export default {
     },
     async nextHandler() {
       try {
-        const file = new File([this.imgSrc], 'selfie.jpg', {
+        // const file = new File([this.imgSrc], 'selfie.jpg', {
+        //   lastModified: new Date().getTime(),
+        //   type: 'image/jpeg',
+        // })
+        const blob = document.blob
+        const file = new File([blob], 'selfie.jpg', {
           lastModified: new Date().getTime(),
           type: 'image/jpeg',
         })

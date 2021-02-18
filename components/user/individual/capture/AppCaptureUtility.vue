@@ -155,7 +155,7 @@ export default {
         //   type: 'image/jpeg',
         // })
         const blob = document.blob
-        const file = new File([blob], 'selfie.jpg', {
+        const file = new File([blob], 'utility.jpg', {
           lastModified: new Date().getTime(),
           type: 'image/jpeg',
         })
