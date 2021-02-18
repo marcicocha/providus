@@ -85,6 +85,7 @@ function stopCapture() {
 function captureSingle() {
   fc.captureFrame().then((blob) => {
     document.querySelector('#image').src = URL.createObjectURL(blob)
+    document.blob = blob;
   })
 }
 
