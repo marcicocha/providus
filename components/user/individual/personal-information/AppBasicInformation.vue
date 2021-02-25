@@ -170,13 +170,13 @@ export default {
         this.$emit('errorMessageHandler', 'First Name')
         return
       }
-      if (
-        this.personalInfoObject.middleName === '' ||
-        this.personalInfoObject.middleName === undefined
-      ) {
-        this.$emit('errorMessageHandler', 'Middle Name')
-        return
-      }
+      // if (
+      //   this.personalInfoObject.middleName === '' ||
+      //   this.personalInfoObject.middleName === undefined
+      // ) {
+      //   this.$emit('errorMessageHandler', 'Middle Name')
+      //   return
+      // }
       if (
         this.personalInfoObject.maritalStatus === '' ||
         this.personalInfoObject.maritalStatus === undefined

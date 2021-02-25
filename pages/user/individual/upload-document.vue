@@ -77,7 +77,7 @@ export default {
       }
       const response = this.$cookies.get('accountType')
       if (response === 'CURRENT') {
-        if (this.referenceFile1) {
+        if (!this.referenceFile1) {
           this.$toast.open({
             message: `<p class="toast-msg"> Reference File 1 is Mandatory </p>`,
             type: 'error',
