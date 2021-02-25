@@ -72,10 +72,10 @@ export default {
         return
       }
       const extensionStatus = this.extensionHandler(file.name)
-      if (extensionStatus && file.size < 634593) {
+      if (extensionStatus && file.size < 3145728) {
         this.file = file
         this.$emit('fileUploadHandler', this.file)
-      } else if (file.size > 634593) {
+      } else if (file.size > 3145728) {
         this.file = null
         this.$toast.open({
           message: `<p class="toast-msg"> Input File must not be Larger than 635KB' </p>`,

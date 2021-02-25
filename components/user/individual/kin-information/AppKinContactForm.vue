@@ -15,6 +15,8 @@
             label="Phone Number"
             placeholder="Enter Number"
             is-phone
+            max-length="15"
+            min-length="7"
           />
         </div>
         <div class="column">
@@ -23,6 +25,8 @@
             label="Alternate Phone Number"
             placeholder="Enter Number"
             is-phone
+            max-length="15"
+            min-length="7"
           />
         </div>
       </div>
@@ -132,13 +136,13 @@ export default {
   },
   methods: {
     kinsContactDetailsHandler() {
-      if (
-        this.kinInfoObject.email === undefined ||
-        this.kinInfoObject.email === ''
-      ) {
-        this.$emit('errorMessageHandler', 'Email')
-        return
-      }
+      // if (
+      //   this.kinInfoObject.email === undefined ||
+      //   this.kinInfoObject.email === ''
+      // ) {
+      //   this.$emit('errorMessageHandler', 'Email')
+      //   return
+      // }
       if (
         this.kinInfoObject.phoneNumber === undefined ||
         this.kinInfoObject.phoneNumber === ''

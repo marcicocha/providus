@@ -38,8 +38,10 @@
         </div>
         <p class="notification">
           A reference form is required to open a Current Account,
-          <a download>click here</a> to download, fill and make ready for
-          upload.
+          <a download :href="url + '/forms/download/referenceForm'"
+            >click here</a
+          >
+          to download, fill and make ready for upload.
         </p>
       </div>
       <div v-if="isBvn">
@@ -158,6 +160,7 @@ export default {
       bvnDetails: {},
       message: '',
       fetching: false,
+      url: process.env.APP_CORE_BASE_URL,
     }
   },
   methods: {
@@ -427,7 +430,7 @@ export default {
 }
 .notification {
   position: absolute;
-  bottom: 5%;
+  bottom: 10%;
   font-size: 15px;
 }
 .error_message {
