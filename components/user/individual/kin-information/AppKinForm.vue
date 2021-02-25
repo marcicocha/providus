@@ -154,13 +154,13 @@ export default {
         this.$emit('errorMessageHandler', 'First Name')
         return
       }
-      if (
-        this.kinInfoObject.middleName === undefined ||
-        this.kinInfoObject.middleName === ''
-      ) {
-        this.$emit('errorMessageHandler', 'Middle Name')
-        return
-      }
+      // if (
+      //   this.kinInfoObject.middleName === undefined ||
+      //   this.kinInfoObject.middleName === ''
+      // ) {
+      //   this.$emit('errorMessageHandler', 'Middle Name')
+      //   return
+      // }
       if (
         this.kinInfoObject.relationship === undefined ||
         this.kinInfoObject.relationship === ''

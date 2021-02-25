@@ -44,13 +44,13 @@ export default {
         this.$emit('errorMessageHandler', 'Tax Payer Id')
         return
       }
-      if (
-        this.personalInfoObject.employeeIdNo === '' ||
-        this.personalInfoObject.employeeIdNo === undefined
-      ) {
-        this.$emit('errorMessageHandler', 'Employee Id No')
-        return
-      }
+      // if (
+      //   this.personalInfoObject.employeeIdNo === '' ||
+      //   this.personalInfoObject.employeeIdNo === undefined
+      // ) {
+      //   this.$emit('errorMessageHandler', 'Employee Id No')
+      //   return
+      // }
       if (
         this.personalInfoObject.taxPayerId === '' ||
         this.personalInfoObject.taxPayerId === undefined
