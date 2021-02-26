@@ -17,6 +17,7 @@
         :nationality-object="nationalityObject"
         @nationalityHandler="nationalityHandler"
         @updateNationalityDetails="updateNationalityDetails"
+        @changeStateHandler="changeStateHandler"
         @errorMessageHandler="errorMessageHandler"
         @dualCitizenshipHandler="dualCitizenshipHandler"
       />
@@ -62,6 +63,13 @@ export default {
     updateNationalityDetails(value) {
       this.nationalityObject = {
         nationality: value,
+      }
+    },
+    changeStateHandler(value) {
+      this.nationalityObject = {
+        ...this.nationalityObject,
+        stateOfOrigin: value,
+        lga: undefined,
       }
     },
     dualCitizenshipHandler(value) {

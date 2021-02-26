@@ -24,6 +24,7 @@
                   value: resp,
                 })
               "
+              @change="changeStateHandler"
             />
           </div>
           <div class="column is-6">
@@ -226,6 +227,9 @@ export default {
     },
     dualCitizenshipHandler(value) {
       this.$emit('dualCitizenshipHandler', value)
+    },
+    changeStateHandler(value) {
+      this.$emit('changeStateHandler', value)
     },
   },
 }

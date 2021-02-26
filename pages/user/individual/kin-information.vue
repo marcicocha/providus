@@ -17,6 +17,8 @@
       :kin-info-object="kinInfoObject"
       @kinsContactDetailsHandler="kinsContactDetailsHandler"
       @errorMessageHandler="errorMessageHandler"
+      @changeStateHandler="changeStateHandler"
+      @changeCountryHandler="changeCountryHandler"
     />
   </div>
 </template>
@@ -51,6 +53,21 @@ export default {
       // }
       if (!this.isBasicDetails) {
         this.isBasicDetails = true
+      }
+    },
+    changeStateHandler(value) {
+      this.kinInfoObject = {
+        ...this.kinInfoObject,
+        residentState: value,
+        residentLga: undefined,
+      }
+    },
+    changeCountryHandler(value) {
+      this.kinInfoObject = {
+        ...this.kinInfoObject,
+        residentCountry: value,
+        residentState: undefined,
+        residentLga: undefined,
       }
     },
     async kinsContactDetailsHandler() {

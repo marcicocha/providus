@@ -20,6 +20,7 @@
         />
         <AppButton
           title="Continue"
+          :loading="loading"
           :disabled="!signatureFile"
           @click="submitDocumentHandler"
         />
@@ -43,6 +44,7 @@ export default {
       referenceFile1: null,
       referenceFile2: null,
       signatureFile: null,
+      loading: false,
     }
   },
   computed: {
@@ -89,6 +91,7 @@ export default {
       }
       try {
         this.message = ''
+        this.loading = true
         const response = this.$cookies.get('requestId')
         const formData = new FormData()
         if (this.referenceFile1) {
@@ -104,7 +107,9 @@ export default {
           formData
         )
         this.$router.replace('/user/individual/liveness-check')
+        this.loading = false
       } catch (err) {
+        this.loading = false
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
