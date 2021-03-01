@@ -77,6 +77,7 @@
                 value: resp,
               })
             "
+            @change="changeCountryHandler"
           />
         </div>
       </div>
@@ -94,6 +95,7 @@
                 value: resp,
               })
             "
+            @change="changeStateHandler"
           />
         </div>
         <div class="column">
@@ -200,6 +202,12 @@ export default {
         return
       }
       this.$emit('kinsContactDetailsHandler', this.kinInfoObject)
+    },
+    changeStateHandler(value) {
+      this.$emit('changeStateHandler', value)
+    },
+    changeCountryHandler(value) {
+      this.$emit('changeCountryHandler', value)
     },
   },
 }

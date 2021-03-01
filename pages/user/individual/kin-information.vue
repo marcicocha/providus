@@ -17,6 +17,8 @@
       :kin-info-object="kinInfoObject"
       @kinsContactDetailsHandler="kinsContactDetailsHandler"
       @errorMessageHandler="errorMessageHandler"
+      @changeStateHandler="changeStateHandler"
+      @changeCountryHandler="changeCountryHandler"
     />
   </div>
 </template>
@@ -53,6 +55,21 @@ export default {
         this.isBasicDetails = true
       }
     },
+    changeStateHandler(value) {
+      this.kinInfoObject = {
+        ...this.kinInfoObject,
+        residentState: value,
+        residentLga: undefined,
+      }
+    },
+    changeCountryHandler(value) {
+      this.kinInfoObject = {
+        ...this.kinInfoObject,
+        residentCountry: value,
+        residentState: undefined,
+        residentLga: undefined,
+      }
+    },
     async kinsContactDetailsHandler() {
       try {
         const response = this.$cookies.get('requestId')
@@ -61,7 +78,7 @@ export default {
           requestId: response,
         }
         await this.$axios.$put('/individual/kinDetails', kinInfoObject)
-        this.$router.replace('/user/individual/capture-selfie')
+        this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins

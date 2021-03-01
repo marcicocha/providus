@@ -21,6 +21,7 @@
             open = false
             $emit('input', option.value)
           "
+          @select="changeHandler(option.value)"
         >
           {{ option.text }}
         </p>
@@ -36,6 +37,7 @@
               open = false
               $emit('input', option)
             "
+            @select="changeHandler(option)"
           >
             {{ option }}
           </p>
