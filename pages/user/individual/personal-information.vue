@@ -69,7 +69,7 @@ export default {
       this.nationalityObject = {
         ...this.nationalityObject,
         stateOfOrigin: value,
-        lga: undefined,
+        lga: '',
       }
     },
     dualCitizenshipHandler(value) {

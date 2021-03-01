@@ -148,7 +148,8 @@ export default {
         formData.append('requestId', requestId)
         document.querySelector('#stop-capture').click()
         await this.$axios.$post('/individual/selfieUpload', formData)
-        this.$router.replace('/user/individual/upload-valid-id')
+        // this.$router.replace('/user/individual/upload-valid-id')
+        this.$router.replace('/user/individual/personal-information')
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins

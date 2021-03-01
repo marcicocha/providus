@@ -384,7 +384,8 @@ export default {
       }
     },
     nextHandler() {
-      this.$router.replace('/user/individual/personal-information')
+      this.$router.replace('/user/individual/capture-selfie')
+      // this.$router.replace('/user/individual/personal-information')
     },
     ...mapActions({
       submitBvnInfoHandler: 'individualModule/GET_BVN_INFORMATION',

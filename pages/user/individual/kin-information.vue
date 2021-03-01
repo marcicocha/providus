@@ -78,7 +78,7 @@ export default {
           requestId: response,
         }
         await this.$axios.$put('/individual/kinDetails', kinInfoObject)
-        this.$router.replace('/user/individual/capture-selfie')
+        this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
