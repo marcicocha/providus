@@ -63,7 +63,11 @@
         <AppButton title="Recapture" color="secondary" @click="returnHandler" />
       </div>
       <div class="column">
-        <AppButton title="Continue" @click="nextHandler" />
+        <AppButton
+          title="Continue"
+          :loading="formLoading"
+          @click="nextHandler"
+        />
       </div>
     </div>
     <!-- <AppButton title="Capture Selfie" @click="submitCaptureHandler" /> -->
@@ -81,6 +85,7 @@ export default {
       loading: true,
       selfieCapture: false,
       imgSrc: '',
+      formLoading: false,
     }
   },
   mounted() {
@@ -137,6 +142,7 @@ export default {
         //   lastModified: new Date().getTime(),
         //   type: 'image/jpeg',
         // })
+        this.formLoading = true
         const blob = document.blob
         const file = new File([blob], 'selfie.jpg', {
           lastModified: new Date().getTime(),
@@ -150,7 +156,9 @@ export default {
         await this.$axios.$post('/individual/selfieUpload', formData)
         // this.$router.replace('/user/individual/upload-valid-id')
         this.$router.replace('/user/individual/personal-information')
+        this.formLoading = false
       } catch (err) {
+        this.formLoading = false
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
