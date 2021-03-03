@@ -16,6 +16,8 @@
             label="Phone Number"
             placeholder="Enter Number"
             is-phone
+            max-length="15"
+            min-length="7"
           />
         </div>
         <div class="column small-left-padding">
@@ -24,6 +26,8 @@
             label="Alt. Phone Number"
             placeholder="Enter Number"
             is-phone
+            max-length="15"
+            min-length="7"
           />
         </div>
       </div>
