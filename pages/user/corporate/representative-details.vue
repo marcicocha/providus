@@ -21,6 +21,13 @@
           :loading="isLoading"
           @click="rcValidationHandler"
         />
+        <br />
+        <div>
+          <p class="reference">
+            Have a Reference Number?
+            <nuxt-link to="/user/reference" class="bold">Continue</nuxt-link>
+          </p>
+        </div>
       </div>
       <div v-if="isRepresentative">
         <h2>Representative Details</h2>
@@ -309,6 +316,18 @@ hr {
   }
   hr {
     margin: 1rem 0 !important;
+  }
+}
+@media only screen and (min-width: 1536px) {
+  @media only screen and (min-height: 730px) {
+    .reference {
+      font-size: 14px;
+    }
+  }
+  @media only screen and (min-height: 900px) {
+    .reference {
+      font-size: 16px;
+    }
   }
 }
 </style>
