@@ -19,9 +19,8 @@
           @click="
             selected = option
             open = false
-            $emit('input', option.value)
+            clickHandler(option.value)
           "
-          @select="changeHandler(option.value)"
         >
           {{ option.text }}
         </p>
@@ -35,9 +34,8 @@
             @click="
               selected = option
               open = false
-              $emit('input', option)
+              clickHandler(option)
             "
-            @select="changeHandler(option)"
           >
             {{ option }}
           </p>
@@ -137,7 +135,11 @@ export default {
   },
   computed: {
     setSelected() {
-      return this.value
+      console.log(this.value, 'VALUE:::')
+      if (this.value && (this.value !== '' || this.value.length > 0)) {
+        return this.value
+      }
+      return undefined
     },
   },
   // watch: {
@@ -169,8 +171,13 @@ export default {
     blurHandler(e) {
       this.$emit('blur', e.target.value)
     },
-    changeHandler(e) {
-      this.$emit('change', e.target.value)
+    clickHandler(option) {
+      this.$emit('input', option)
+      this.changeHandler(option)
+    },
+    changeHandler(value) {
+      console.log('IT CHANGED')
+      this.$emit('change', value)
     },
     searchHandler(e) {
       if (this.remote) {

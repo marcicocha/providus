@@ -13,7 +13,7 @@
       @focus="searchHandler"
       @select="selectHandler"
     >
-      <template v-if="remote">
+      <template v-if="remote && dataRemote">
         <template>
           <option
             v-for="d in dataRemote"

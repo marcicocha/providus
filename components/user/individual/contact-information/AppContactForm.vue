@@ -79,6 +79,7 @@
                 value: resp,
               })
             "
+            @change="selectStateHandler"
           />
         </div>
         <div class="column small-left-padding">
@@ -106,12 +107,15 @@ import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
 import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
+// import AppSelect from '@/components/UI/AppSelect'
+
 export default {
   name: 'AppContactDetails',
   components: {
     AppSelectHybrid,
     AppInput,
     AppButton,
+    // AppSelect,
   },
   data() {
     return {
@@ -221,6 +225,13 @@ export default {
         duration: 4000,
         dismissible: true,
       })
+    },
+    selectStateHandler(value) {
+      this.contactDetails = {
+        ...this.contactDetails,
+        residentState: value,
+        residentLga: undefined,
+      }
     },
     ...mapActions({
       submitContactHandler: 'individualModule/POST_CONTACT_INFORMATION',
