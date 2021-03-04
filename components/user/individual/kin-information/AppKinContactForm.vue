@@ -81,7 +81,10 @@
           />
         </div>
       </div>
-      <div class="columns is-mobile">
+      <div
+        v-if="kinInfoObject.residentCountry === 'NIGERIAN'"
+        class="columns is-mobile"
+      >
         <div class="column">
           <AppSelectHybrid
             :key="kinInfoObject.residentCountry"
