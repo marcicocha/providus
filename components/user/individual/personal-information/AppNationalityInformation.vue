@@ -91,7 +91,7 @@
             <AppInput
               v-model="nationalityObject.altCitizenship"
               label="If Yes, Specify?"
-              placeholder="Select Option"
+              placeholder="Enter Alt. Citizenship"
               :disabled="nationalityObject.dualCitizenship !== 'YES'"
               is-text
             />
