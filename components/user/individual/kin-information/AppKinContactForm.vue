@@ -82,7 +82,7 @@
         </div>
       </div>
       <div
-        v-if="kinInfoObject.residentCountry === 'NIGERIAN'"
+        v-if="kinInfoObject.residentCountry === 'NIGERIA'"
         class="columns is-mobile"
       >
         <div class="column">
