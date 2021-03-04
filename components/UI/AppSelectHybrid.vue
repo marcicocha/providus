@@ -137,7 +137,10 @@ export default {
   },
   computed: {
     setSelected() {
-      return this.value
+      if (this.value && (this.value !== '' || this.value.length > 0)) {
+        return this.value
+      }
+      return undefined
     },
   },
   // watch: {
