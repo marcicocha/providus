@@ -104,7 +104,7 @@ export default {
               .replace(this.textOnlyRegex, '')
           } else if (!this.isNumber && !this.isText && this.isPhone) {
             this.innerValue = String(newVal)
-              .slice(0, 11)
+              .slice(0, 15)
               .replace(this.numberOnlyRegex, '')
           } else {
             this.innerValue = String(newVal).slice(0, this.maxLength)
