@@ -148,13 +148,13 @@ export default {
       //   this.$emit('errorMessageHandler', 'Email')
       //   return
       // }
-      if (
-        this.kinInfoObject.phoneNumber === undefined ||
-        this.kinInfoObject.phoneNumber === ''
-      ) {
-        this.$emit('errorMessageHandler', 'Phone Number')
-        return
-      }
+      // if (
+      //   this.kinInfoObject.phoneNumber === undefined ||
+      //   this.kinInfoObject.phoneNumber === ''
+      // ) {
+      //   this.$emit('errorMessageHandler', 'Phone Number')
+      //   return
+      // }
       if (
         this.kinInfoObject.houseNo === undefined ||
         this.kinInfoObject.houseNo === ''
