@@ -104,7 +104,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 import AppInput from '@/components/UI/AppInput'
 import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
@@ -188,8 +188,8 @@ export default {
       }
       try {
         await this.$axios.$put('/individual/contactDetails', contactDetails)
-        await this.submitContactHandler(contactDetails)
-        await this.$cookies.set('contactDetails', this.contactDetails)
+        // await this.submitContactHandler(contactDetails)
+        this.$cookies.set('contactDetails', contactDetails)
         this.$router.replace('/user/individual/kin-information')
       } catch (err) {
         let errorMessage
@@ -235,9 +235,9 @@ export default {
         residentLga: undefined,
       }
     },
-    ...mapActions({
-      submitContactHandler: 'individualModule/POST_CONTACT_INFORMATION',
-    }),
+    // ...mapActions({
+    //   submitContactHandler: 'individualModule/POST_CONTACT_INFORMATION',
+    // }),
   },
 }
 </script>
