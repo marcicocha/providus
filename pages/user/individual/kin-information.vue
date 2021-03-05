@@ -41,6 +41,25 @@ export default {
       message: '',
     }
   },
+  mounted() {
+    const {
+      houseNo,
+      landmark,
+      streetName,
+      residentCity,
+      residentState,
+      residentLga,
+    } = this.$cookies.get('contactDetails')
+    this.kinsInfoObject = {
+      ...this.kinsInfoObject,
+      houseNo,
+      landmark,
+      streetName,
+      residentCity,
+      residentState,
+      residentLga,
+    }
+  },
   methods: {
     kinDetailsHandler() {
       this.heading = 'Next of Kin Contact information'
@@ -78,6 +97,7 @@ export default {
           requestId: response,
         }
         await this.$axios.$put('/individual/kinDetails', kinInfoObject)
+        this.$cookies.remove('contactDetails')
         this.$router.replace('/user/individual/upload-valid-id')
       } catch (err) {
         let errorMessage

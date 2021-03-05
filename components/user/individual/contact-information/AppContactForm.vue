@@ -84,6 +84,7 @@
         </div>
         <div class="column small-left-padding">
           <AppSelectHybrid
+            :key="contactDetails.residentState"
             v-model="contactDetails.residentLga"
             label="LGA"
             placeholder="Select Option"
@@ -188,6 +189,7 @@ export default {
       try {
         await this.$axios.$put('/individual/contactDetails', contactDetails)
         await this.submitContactHandler(contactDetails)
+        await this.$cookies.set('contactDetails', this.contactDetails)
         this.$router.replace('/user/individual/kin-information')
       } catch (err) {
         let errorMessage
