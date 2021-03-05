@@ -47,18 +47,20 @@ export default {
       landmark,
       streetName,
       residentCity,
-      residentState,
-      residentLga,
+      // residentState,
+      // residentLga,
     } = this.$cookies.get('contactDetails')
-    this.kinsInfoObject = {
-      ...this.kinsInfoObject,
+    console.log(this.$cookies.get('contactDetails'), 'CONTACTDETAILS')
+    this.kinInfoObject = {
+      ...this.kinInfoObject,
       houseNo,
-      landmark,
+      landMark: landmark,
       streetName,
-      residentCity,
-      residentState,
-      residentLga,
+      city: residentCity,
+      // residentState,
+      // residentLga,
     }
+    console.log(this.kinsInfoObject, 'KINS')
   },
   methods: {
     kinDetailsHandler() {
