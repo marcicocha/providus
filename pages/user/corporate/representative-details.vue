@@ -25,7 +25,9 @@
         <div>
           <p class="reference">
             Have a Reference Number?
-            <nuxt-link to="/user/reference" class="bold">Continue</nuxt-link>
+            <nuxt-link to="/user/corporate/reference" class="bold"
+              >Continue</nuxt-link
+            >
           </p>
         </div>
       </div>

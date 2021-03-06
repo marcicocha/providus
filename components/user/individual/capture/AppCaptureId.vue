@@ -102,32 +102,32 @@ export default {
         }
       })
   },
-  beforeDestroy() {
-    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/app.js').then(() => {})
-        })
-      })
-      .catch((err) => {
-        let errorMessage = ''
+  // beforeDestroy() {
+  //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+  //     .then(() => {
+  //       this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+  //         this.$unloadScript('/daon/doc/app.js').then(() => {})
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       let errorMessage = ''
 
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
+  //       // Error Message from Backend
+  //       // eslint-disable-next-line no-prototype-builtins
+  //       if (err.hasOwnProperty('response')) {
+  //         const res = err.response
+  //         errorMessage = res.data.errorMessage
 
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
-  },
+  //         this.$toast.open({
+  //           message: `<p class="toast-title">Error Message</p>
+  //                   <p class="toast-msg"> ${errorMessage} </p>`,
+  //           type: 'error',
+  //           duration: 4000,
+  //           dismissible: true,
+  //         })
+  //       }
+  //     })
+  // },
   destroyed() {
     clearTimeout()
   },
@@ -185,11 +185,25 @@ export default {
         if (err.hasOwnProperty('response')) {
           const res = err.response
           errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
           })
         }
       }

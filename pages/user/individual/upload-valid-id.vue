@@ -122,7 +122,32 @@ export default {
         await this.$axios.$post('/individual/idCardUpload', formData, config)
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
-        // this.message = err.response.data.errorMessage
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
       }
     },
     validationHandler() {
