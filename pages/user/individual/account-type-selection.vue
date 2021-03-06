@@ -395,10 +395,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.opaque *,
-.opaque *:hover {
-  opacity: 0.2 !important;
-  border: none !important;
+.opaque,
+.opaque:hover {
+  opacity: 0.4 !important;
+  // border: none !important;
+  border: 1.5px solid #eaeaea;
 }
 .back-button {
   span {
