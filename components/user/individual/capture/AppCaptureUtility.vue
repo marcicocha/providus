@@ -104,32 +104,32 @@ export default {
         }
       })
   },
-  beforeDestroy() {
-    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/utility.js').then(() => {})
-        })
-      })
-      .catch((err) => {
-        let errorMessage = ''
+  // beforeDestroy() {
+  //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+  //     .then(() => {
+  //       this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+  //         this.$unloadScript('/daon/doc/utility.js').then(() => {})
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       let errorMessage = ''
 
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
+  //       // Error Message from Backend
+  //       // eslint-disable-next-line no-prototype-builtins
+  //       if (err.hasOwnProperty('response')) {
+  //         const res = err.response
+  //         errorMessage = res.data.errorMessage
 
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
-  },
+  //         this.$toast.open({
+  //           message: `<p class="toast-title">Error Message</p>
+  //                   <p class="toast-msg"> ${errorMessage} </p>`,
+  //           type: 'error',
+  //           duration: 4000,
+  //           dismissible: true,
+  //         })
+  //       }
+  //     })
+  // },
   destroyed() {
     clearTimeout()
   },
