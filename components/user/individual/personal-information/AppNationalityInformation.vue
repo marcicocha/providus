@@ -201,11 +201,34 @@ export default {
             return
           }
         }
-        const expiryDate = new Date(this.nationalityObject.permitExpiryDate)
-        const issuedDate = new Date(this.nationalityObject.permitIssueDate)
+        const expiryDate = new Date(
+          this.nationalityObject.permitExpiryDate
+        ).setHours(0, 0, 0, 0)
+        const issuedDate = new Date(
+          this.nationalityObject.permitIssueDate
+        ).setHours(0, 0, 0, 0)
+        const currentDate = new Date().setHours(0, 0, 0, 0)
         if (expiryDate <= issuedDate) {
           this.$toast.open({
             message: `<p class="toast-msg">Expiry Date should be greater than Issued date</p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+        if (issuedDate >= currentDate) {
+          this.$toast.open({
+            message: `<p class="toast-msg">Issue Date should be less than current Date</p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+        if (expiryDate <= currentDate) {
+          this.$toast.open({
+            message: `<p class="toast-msg">ExpiryDate should be greater than current Date</p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,
