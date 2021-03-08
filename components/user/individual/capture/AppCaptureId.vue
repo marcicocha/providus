@@ -109,6 +109,7 @@ export default {
   // },
   destroyed() {
     clearTimeout()
+    this.unloadScript()
   },
   methods: {
     submitCaptureHandler() {
@@ -123,8 +124,8 @@ export default {
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
-      this.loadScript()
-      document.querySelector('#restartvideo').click()
+      // this.loadScript()
+      // document.querySelector('#restartvideo').click()
     },
     toBase64(file) {
       return new Promise((resolve, reject) => {
