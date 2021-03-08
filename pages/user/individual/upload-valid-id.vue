@@ -175,9 +175,9 @@ export default {
         })
         return true
       }
-      const expiryDate = new Date(this.idObject.expiryDate)
-      const issuedDate = new Date(this.idObject.issuedDate)
-      // const currentDate = new Date()
+      const expiryDate = new Date(this.idObject.expiryDate).setHours(0, 0, 0, 0)
+      const issuedDate = new Date(this.idObject.issuedDate).setHours(0, 0, 0, 0)
+      const currentDate = new Date().setHours(0, 0, 0, 0)
       if (issuedDate >= expiryDate) {
         this.$toast.open({
           message: `<p class="toast-msg">Expiry Date should be greater than Issued date</p>`,
@@ -187,24 +187,24 @@ export default {
         })
         return true
       }
-      // if (issuedDate >= currentDate) {
-      //   this.$toast.open({
-      //     message: `<p class="toast-msg">Issue Date should be less than current Date</p>`,
-      //     type: 'error',
-      //     duration: 4000,
-      //     dismissible: true,
-      //   })
-      //   return true
-      // }
-      // if (expiryDate <= currentDate) {
-      //   this.$toast.open({
-      //     message: `<p class="toast-msg">ExpiryDate should be greater than current Date</p>`,
-      //     type: 'error',
-      //     duration: 4000,
-      //     dismissible: true,
-      //   })
-      //   return true
-      // }
+      if (issuedDate >= currentDate) {
+        this.$toast.open({
+          message: `<p class="toast-msg">Issue Date should be less than current Date</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
+      if (expiryDate <= currentDate) {
+        this.$toast.open({
+          message: `<p class="toast-msg">ExpiryDate should be greater than current Date</p>`,
+          type: 'error',
+          duration: 4000,
+          dismissible: true,
+        })
+        return true
+      }
       return false
     },
     capturePageHandler() {
