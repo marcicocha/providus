@@ -125,6 +125,49 @@ export default {
       this.imgSrc = ''
       this.isCaptured = false
     },
+    async nextHandler() {
+      try {
+        // const file = new File([this.imgSrc], 'selfie.jpg', {
+        //   lastModified: new Date().getTime(),
+        //   type: 'image/jpeg',
+        // })
+        this.formLoading = true
+        const blob = document.blob
+        const file = new File([blob], 'utility.jpg', {
+          lastModified: new Date().getTime(),
+          type: 'image/jpeg',
+        })
+        const requestId = this.$cookies.get('requestId')
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('requestId', requestId)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post(
+          '/individual/utilityBillUpload',
+          formData,
+          config
+        )
+        document.querySelector('#stopcamera').click()
+        this.formLoading = false
+        this.unloadScript()
+        this.$router.replace('/user/individual/upload-document')
+      } catch (err) {
+        this.formLoading = false
+
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
+    },
     loadScript() {
       this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
         .then(() => {
@@ -183,49 +226,6 @@ export default {
             })
           }
         })
-    },
-    async nextHandler() {
-      try {
-        // const file = new File([this.imgSrc], 'selfie.jpg', {
-        //   lastModified: new Date().getTime(),
-        //   type: 'image/jpeg',
-        // })
-        this.formLoading = true
-        const blob = document.blob
-        const file = new File([blob], 'utility.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-        await this.$axios.$post(
-          '/individual/utilityBillUpload',
-          formData,
-          config
-        )
-        document.querySelector('#stopcamera').click()
-        this.formLoading = false
-        this.unloadScript()
-        this.$router.replace('/user/individual/upload-document')
-      } catch (err) {
-        this.formLoading = false
-
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
     },
   },
 }

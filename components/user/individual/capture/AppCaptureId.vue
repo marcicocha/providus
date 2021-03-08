@@ -134,6 +134,63 @@ export default {
         reader.onerror = (error) => reject(error)
       })
     },
+    async nextHandler() {
+      try {
+        // const file = new File([this.imgSrc], 'selfie.jpeg', {
+        //   lastModified: new Date().getTime(),
+        //   type: 'image/jpeg',
+        // })
+        this.formLoading = true
+        const blob = document.blob
+        const file = new File([blob], 'id.jpg', {
+          lastModified: new Date().getTime(),
+          type: 'image/jpeg',
+        })
+        // console.log(await this.toBase64(file), 'FILE', { document })
+        const requestId = this.$cookies.get('requestId')
+        const idObject = this.$cookies.get('idObject')
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('requestId', requestId)
+        formData.append('issuedDate', idObject.issuedDate)
+        formData.append('expiryDate', idObject.expiryDate)
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+        await this.$axios.$post('/individual/idCardUpload', formData, config)
+
+        document.querySelector('#stopcamera').click()
+        this.formLoading = false
+        this.unloadScript()
+        this.$router.replace('/user/individual/upload-utility')
+      } catch (err) {
+        this.formLoading = false
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          const validationError = res.data.fieldValidationErrors
+            ? res.data.fieldValidationErrors
+            : []
+          if (validationError === [] || !validationError) {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
+          validationError.forEach((element) => {
+            this.$toast.open({
+              message: `<p class="toast-msg"> ${element.message} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          })
+        }
+      }
+    },
     loadScript() {
       this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
         .then(() => {
@@ -192,63 +249,6 @@ export default {
             })
           }
         })
-    },
-    async nextHandler() {
-      try {
-        // const file = new File([this.imgSrc], 'selfie.jpeg', {
-        //   lastModified: new Date().getTime(),
-        //   type: 'image/jpeg',
-        // })
-        this.formLoading = true
-        const blob = document.blob
-        const file = new File([blob], 'id.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        // console.log(await this.toBase64(file), 'FILE', { document })
-        const requestId = this.$cookies.get('requestId')
-        const idObject = this.$cookies.get('idObject')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        formData.append('issuedDate', idObject.issuedDate)
-        formData.append('expiryDate', idObject.expiryDate)
-        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-        await this.$axios.$post('/individual/idCardUpload', formData, config)
-
-        document.querySelector('#stopcamera').click()
-        this.formLoading = false
-        this.unloadScript()
-        this.$router.replace('/user/individual/upload-utility')
-      } catch (err) {
-        this.formLoading = false
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          const validationError = res.data.fieldValidationErrors
-            ? res.data.fieldValidationErrors
-            : []
-          if (validationError === [] || !validationError) {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-            return
-          }
-          validationError.forEach((element) => {
-            this.$toast.open({
-              message: `<p class="toast-msg"> ${element.message} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-          })
-        }
-      }
     },
   },
 }
