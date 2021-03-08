@@ -53,7 +53,11 @@
         <AppButton title="Recapture" color="secondary" @click="returnHandler" />
       </div>
       <div class="column">
-        <AppButton title="Continue" @click="nextHandler" />
+        <AppButton
+          title="Continue"
+          :loading="formLoading"
+          @click="nextHandler"
+        />
       </div>
     </div>
   </div>
@@ -71,38 +75,11 @@ export default {
       loading: true,
       isCaptured: false,
       imgSrc: '',
+      formLoading: false,
     }
   },
   mounted() {
-    this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.loading = false
-        this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/utility.js').then(() => {
-            document.querySelector('#restartvideo').click()
-          })
-        })
-      })
-      .catch((err) => {
-        // Failed to fetch script
-        this.loading = false
-        let errorMessage = ''
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
+    this.loadScript()
   },
   // beforeDestroy() {
   //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
@@ -132,6 +109,7 @@ export default {
   // },
   destroyed() {
     clearTimeout()
+    this.unloadScript()
   },
   methods: {
     submitCaptureHandler() {
@@ -146,7 +124,65 @@ export default {
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
-      document.querySelector('#restartvideo').click()
+    },
+    loadScript() {
+      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+        .then(() => {
+          this.loading = false
+          this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+            this.$loadScript('/daon/doc/app.js').then(() => {
+              document.querySelector('#restartvideo').click()
+            })
+          })
+        })
+        .catch((err) => {
+          // Failed to fetch script
+          this.loading = false
+          let errorMessage = ''
+
+          // Error Message from Backend
+          // eslint-disable-next-line no-prototype-builtins
+          if (err.hasOwnProperty('response')) {
+            const res = err.response
+            errorMessage = res.data.errorMessage
+
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          }
+        })
+    },
+    unloadScript() {
+      this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+        .then(() => {
+          this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
+            () => {
+              this.$unloadScript('/daon/doc/app.js').then(() => {})
+            }
+          )
+        })
+        .catch((err) => {
+          let errorMessage = ''
+
+          // Error Message from Backend
+          // eslint-disable-next-line no-prototype-builtins
+          if (err.hasOwnProperty('response')) {
+            const res = err.response
+            errorMessage = res.data.errorMessage
+
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          }
+        })
     },
     async nextHandler() {
       try {
@@ -154,6 +190,7 @@ export default {
         //   lastModified: new Date().getTime(),
         //   type: 'image/jpeg',
         // })
+        this.formLoading = true
         const blob = document.blob
         const file = new File([blob], 'utility.jpg', {
           lastModified: new Date().getTime(),
@@ -170,8 +207,12 @@ export default {
           config
         )
         document.querySelector('#stopcamera').click()
+        this.formLoading = false
+        this.unloadScript()
         this.$router.replace('/user/individual/upload-document')
       } catch (err) {
+        this.formLoading = false
+
         let errorMessage
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {

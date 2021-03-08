@@ -124,7 +124,6 @@ export default {
     returnHandler() {
       this.imgSrc = ''
       this.isCaptured = false
-      // this.loadScript()
       // document.querySelector('#restartvideo').click()
     },
     toBase64(file) {
