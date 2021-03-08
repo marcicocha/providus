@@ -3,7 +3,7 @@
     <div>
       <div>
         <AppInput
-          v-model="kinInfoObject.email"
+          v-model.trim="kinInfoObject.email"
           label="Email Address"
           placeholder="Enter Next of Kin's Email Address"
         />

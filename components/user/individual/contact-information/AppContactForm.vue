@@ -3,7 +3,7 @@
     <div>
       <div>
         <AppInput
-          v-model="contactDetails.email"
+          v-model.trim="contactDetails.email"
           label="Email Address"
           placeholder="Enter your Email Address"
         />
