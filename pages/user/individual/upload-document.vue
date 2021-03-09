@@ -19,7 +19,7 @@
           @fileUploadHandler="fileUploadSignatureHandler"
         />
         <AppButton
-          title="Continue"
+          title="Save &amp; Continue"
           :loading="loading"
           :disabled="!signatureFile"
           @click="submitDocumentHandler"
