@@ -80,12 +80,17 @@ export default {
   components: {
     AppButton,
   },
+  props: {
+    formLoading: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       loading: true,
       selfieCapture: false,
       imgSrc: '',
-      formLoading: false,
     }
   },
   mounted() {
@@ -137,41 +142,19 @@ export default {
       this.selfieCapture = false
     },
     async nextHandler() {
-      try {
-        // const file = new File([this.imgSrc], 'selfie.jpg', {
-        //   lastModified: new Date().getTime(),
-        //   type: 'image/jpeg',
-        // })
-        this.formLoading = true
-        const blob = document.blob
-        const file = new File([blob], 'selfie.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        document.querySelector('#stop-capture').click()
-        await this.$axios.$post('/individual/selfieUpload', formData)
-        // this.$router.replace('/user/individual/upload-valid-id')
-        this.$router.replace('/user/individual/personal-information')
-        this.formLoading = false
-      } catch (err) {
-        this.formLoading = false
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
+      // const file = new File([this.imgSrc], 'selfie.jpg', {
+      //   lastModified: new Date().getTime(),
+      //   type: 'image/jpeg',
+      // })
+      const blob = document.blob
+      const file = new File([blob], 'selfie.jpg', {
+        lastModified: new Date().getTime(),
+        type: 'image/jpeg',
+      })
+
+      await this.$emit('submitCapturehandler', file)
+      // this.$router.replace('/user/individual/upload-valid-id')
+      document.querySelector('#stop-capture').click()
     },
     getImage(data) {},
   },
