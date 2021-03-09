@@ -9,8 +9,9 @@ let queryParams = {}
 let videoNew = null
 let canvas = document.querySelector('canvas')
 let doc_type = 'PASSPORT'
-let overlayWidth = 500
-let ID_CARD_RATIO = 1.5858
+let overlayWidth = 550
+// let ID_CARD_RATIO = 1.5858
+let ID_CARD_RATIO = 1.2858
 let PASSPORT_RATIO = 1.4205
 
 let dc = new Daon.DocumentCapture({
