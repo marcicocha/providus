@@ -6,7 +6,11 @@
       v-if="isCaptureInstruction"
       @captureInstructionHandler="captureInstructionHandler"
     />
-    <AppCaptureSelfie v-if="isCapture" />
+    <AppCaptureSelfie
+      v-if="isCapture"
+      :form-loading="formLoading"
+      @submitCapturehandler="submitCapturehandler"
+    />
   </div>
 </template>
 <script>
@@ -24,6 +28,7 @@ export default {
       description: 'Take a selfie showing your face.',
       isCaptureInstruction: true,
       isCapture: false,
+      formLoading: false,
     }
   },
   methods: {
@@ -32,6 +37,32 @@ export default {
       this.isCapture = true
       this.description = 'Stay still while taking selfie'
       // 'Stay still and keep your face inside the oval while taking selfie'
+    },
+    async submitCapturehandler(file) {
+      try {
+        this.formLoading = true
+        const requestId = this.$cookies.get('requestId')
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('requestId', requestId)
+        await this.$axios.$post('/individual/selfieUpload', formData)
+        this.formLoading = false
+        this.$router.replace('/user/individual/personal-information')
+      } catch (err) {
+        this.formLoading = false
+        let errorMessage
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      }
     },
   },
 }

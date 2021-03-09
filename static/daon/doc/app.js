@@ -9,7 +9,7 @@ let queryParams = {}
 let videoNew = null
 let canvas = document.querySelector('canvas')
 let doc_type = 'PASSPORT'
-let overlayWidth = 400
+let overlayWidth = 500
 let ID_CARD_RATIO = 1.5858
 let PASSPORT_RATIO = 1.4205
 
