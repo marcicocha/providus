@@ -15,7 +15,10 @@
       label="Purpose of Account"
       placeholder="Type purpose of account here"
     />
-    <AppButton title="Continue" @click="submitIdentificationInfoHandler" />
+    <AppButton
+      title="Save &amp; Continue"
+      @click="submitIdentificationInfoHandler"
+    />
   </div>
 </template>
 <script>

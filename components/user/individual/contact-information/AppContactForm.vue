@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <AppButton title="Continue" @click="contactDetailsHandler" />
+    <AppButton title="Save &amp; Continue" @click="contactDetailsHandler" />
   </div>
 </template>
 <script>
