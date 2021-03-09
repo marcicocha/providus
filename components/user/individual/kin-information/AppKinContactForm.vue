@@ -119,7 +119,7 @@
       </div>
     </div>
 
-    <AppButton title="Continue" @click="kinsContactDetailsHandler" />
+    <AppButton title="Save &amp; Continue" @click="kinsContactDetailsHandler" />
   </div>
 </template>
 <script>
