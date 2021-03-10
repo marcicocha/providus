@@ -62,207 +62,10 @@
     </div>
   </div>
 </template>
-<script>
-import AppButton from '@/components/UI/AppButton'
-
-export default {
-  name: 'AppCaptureUtility',
-  components: {
-    AppButton,
-  },
-  data() {
-    return {
-      loading: true,
-      isCaptured: false,
-      imgSrc: '',
-      formLoading: false,
-    }
-  },
-  mounted() {
-    this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.loading = false
-        this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/utility.js').then(() => {
-            document.querySelector('#restartvideo').click()
-          })
-        })
-      })
-      .catch((err) => {
-        // Failed to fetch script
-        this.loading = false
-        let errorMessage = ''
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
-  },
-  beforeDestroy() {
-    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/utility.js').then(() => {
-            console.log('All Scripts Unloaded')
-          })
-        })
-      })
-      .catch((err) => {
-        let errorMessage = ''
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
-  },
-  destroyed() {
-    this.unloadScript()
-  },
-  methods: {
-    submitCaptureHandler() {
-      //  this.$emit('submitCapturehandler')
-      document.querySelector('#buttonscontainer').click()
-      this.isCaptured = true
-      setTimeout(() => {
-        this.imgSrc = document.querySelector('#img-sent').src
-      }, 500)
-    },
-    getImage(data) {},
-    returnHandler() {
-      this.imgSrc = ''
-      this.isCaptured = false
-    },
-    async nextHandler() {
-      try {
-        // const file = new File([this.imgSrc], 'selfie.jpg', {
-        //   lastModified: new Date().getTime(),
-        //   type: 'image/jpeg',
-        // })
-        this.formLoading = true
-        const blob = document.blob
-        const file = new File([blob], 'utility.jpg', {
-          lastModified: new Date().getTime(),
-          type: 'image/jpeg',
-        })
-        const requestId = this.$cookies.get('requestId')
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('requestId', requestId)
-        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-        await this.$axios.$post(
-          '/individual/utilityBillUpload',
-          formData,
-          config
-        )
-        document.querySelector('#stopcamera').click()
-        this.formLoading = false
-        this.unloadScript()
-        this.$router.replace('/user/individual/upload-document')
-      } catch (err) {
-        this.formLoading = false
-
-        let errorMessage
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-          this.$toast.open({
-            message: `<p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      }
-    },
-    loadScript() {
-      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-        .then(() => {
-          this.loading = false
-          this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-            this.$loadScript('/daon/doc/app.js').then(() => {
-              document.querySelector('#restartvideo').click()
-            })
-          })
-        })
-        .catch((err) => {
-          // Failed to fetch script
-          this.loading = false
-          let errorMessage = ''
-          // Error Message from Backend
-          // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
-            const res = err.response
-            errorMessage = res.data.errorMessage
-
-            this.$toast.open({
-              message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-          }
-        })
-    },
-    unloadScript() {
-      this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-        .then(() => {
-          this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
-            () => {
-              this.$unloadScript('/daon/doc/app.js').then(() => {})
-            }
-          )
-        })
-        .catch((err) => {
-          let errorMessage = ''
-
-          // Error Message from Backend
-          // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
-            const res = err.response
-            errorMessage = res.data.errorMessage
-
-            this.$toast.open({
-              message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-          }
-        })
-    },
-  },
-}
-</script>
 <style scoped>
 input {
   width: 90%;
 }
-
 label {
   display: block;
   font-family: 'GothamThin', sans-serif;
@@ -273,33 +76,27 @@ label {
   opacity: 0.7;
   padding: 2px 1px;
 }
-
 .container {
   position: relative;
   width: 100%;
 }
-
 .form_field {
   visibility: hidden;
   position: absolute;
   top: 0;
 }
-
 img {
   width: 100%;
 }
-
 #url-container,
 #url {
   width: 90%;
 }
-
 select {
   display: inline-block;
   width: 100%;
   float: left;
 }
-
 canvas {
   width: 100%;
   height: auto;
@@ -308,24 +105,20 @@ canvas {
   left: 0;
   z-index: 2;
 }
-
 #controls {
   display: block;
   position: relative;
 }
-
 .mbtn {
   width: auto !important;
   display: inline-block;
   float: left;
   font-size: 9px;
 }
-
 .sl,
 #face-coord {
   font-size: 11px;
 }
-
 .select,
 p,
 pre,
@@ -336,22 +129,18 @@ div {
   display: inline-block;
   font-size: 10px;
 }
-
 pre {
   padding: 0.5rem;
 }
-
 .select:not(.is-multiple):not(.is-loading)::after {
   border-color: #fdb813;
   right: 1.125em;
   z-index: 4;
   margin-top: 6px;
 }
-
 .select {
   visibility: hidden;
 }
-
 #buttonscontainer,
 #control {
   text-align: left;
@@ -362,7 +151,6 @@ pre {
   height: 0;
   z-index: -1;
 }
-
 #img-sent {
   position: absolute;
   display: inline-block;
@@ -370,6 +158,7 @@ pre {
   left: 0;
   z-index: 2;
   width: 100%;
-  transform: scaleX(-1);
+
+  /* transform: scaleX(-1); */
 }
 </style>

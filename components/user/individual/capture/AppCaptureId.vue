@@ -79,61 +79,36 @@ export default {
     }
   },
   mounted() {
-    this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.loading = false
-        this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {})
-        })
-      })
-      .catch((err) => {
-        // Failed to fetch script
-        this.loading = false
-        let errorMessage = ''
-
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
+    this.loadScript()
   },
-  beforeDestroy() {
-    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-          this.$unloadScript('/daon/doc/app.js').then(() => {})
-        })
-      })
-      .catch((err) => {
-        let errorMessage = ''
+  // beforeDestroy() {
+  //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+  //     .then(() => {
+  //       this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
+  //         this.$unloadScript('/daon/doc/app.js').then(() => {})
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       let errorMessage = ''
 
-        // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
+  //       // Error Message from Backend
+  //       // eslint-disable-next-line no-prototype-builtins
+  //       if (err.hasOwnProperty('response')) {
+  //         const res = err.response
+  //         errorMessage = res.data.errorMessage
 
-          this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-        }
-      })
-  },
+  //         this.$toast.open({
+  //           message: `<p class="toast-title">Error Message</p>
+  //                   <p class="toast-msg"> ${errorMessage} </p>`,
+  //           type: 'error',
+  //           duration: 4000,
+  //           dismissible: true,
+  //         })
+  //       }
+  //     })
+  // },
   destroyed() {
+    clearTimeout()
     this.unloadScript()
   },
   methods: {
@@ -374,6 +349,7 @@ pre {
   left: 0;
   z-index: 2;
   width: 100%;
-  transform: scaleX(-1);
+
+  /* transform: scaleX(-1); */
 }
 </style>
