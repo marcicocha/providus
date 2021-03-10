@@ -81,6 +81,9 @@ export default {
   mounted() {
     this.loadScript()
   },
+  updated() {
+    this.loadScript()
+  },
   // beforeDestroy() {
   //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
   //     .then(() => {
