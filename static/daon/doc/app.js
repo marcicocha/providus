@@ -95,7 +95,8 @@ function draw() {
   const ctx = canvas.getContext('2d')
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ctx.strokeStyle = '#FF0000'
-  ctx.lineWidth = 5
+  // ctx.lineWidth = 5
+  ctx.lineWidth = 0
   ctx.beginPath()
   ctx.rect(upperLeftX, upperLeftY, width, height)
   ctx.stroke()
