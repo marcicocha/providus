@@ -4,11 +4,13 @@
       v-model="personalInfoObject.taxPayerId"
       label="Tax Identification Number"
       placeholder="Enter ID Number"
+      max-length="15"
     />
     <AppInput
       v-model="personalInfoObject.employeeIdNo"
       label="Employee Identification Number"
       placeholder="Enter Number"
+      max-length="15"
     />
     <AppTextArea
       v-model="personalInfoObject.purposeOfAcc"

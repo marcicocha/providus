@@ -92,6 +92,37 @@ export default {
         }
       })
   },
+  beforeDestroy() {
+    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      .then(() => {
+        this.loading = false
+        this.$unloadScript('/daon/face/faceCapture.min.js').then(() => {
+          this.$unloadScript('/daon/face/auto.js').then(() => {
+            console.log('All Scripts Unloaded')
+          })
+        })
+      })
+      .catch((err) => {
+        // Failed to fetch script
+        this.loading = false
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      })
+  },
   methods: {
     submitCaptureHandler() {
       //  this.$emit('submitCapturehandler')

@@ -13,9 +13,9 @@ function drawOutline() {
   outlineCanvasCtx.clearRect(0, 0, outlineCanvas.width, outlineCanvas.height)
 
   if (outlineImage) {
-    let scale = 0.55
+    let scale = 0.45
     if (outlineCanvas.width < outlineCanvas.height) {
-      scale = 0.75
+      scale = 0.65
     }
 
     const dx = (outlineCanvas.width - outlineImage.width * scale) / 2

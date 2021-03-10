@@ -108,7 +108,6 @@ export default {
   //     })
   // },
   destroyed() {
-    clearTimeout()
     this.unloadScript()
   },
   methods: {
@@ -204,7 +203,9 @@ export default {
         .then(() => {
           this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
             () => {
-              this.$unloadScript('/daon/doc/app.js').then(() => {})
+              this.$unloadScript('/daon/doc/app.js').then(() => {
+                console.log('all scripts unloaded')
+              })
             }
           )
         })

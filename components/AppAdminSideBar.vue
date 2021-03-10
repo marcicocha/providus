@@ -18,35 +18,77 @@
     </ul>
   </aside>
 </template>
-
 <script>
 export default {
   name: 'AppInput',
   components: {},
   props: {},
   data() {
-    return {}
-  },
-  computed: {
-    menuList() {
-      const menu = [
+    return {
+      clientMenu: [
         {
+          key: 'user_management',
           name: 'User Management',
           path: '/admin/usermangement',
           children: [],
         },
         {
+          key: 'settings',
           name: 'Settings',
           path: '/admin/setting',
           children: [],
         },
         {
-          name: 'Request',
+          key: 'request_management',
+          name: 'Requests',
           path: '/admin/requests',
           children: [],
         },
         {
-          name: 'Team',
+          key: 'role_management',
+          name: 'Roles',
+          path: '/admin/roles',
+          children: [],
+        },
+        {
+          key: 'team_management',
+          name: 'Teams',
+          path: '/admin/team',
+          children: [],
+        },
+      ],
+    }
+  },
+  computed: {
+    menuList() {
+      const menu = [
+        {
+          key: 'user_management',
+          name: 'User Management',
+          path: '/admin/usermangement',
+          children: [],
+        },
+        {
+          key: 'settings',
+          name: 'Settings',
+          path: '/admin/setting',
+          children: [],
+        },
+        {
+          key: 'request_management',
+          name: 'Requests',
+          path: '/admin/requests',
+          children: [],
+        },
+        {
+          key: 'role_management',
+          name: 'Roles',
+          path: '/admin/roles',
+          children: [],
+        },
+        {
+          key: 'team_management',
+          name: 'Teams',
           path: '/admin/team',
           children: [],
         },

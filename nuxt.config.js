@@ -21,7 +21,9 @@ export default {
   css: ['~/assets/main.scss'],
   server: {
     host: '0.0.0.0',
+    port: 8001,
   },
+
   // Plugins to generate: { fallback: true },run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     { src: '~/plugins/vueToast.js', ssr: false },

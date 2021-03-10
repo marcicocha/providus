@@ -35,14 +35,13 @@
           <!-- <Nuxt /> -->
 
           <!-- Production -->
-          <Nuxt />
-          <!-- <Nuxt v-if="isMobile" /> -->
-          <!-- <div v-else class="not_available__desktop">
+          <Nuxt v-if="isMobile" />
+          <div v-else class="not_available__desktop">
             <p>
               <i style="color: #fdb813" class="fas fa-bell" /> This application
               is not available for desktop use, please use on a mobile device
             </p>
-          </div> -->
+          </div>
         </div>
         <footer class="web_footer">
           <img
@@ -83,15 +82,13 @@ export default {
         width: 0,
         height: 0,
       },
+      isMobile: false,
     }
   },
   computed: {
     ...mapState({
       accountCategory: (state) => state.accountCategory,
     }),
-    isMobile() {
-      return this.handleResize()
-    },
   },
   beforeMount() {
     const root = document.querySelector('html')
@@ -152,7 +149,7 @@ export default {
             )
           },
         }
-        return isMobile.any()
+        this.isMobile = isMobile.any()
       }
     },
   },
