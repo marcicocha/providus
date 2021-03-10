@@ -10,7 +10,7 @@
           @fileUploadHandler="fileUploadReference1Handler"
         />
         <AppUpload
-          label="Reference Form 2 (optional)"
+          :label="accountTypeLabel2"
           :extension="['.docx', '.pdf']"
           @fileUploadHandler="fileUploadReference2Handler"
         />
@@ -55,6 +55,14 @@ export default {
         return 'Reference Form 1'
       }
       return 'Reference Form 1 (optional)'
+    },
+    accountTypeLabel2() {
+      const response = this.$cookies.get('accountType')
+      console.log(response, 'SOME RESPONSE')
+      if (response === 'CURRENT') {
+        return 'Reference Form 2'
+      }
+      return 'Reference Form 2 (optional)'
     },
   },
   methods: {
