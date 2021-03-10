@@ -64,7 +64,7 @@
       </div>
       <div class="column">
         <AppButton
-          title="Continue"
+          title="Save &amp; Continue"
           :loading="formLoading"
           @click="nextHandler"
         />
