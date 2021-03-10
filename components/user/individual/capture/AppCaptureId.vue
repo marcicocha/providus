@@ -78,9 +78,14 @@ export default {
       formLoading: false,
     }
   },
+  watch: {
+    // call again the method if the route changes
+    $route: 'loadScript',
+  },
   mounted() {
     this.loadScript()
   },
+
   // beforeDestroy() {
   //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
   //     .then(() => {
@@ -108,6 +113,7 @@ export default {
   //     })
   // },
   destroyed() {
+    this.unloadScript()
     clearTimeout()
   },
   methods: {
