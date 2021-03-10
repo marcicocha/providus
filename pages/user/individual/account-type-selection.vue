@@ -41,7 +41,6 @@
           <a :href="url + `/forms/download/referenceForm`" download
             >click here</a
           >
-          {{ url }}
           to download, fill and make ready for upload.
         </p>
       </div>

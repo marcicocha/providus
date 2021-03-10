@@ -8,7 +8,7 @@
       heading="Capture Utility Bill"
       description="Please capture a valid utility bill not later than 3 months."
     />
-    <AppCaptureUtility />
+    <AppCaptureUtility :key="counter" />
   </div>
 </template>
 <script>
@@ -20,8 +20,14 @@ export default {
     AppTitleComponent,
     AppCaptureUtility,
   },
+  data() {
+    return {
+      counter: 0,
+    }
+  },
   methods: {
     backButtonHandler() {
+      this.counter++
       this.$router.replace('/user/individual/upload-utility')
     },
   },

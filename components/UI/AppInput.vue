@@ -2,7 +2,7 @@
   <!-- <ValidationProvider rules="positive" v-slot="{ errors }"> -->
   <!-- <input v-model="value" type="text" /> -->
   <div class="full-input">
-    <label>{{ label }}</label>
+    <label for="name">{{ label }}</label>
     <input
       v-model="innerValue"
       name="name"
