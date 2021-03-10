@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!loading">
+  <div v-show="!loading" id="liveness-wrapper">
     <div id="clientcontainer">
       <h1 id="instructions">Please center your face so it fills the guide</h1>
       <div id="videocontainer">
@@ -87,9 +87,15 @@
       />
     </div>
     <AppButton
+      v-show="!accountCreation"
       id="btn-start-session"
       title="Please Wait"
-      @click="livenessCheckHandler"
+      @click.prevent="livenessCheckHandler"
+    />
+    <AppButton
+      v-show="accountCreation"
+      :loading="accountCreation"
+      title="creating account..."
     />
   </div>
 </template>
@@ -107,6 +113,7 @@ export default {
       loading: true,
       livenessCapture: '',
       reqId: '',
+      accountCreation: false,
     }
   },
   watch: {
@@ -158,6 +165,47 @@ export default {
         }
       })
   },
+  beforeDestroy() {
+    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      .then(() => {
+        this.loading = false
+        this.$unloadScript('/daon/3dfl/labels.js').then(() => {
+          this.$unloadScript('/daon/3dfl/Daon.FaceLiveness3D.min.js').then(
+            () => {
+              this.$unloadScript('/daon/3dfl/animation.js').then(() => {
+                this.$unloadScript('/daon/3dfl/ui.js').then(() => {
+                  this.$unloadScript('/daon/3dfl/3dflClient_withlib.js').then(
+                    () => {
+                      console.log('All Scripts Unloaded')
+                    }
+                  )
+                })
+              })
+            }
+          )
+        })
+      })
+      .catch((err) => {
+        // Failed to fetch script
+        this.loading = false
+        let errorMessage = ''
+
+        // Error Message from Backend
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
+      })
+  },
   methods: {
     livenessCheckHandler() {
       //  this.$emit('submitCapturehandler')
@@ -172,7 +220,7 @@ export default {
         requestId: this.$cookies.get('requestId'),
         base64Video: this.livenessCapture,
       }
-
+      this.accountCreation = true
       try {
         const { response } = await this.$axios.$post(
           '/individual/videoFaceEvaluation',
@@ -181,6 +229,7 @@ export default {
         this.accountNumberHandler(response)
         this.$router.replace('/user/individual/weldone')
       } catch (err) {
+        this.accountCreation = false
         const res = err.response
         const errorMessage = res.data.errorMessage
         const hasError = res.data.hasError
@@ -254,6 +303,7 @@ body {
   height: 100%;
   margin: 0;
 }
+
 .video {
   width: 100%;
   height: auto;
@@ -261,15 +311,22 @@ body {
   top: 0;
   left: 0;
 }
+
 select {
   display: inline-block;
   width: 100%;
   float: left;
 }
+
+#liveness-wrapper {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 10px;
+}
+
 #clientcontainer {
   margin: 0 auto;
-  border: 1px solid black;
-  padding: 5px;
+  border: none !important;
+  padding: 2px;
   width: 50%;
   min-width: calc(var(--cam-width) + 30px);
 }
@@ -282,24 +339,27 @@ select {
 }
 
 video {
-  border: 1px solid black;
+  border: none !important;
   position: relative;
-  top: 0px;
-  left: 0px;
-  width: var(--cam-width);
+  top: 0;
+  left: 0;
+  width: 100%;
   height: var(--cam-height);
   transform: rotateY(180deg);
 }
 
 .displaycanvas {
-  border: 1px solid black;
+  border: none !important;
   position: absolute;
   top: 0px;
   left: 0px;
-  width: var(--cam-width);
+  width: 100%;
   height: var(--cam-height);
   pointer-events: none;
   transform: rotateY(180deg);
+}
+.displaycanvas label {
+  margin-top: 4px !important;
 }
 
 .container_visible {
@@ -332,20 +392,32 @@ video {
 #versionstr {
   top: 10px;
 }
+
 #nbcaptures {
   top: 25px;
 }
+
 #dimensions {
   top: 10px;
 }
+
 #timingTracker {
   top: 25px;
 }
+
 #timingAnalysis {
   top: 40px;
 }
+
 #ied {
   top: 55px;
+}
+
+#instructions {
+  font-size: 13px !important;
+  padding-bottom: 10px;
+  font-weight: bold !important;
+  text-align: center !important;
 }
 
 #instructions_on_face {
@@ -438,6 +510,7 @@ input:disabled + label {
   margin: 0 auto;
   position: relative;
 }
+
 pre {
   -webkit-overflow-scrolling: touch;
   background-color: whitesmoke;
@@ -448,12 +521,14 @@ pre {
   white-space: pre;
   word-wrap: normal;
 }
+
 #video-settings,
 #feedback {
   width: 100%;
   display: block;
   font-size: 9px;
 }
+
 .canvas {
   width: 100%;
   height: auto;
@@ -463,10 +538,12 @@ pre {
   z-index: 5;
   transform: scaleX(-1);
 }
+
 #controls {
   display: block;
   position: relative;
 }
+
 .mbtn {
   width: auto !important;
   display: inline-block;
@@ -476,16 +553,19 @@ pre {
   left: 0;
   z-index: -1;
 }
+
 .sl,
 #face-coord {
   font-size: 11px;
 }
+
 .select:not(.is-multiple):not(.is-loading)::after {
   border-color: #fdb813;
   right: 1.125em;
   z-index: 4;
   margin-top: 6px;
 }
+
 .video-source,
 .btn-control {
   display: inline-block;

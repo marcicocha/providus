@@ -73,13 +73,13 @@
       </div>
       <div v-if="isBvnDetails">
         <div class="columns is-mobile">
-          <div class="column is-5 bvn_image">
+          <div class="column is-6 bvn_image">
             <img
               :src="getImgUrl(bvnDetails.base64Image)"
               :alt="bvnDetails.firstName"
             />
           </div>
-          <div class="column is-7">
+          <div class="column is-6">
             <div class="bvn-child__block">
               <small>BVN</small>
               <p style="font-weight: bolder">{{ bvnDetails.bvn }}</p>

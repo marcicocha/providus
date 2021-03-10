@@ -278,6 +278,9 @@ export default {
   padding-right: 1em;
   cursor: pointer;
   user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 // .custom-select .selected.open {
 //  border: 1px solid #ad8225;
@@ -330,7 +333,9 @@ export default {
   display: none;
 }
 @media only screen and (max-width: 991px) {
-  .custom-select {
+  .custom-select,
+  .custom-select .selected {
+    padding-top: 0 !important;
     font-size: 13px !important;
   }
 }

@@ -88,8 +88,8 @@ navigator.mediaDevices
   .getUserMedia({
     audio: false,
     video: {
-      width: { ideal: 380 },
-      height: { ideal: 400 },
+      width: { ideal: 292 },
+      height: { ideal: 350 },
       facingMode: 'user',
     },
   })

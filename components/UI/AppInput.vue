@@ -2,14 +2,14 @@
   <!-- <ValidationProvider rules="positive" v-slot="{ errors }"> -->
   <!-- <input v-model="value" type="text" /> -->
   <div class="full-input">
-    <label for="name">{{ label }}</label>
+    <label>{{ label }}</label>
     <input
-      id="name"
       v-model="innerValue"
-      :type="inputType"
       name="name"
+      :type="inputType"
       :placeholder="placeholder"
       :disabled="disabled"
+      :max-lenght="maxLength"
       @blur="blurHandler"
     />
   </div>
