@@ -10,7 +10,7 @@
           @fileUploadHandler="fileUploadReference1Handler"
         />
         <AppUpload
-          label="Reference Form 2 (optional)"
+          label="Reference Form 2"
           :extension="['.docx', '.pdf']"
           @fileUploadHandler="fileUploadReference2Handler"
         />
@@ -82,6 +82,15 @@ export default {
         if (!this.referenceFile1) {
           this.$toast.open({
             message: `<p class="toast-msg"> Reference File 1 is Mandatory </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+        if (!this.referenceFile2) {
+          this.$toast.open({
+            message: `<p class="toast-msg"> Reference File 2 is Mandatory </p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,

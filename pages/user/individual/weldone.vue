@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     saveHandler() {
-      this.$router.replace('/')
+      window.location = '/'
     },
   },
 }
