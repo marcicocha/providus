@@ -94,7 +94,7 @@ function draw() {
   } = (queryParams = getQueryParams())
   const ctx = canvas.getContext('2d')
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  ctx.strokeStyle = 'blue'
+  ctx.strokeStyle = 'transparent'
   ctx.lineWidth = 5
   ctx.beginPath()
   ctx.rect(upperLeftX, upperLeftY, width, height)
