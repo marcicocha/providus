@@ -9,7 +9,7 @@
       description="Place ID within the edges of the rectangle."
     />
 
-    <AppCaptureId />
+    <AppCaptureId :key="counter" />
   </div>
 </template>
 <script>
@@ -20,8 +20,14 @@ export default {
     AppTitleComponent,
     AppCaptureId,
   },
+  data() {
+    return {
+      counter: 0,
+    }
+  },
   methods: {
     backButtonHandler() {
+      this.counter++
       this.$router.replace('/user/individual/upload-valid-id')
     },
   },

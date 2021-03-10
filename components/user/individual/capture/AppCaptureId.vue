@@ -109,6 +109,7 @@ export default {
   // },
   destroyed() {
     this.unloadScript()
+    clearTimeout()
   },
   methods: {
     submitCaptureHandler() {

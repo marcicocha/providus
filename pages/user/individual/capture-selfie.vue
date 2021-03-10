@@ -8,6 +8,7 @@
     />
     <AppCaptureSelfie
       v-if="isCapture"
+      :key="counter"
       :form-loading="formLoading"
       @submitCapturehandler="submitCapturehandler"
     />
@@ -29,6 +30,7 @@ export default {
       isCaptureInstruction: true,
       isCapture: false,
       formLoading: false,
+      counter: 0,
     }
   },
   methods: {
@@ -36,6 +38,7 @@ export default {
       this.isCaptureInstruction = false
       this.isCapture = true
       this.description = 'Stay still while taking selfie'
+      this.counter++
       // 'Stay still and keep your face inside the oval while taking selfie'
     },
     async submitCapturehandler(file) {
