@@ -10,7 +10,7 @@
           @fileUploadHandler="fileUploadReference1Handler"
         />
         <AppUpload
-          label="Reference Form 2"
+          :label="accountTypeLabel2"
           :extension="['.docx', '.pdf']"
           @fileUploadHandler="fileUploadReference2Handler"
         />
@@ -56,6 +56,14 @@ export default {
       }
       return 'Reference Form 1 (optional)'
     },
+    accountTypeLabel2() {
+      const response = this.$cookies.get('accountType')
+      console.log(response, 'SOME RESPONSE')
+      if (response === 'CURRENT') {
+        return 'Reference Form 2'
+      }
+      return 'Reference Form 2 (optional)'
+    },
   },
   methods: {
     fileUploadReference1Handler(file) {
@@ -82,15 +90,6 @@ export default {
         if (!this.referenceFile1) {
           this.$toast.open({
             message: `<p class="toast-msg"> Reference File 1 is Mandatory </p>`,
-            type: 'error',
-            duration: 4000,
-            dismissible: true,
-          })
-          return
-        }
-        if (!this.referenceFile2) {
-          this.$toast.open({
-            message: `<p class="toast-msg"> Reference File 2 is Mandatory </p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,
