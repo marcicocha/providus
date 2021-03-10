@@ -96,6 +96,16 @@ export default {
           })
           return
         }
+
+        if (!this.referenceFile2) {
+          this.$toast.open({
+            message: `<p class="toast-msg"> Reference File 2 is Mandatory </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
       }
       try {
         this.message = ''
