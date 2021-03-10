@@ -98,6 +98,12 @@
           />
         </div>
       </div>
+      <div>
+        <AppCheckbox
+          v-model="contactDetails.saveAddress"
+          label="Use address for kin's address?"
+        />
+      </div>
     </div>
 
     <AppButton title="Save &amp; Continue" @click="contactDetailsHandler" />
@@ -108,6 +114,7 @@
 import AppInput from '@/components/UI/AppInput'
 import AppSelectHybrid from '@/components/UI/AppSelectHybrid'
 import AppButton from '@/components/UI/AppButton'
+import AppCheckbox from '@/components/UI/AppCheckbox.vue'
 // import AppSelect from '@/components/UI/AppSelect'
 
 export default {
@@ -116,6 +123,7 @@ export default {
     AppSelectHybrid,
     AppInput,
     AppButton,
+    AppCheckbox,
     // AppSelect,
   },
   data() {
