@@ -54,7 +54,7 @@
       </div>
       <div class="column">
         <AppButton
-          title="Continue"
+          title="Save &amp; Continue"
           :loading="formLoading"
           @click="nextHandler"
         />
@@ -66,7 +66,7 @@
 import AppButton from '@/components/UI/AppButton'
 
 export default {
-  name: 'AppCaptureSelfie',
+  name: 'AppCaptureId',
   components: {
     AppButton,
   },
