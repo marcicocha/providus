@@ -148,6 +148,10 @@ export default {
           // eslint-disable-next-line no-prototype-builtins
           if (res.hasOwnProperty('data')) {
             errorMessage = res.data.errorMessage
+            if (!errorMessage) {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
           } else {
             errorMessage =
               'No response was received from the server...please try again'
@@ -195,6 +199,10 @@ export default {
             // eslint-disable-next-line no-prototype-builtins
             if (res.hasOwnProperty('data')) {
               errorMessage = res.data.errorMessage
+              if (!errorMessage) {
+                errorMessage =
+                  'No response was received from the server...please try again'
+              }
             } else {
               errorMessage =
                 'No response was received from the server...please try again'
@@ -238,6 +246,10 @@ export default {
             // eslint-disable-next-line no-prototype-builtins
             if (res.hasOwnProperty('data')) {
               errorMessage = res.data.errorMessage
+              if (!errorMessage) {
+                errorMessage =
+                  'No response was received from the server...please try again'
+              }
             } else {
               errorMessage =
                 'No response was received from the server...please try again'
