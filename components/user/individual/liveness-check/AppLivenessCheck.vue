@@ -290,6 +290,7 @@ body {
 }
 
 .video {
+  background: transparent !important;
   width: 100%;
   height: auto;
   position: absolute;
@@ -321,19 +322,23 @@ select {
   width: calc(var(--cam-width) + 2px);
   height: calc(var(--cam-height) + 2px);
   margin: 0 auto;
+  background: transparent !important;
 }
 
 video {
+  background: transparent !important;
   border: none !important;
   position: relative;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100% !important;
   height: var(--cam-height);
   transform: rotateY(180deg);
+  object-fit: cover;
 }
 
 .displaycanvas {
+  background: transparent !important;
   border: none !important;
   position: absolute;
   top: 0px;
@@ -341,6 +346,7 @@ video {
   width: 100%;
   height: var(--cam-height);
   pointer-events: none;
+  object-fit: cover;
   transform: rotateY(180deg);
 }
 .displaycanvas label {
@@ -522,6 +528,7 @@ pre {
   left: 0;
   z-index: 5;
   transform: scaleX(-1);
+  background: transparent !important;
 }
 
 #controls {
