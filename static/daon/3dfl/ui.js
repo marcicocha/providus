@@ -1,36 +1,30 @@
-let mWidth, mHeight
-
-const startButton = document.querySelector('#btn-start-session')
-const renderCanvas = document.querySelector('#rendercanvas')
-const renderCanvasCtx = renderCanvas.getContext('2d')
-const outlineCanvas = document.querySelector('#motioncanvas')
-const outlineCanvasCtx = outlineCanvas.getContext('2d')
-const instrElem = document.getElementById('instructions')
-const instrFaceElem = document.getElementById('instructions_on_face')
-
-const panelSettings = document.getElementById('settingsdiv')
-
-const iedElem = document.getElementById('ied')
-const dimensionsElem = document.getElementById('dimensions')
-const timingTrackerElem = document.getElementById('timingTracker')
-const timingAnalysisElem = document.getElementById('timingAnalysis')
-
-const showExtraInfoCheckBox = document.getElementById('showextrainfo')
+startButton = document.querySelector('#btn-start-session')
+renderCanvas = document.querySelector('#rendercanvas')
+renderCanvasCtx = renderCanvas.getContext('2d')
+outlineCanvas = document.querySelector('#motioncanvas')
+outlineCanvasCtx = outlineCanvas.getContext('2d')
+instrElem = document.getElementById('instructions')
+instrFaceElem = document.getElementById('instructions_on_face')
+panelSettings = document.getElementById('settingsdiv')
+iedElem = document.getElementById('ied')
+dimensionsElem = document.getElementById('dimensions')
+timingTrackerElem = document.getElementById('timingTracker')
+timingAnalysisElem = document.getElementById('timingAnalysis')
+showExtraInfoCheckBox = document.getElementById('showextrainfo')
 video = document.querySelector('video')
 
-let faceBox = null
-
-let nbCaptures = 0
-let blackCanvas = false
-let showFaceBox = document.getElementById('displayfacebox').checked
-const iOS = ['iPad', 'iPhone', 'iPod'].includes(navigator.platform)
+faceBox = null
+nbCaptures = 0
+blackCanvas = false
+showFaceBox = document.getElementById('displayfacebox').checked
+iOS = ['iPad', 'iPhone', 'iPod'].includes(navigator.platform)
 
 if (iOS) {
   document.getElementById('allowh264').disabled = true
 }
 
-const DFQ_WASM = window.location.origin + '/DaonFaceQualityLite.wasm'
-const f3d = new Daon.FaceLiveness3D(DFQ_WASM)
+DFQ_WASM = window.location.origin + '/DaonFaceQualityLite.wasm'
+f3d = new Daon.FaceLiveness3D(DFQ_WASM)
 
 startButton.disabled = true // until 3DFL is ready
 
@@ -381,7 +375,7 @@ function onServerResults(resultsObj) {
     'nb captures: ' + nbCaptures
 }
 
-const eventName = iOS ? 'pagehide' : 'beforeunload'
+eventName = iOS ? 'pagehide' : 'beforeunload'
 window.addEventListener(eventName, function (e) {
   console.log('3DFL client ' + eventName + ' called')
   if (timing3dflQueryInterval) {
@@ -394,7 +388,7 @@ window.addEventListener(eventName, function (e) {
 })
 
 // FPS labels
-var timing3dflQueryInterval = setInterval(refresh3dflTiming, 250)
+timing3dflQueryInterval = setInterval(refresh3dflTiming, 250)
 function refresh3dflTiming() {
   if (f3d.instance) {
     let processingTime = f3d.instance.getTrackerProcessingTime()

@@ -50,7 +50,7 @@ export default {
         this.$router.replace('/user/corporate/upload-document')
       } catch (err) {
         this.formLoading = false
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

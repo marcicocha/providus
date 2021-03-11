@@ -79,37 +79,11 @@ export default {
     }
   },
   mounted() {
+    this.unloadScript()
     this.loadScript()
   },
-  // beforeDestroy() {
-  //   this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-  //     .then(() => {
-  //       this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-  //         this.$unloadScript('/daon/doc/utility.js').then(() => {})
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       let errorMessage = ''
-
-  //       // Error Message from Backend
-  //       // eslint-disable-next-line no-prototype-builtins
-  //       if (err.hasOwnProperty('response')) {
-  //         const res = err.response
-  //         errorMessage = res.data.errorMessage
-
-  //         this.$toast.open({
-  //           message: `<p class="toast-title">Error Message</p>
-  //                   <p class="toast-msg"> ${errorMessage} </p>`,
-  //           type: 'error',
-  //           duration: 4000,
-  //           dismissible: true,
-  //         })
-  //       }
-  //     })
-  // },
   destroyed() {
-    this.unloadScript()
-    clearTimeout()
+    this.$destroy()
   },
   methods: {
     submitCaptureHandler() {
@@ -154,11 +128,31 @@ export default {
       } catch (err) {
         this.formLoading = false
 
-        let errorMessage
+        let errorMessage = 'Network Error'
+
+        if (err && !err.response) {
+          errorMessage = String(err)
+          const customMessage = 'please try again'
+          this.$toast.open({
+            message: `<p class="toast-title">${errorMessage} </p>
+                    <p class="toast-msg"> ${customMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
         // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
+        if (err && err.hasOwnProperty('response')) {
           const res = err.response
-          errorMessage = res.data.errorMessage
+          // eslint-disable-next-line no-prototype-builtins
+          if (res.hasOwnProperty('data')) {
+            errorMessage = res.data.errorMessage
+          } else {
+            errorMessage =
+              'No response was received from the server...please try again'
+          }
+
           this.$toast.open({
             message: `<p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
@@ -169,29 +163,45 @@ export default {
       }
     },
     loadScript() {
-      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      this.loading = false
+      this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js')
         .then(() => {
-          this.loading = false
-          this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(() => {
-            this.$loadScript('/daon/doc/app.js').then(() => {
-              document.querySelector('#restartvideo').click()
-            })
+          this.$loadScript('/daon/doc/app.js').then(() => {
+            const target = document.querySelector('#restartvideo')
+            if (target) target.click()
           })
         })
         .catch((err) => {
           // Failed to fetch script
           this.loading = false
-          let errorMessage = ''
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
+          if (err && !err.response) {
+            errorMessage = String(err)
+            const customMessage = 'please try again'
+            this.$toast.open({
+              message: `<p class="toast-title">${errorMessage} </p>
+                    <p class="toast-msg"> ${customMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
           // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
+          if (err && err.hasOwnProperty('response')) {
             const res = err.response
-            errorMessage = res.data.errorMessage
+            // eslint-disable-next-line no-prototype-builtins
+            if (res.hasOwnProperty('data')) {
+              errorMessage = res.data.errorMessage
+            } else {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
 
             this.$toast.open({
-              message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
               duration: 4000,
               dismissible: true,
@@ -200,28 +210,41 @@ export default {
         })
     },
     unloadScript() {
-      this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js')
         .then(() => {
-          this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
-            () => {
-              this.$unloadScript('/daon/doc/app.js').then(() => {
-                console.log('all scripts unloaded')
-              })
-            }
-          )
+          this.$unloadScript('/daon/doc/app.js').then(() => {})
         })
         .catch((err) => {
-          let errorMessage = ''
+          // Failed to fetch script
+          this.loading = false
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
+          if (err && !err.response) {
+            errorMessage = String(err)
+            const customMessage = 'please try again'
+            this.$toast.open({
+              message: `<p class="toast-title">${errorMessage} </p>
+                    <p class="toast-msg"> ${customMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+            return
+          }
           // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
+          if (err && err.hasOwnProperty('response')) {
             const res = err.response
-            errorMessage = res.data.errorMessage
+            // eslint-disable-next-line no-prototype-builtins
+            if (res.hasOwnProperty('data')) {
+              errorMessage = res.data.errorMessage
+            } else {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
 
             this.$toast.open({
-              message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
+              message: `<p class="toast-msg"> ${errorMessage} </p>`,
               type: 'error',
               duration: 4000,
               dismissible: true,
@@ -236,6 +259,7 @@ export default {
 input {
   width: 90%;
 }
+
 label {
   display: block;
   font-family: 'GothamThin', sans-serif;
@@ -246,27 +270,33 @@ label {
   opacity: 0.7;
   padding: 2px 1px;
 }
+
 .container {
   position: relative;
   width: 100%;
 }
+
 .form_field {
   visibility: hidden;
   position: absolute;
   top: 0;
 }
+
 img {
   width: 100%;
 }
+
 #url-container,
 #url {
   width: 90%;
 }
+
 select {
   display: inline-block;
   width: 100%;
   float: left;
 }
+
 canvas {
   width: 100%;
   height: auto;
@@ -275,42 +305,56 @@ canvas {
   left: 0;
   z-index: 2;
 }
+
 #controls {
   display: block;
   position: relative;
 }
+
 .mbtn {
   width: auto !important;
   display: inline-block;
   float: left;
   font-size: 9px;
 }
+
 .sl,
 #face-coord {
   font-size: 11px;
 }
+
 .select,
 p,
 pre,
 img,
 div {
-  width: 100%;
   height: auto;
   display: inline-block;
   font-size: 10px;
 }
+
+.select,
+p,
+pre,
+img {
+  width: 100%;
+}
+
 pre {
   padding: 0.5rem;
 }
+
 .select:not(.is-multiple):not(.is-loading)::after {
   border-color: #fdb813;
   right: 1.125em;
   z-index: 4;
   margin-top: 6px;
 }
+
 .select {
   visibility: hidden;
 }
+
 #buttonscontainer,
 #control {
   text-align: left;
@@ -321,6 +365,7 @@ pre {
   height: 0;
   z-index: -1;
 }
+
 #img-sent {
   position: absolute;
   display: inline-block;

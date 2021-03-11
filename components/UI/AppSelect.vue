@@ -157,7 +157,7 @@ export default {
         })
         .catch((err) => {
           this.fetching = false
-          let errorMessage = ''
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
           // eslint-disable-next-line no-prototype-builtins

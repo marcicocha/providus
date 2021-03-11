@@ -1,21 +1,21 @@
-let elDocType = document.querySelector('#doc-type')
-let elWidth = document.querySelector('#width')
-let elUrl = document.querySelector('#url')
+elDocType = document.querySelector('#doc-type')
+elWidth = document.querySelector('#width')
+elUrl = document.querySelector('#url')
 elUrl.value =
   'http://localhost:5000/https://emea.identityx-cloud.com:8087/rest/v1/quality/assessments'
-let videoSelectNew = document.querySelector('select#videoSource')
-let selectorsNew = [videoSelectNew]
-let queryParams = {}
-let videoNew = null
-let canvas = document.querySelector('canvas')
-let doc_type = 'PASSPORT'
-let overlayWidth = 600
-// let ID_CARD_RATIO = 1.5858
-let ID_CARD_RATIO = 1
-// let PASSPORT_RATIO = 1.4205
-let PASSPORT_RATIO = 1
+videoSelectNew = document.querySelector('select#videoSource')
+selectorsNew = [videoSelectNew]
+queryParams = {}
+videoNew = null
+canvas = document.querySelector('canvas')
+doc_type = 'PASSPORT'
+overlayWidth = 600
+// ID_CARD_RATIO = 1.5858
+ID_CARD_RATIO = 1
+// PASSPORT_RATIO = 1.4205
+PASSPORT_RATIO = 1
 
-let dc = new Daon.DocumentCapture({
+dc = new Daon.DocumentCapture({
   url: elUrl.value,
   documentType: doc_type,
 })
@@ -132,7 +132,7 @@ function getQueryParams() {
   }
 }
 
-let imgSent = document.querySelector('#img-sent')
+imgSent = document.querySelector('#img-sent')
 imgSent.onload = function () {
   URL.revokeObjectURL(imgSent.src)
   document.querySelector('#img-processed').src = undefined
@@ -175,3 +175,4 @@ function onServerFeedback(response) {
 function onServerError(response) {
   document.querySelector('pre').innerText = response
 }
+

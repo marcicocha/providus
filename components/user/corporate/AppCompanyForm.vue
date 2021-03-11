@@ -108,7 +108,7 @@ export default {
       } catch (err) {
         this.loading = false
         this.message = err.response.data.errorMessage
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

@@ -94,28 +94,26 @@ export default {
     }
   },
   mounted() {
+    this.unloadScript()
     this.loadScript()
   },
   destroyed() {
-    this.unloadScript()
-    clearTimeout()
+    this.$destroy()
   },
   methods: {
     loadScript() {
-      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      this.loading = false
+      this.$loadScript('/daon/face/faceCapture.min.js')
         .then(() => {
-          this.loading = false
-          this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
-            this.$loadScript('/daon/face/auto.js').then(() => {
-              document.querySelector('.startcam').click()
-              document.querySelector('#find-face').click()
-            })
+          this.$loadScript('/daon/face/auto.js').then(() => {
+            document.querySelector('.startcam').click()
+            document.querySelector('#find-face').click()
           })
         })
         .catch((err) => {
           // Failed to fetch script
           this.loading = false
-          let errorMessage = ''
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
           // eslint-disable-next-line no-prototype-builtins
@@ -134,22 +132,18 @@ export default {
         })
     },
     unloadScript() {
-      this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+      this.$unloadScript('/daon/face/faceCapture.min.js')
         .then(() => {
-          this.$unloadScript('/daon/face/faceCapture.min.js').then(() => {
-            this.$unloadScript('/daon/face/auto.js').then(() => {
-              console.log('all scripts unloaded')
-            })
-          })
+          this.$unloadScript('/daon/face/auto.js').then(() => {})
         })
         .catch((err) => {
           // Failed to fetch script
           this.loading = false
-          let errorMessage = ''
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
           // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
+          if (err && err.hasOwnProperty('response')) {
             const res = err.response
             errorMessage = res.data.errorMessage
 

@@ -6,17 +6,15 @@
     />
     <br />
     <AppInput
-      v-model="referenceCode"
+      v-model="referenceId"
       label="Reference ID"
       placeholder="Enter Reference ID"
       :disabled="isLoading"
-      max-length="11"
-      min-length="11"
     />
     <div style="height: 20px"></div>
     <AppButton
       title="Submit Reference ID"
-      :disabled="!referenceCode"
+      :disabled="!referenceId"
       :loading="isLoading"
       @click="referenceIdHandler"
     />
@@ -34,7 +32,7 @@ export default {
   },
   data() {
     return {
-      referenceCode: '',
+      referenceId: '',
       isLoading: false,
     }
   },
@@ -43,7 +41,8 @@ export default {
       try {
         this.isLoading = true
         const response = await this.$axios.$post(
-          `/corporate/verifyReferenceCode?referenceCode=${this.referenceCode}`
+          '/individual',
+          this.referenceId
         )
         if (response) {
           this.$router.replace('/user/corporate/upload-document')
@@ -57,16 +56,6 @@ export default {
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
-          if (res === undefined || !res) {
-            this.$toast.open({
-              message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> No response </p>`,
-              type: 'error',
-              duration: 4000,
-              dismissible: true,
-            })
-            return
-          }
           errorMessage = res.data.errorMessage
 
           this.$toast.open({
