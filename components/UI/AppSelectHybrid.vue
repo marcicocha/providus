@@ -135,7 +135,6 @@ export default {
   },
   computed: {
     setSelected() {
-      console.log(this.value, 'VALUE:::')
       if (this.value && (this.value !== '' || this.value.length > 0)) {
         return this.value
       }
@@ -176,7 +175,6 @@ export default {
       this.changeHandler(option)
     },
     changeHandler(value) {
-      console.log('IT CHANGED')
       this.$emit('change', value)
     },
     searchHandler(e) {
@@ -220,7 +218,7 @@ export default {
         })
         .catch((err) => {
           this.fetching = false
-          let errorMessage = ''
+          let errorMessage = 'Network Error'
 
           // Error Message from Backend
           // eslint-disable-next-line no-prototype-builtins

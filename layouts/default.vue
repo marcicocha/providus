@@ -107,16 +107,42 @@ export default {
     initLoader() {
       const root = document.querySelector('html')
       root.classList.add('hide-scroller')
-      setTimeout(() => {
-        root.classList.remove('hide-scroller')
-        this.loaderTag = {
-          'animated fadeoutleft': true,
-          hidden: false,
-        }
-        this.pageTag = {
-          'animated fadeinright': true,
-        }
-      }, 3000)
+      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
+        .then(() => {
+          this.loading = false
+          this.$loadScript('/daon/daon.js').then(() => {
+            setTimeout(() => {
+              root.classList.remove('hide-scroller')
+              this.loaderTag = {
+                'animated fadeoutleft': true,
+                hidden: false,
+              }
+              this.pageTag = {
+                'animated fadeinright': true,
+              }
+            }, 3000)
+          })
+        })
+        .catch((err) => {
+          // Failed to fetch script
+          this.loading = false
+          let errorMessage = ''
+
+          // Error Message from Backend
+          // eslint-disable-next-line no-prototype-builtins
+          if (err.hasOwnProperty('response')) {
+            const res = err.response
+            errorMessage = res.data.errorMessage
+
+            this.$toast.open({
+              message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> ${errorMessage} </p>`,
+              type: 'error',
+              duration: 4000,
+              dismissible: true,
+            })
+          }
+        })
     },
     goHome() {
       this.$router.push('/')
@@ -149,7 +175,8 @@ export default {
             )
           },
         }
-        this.isMobile = isMobile.any()
+
+        this.isMobile = isMobile.any() !== null
       }
     },
   },

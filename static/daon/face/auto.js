@@ -1,7 +1,10 @@
-const fc = new Daon.FaceCapture({
-  url:
-    'http://localhost:5000/https://emea.identityx-cloud.com:8099/rest/v1/quality/assessments',
-})
+
+if(!fc) {
+   fc = new Daon.FaceCapture({
+    url:
+      'http://localhost:5000/https://emea.identityx-cloud.com:8099/rest/v1/quality/assessments',
+  })
+}
 if (fc) {
   console.log('ive been invoked')
 }
@@ -63,7 +66,7 @@ function handleError(error) {
   )
 }
 
-let iteration = 0
+iteration = 0
 
 function capture() {
   fc.startAutoCapture(
@@ -100,19 +103,15 @@ function restart() {
   fc.startCamera(video, videoSource)
 }
 
-const c = getCanvasId()
-const ctx = c.getContext('2d')
-
-const width = 1280
-const height = 720
-
-let video = document.querySelector('video')
-const text = document.querySelector('#video-settings')
-const feedback = document.querySelector('#feedback')
-
-const videoSelect = document.querySelector('select#videoSource')
-const selectors = [videoSelect]
-
+c = getCanvasId()
+ctx = c.getContext('2d')
+width = 1280
+height = 720
+video = document.querySelector('video')
+text = document.querySelector('#video-settings')
+feedback = document.querySelector('#feedback')
+videoSelect = document.querySelector('select#videoSource')
+selectors = [videoSelect]
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError)
 video.onloadedmetadata = function () {
   // document.querySelector('#start-capture').disabled = false

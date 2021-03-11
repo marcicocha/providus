@@ -200,7 +200,7 @@ export default {
         this.$cookies.set('contactDetails', contactDetails)
         this.$router.replace('/user/individual/kin-information')
       } catch (err) {
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

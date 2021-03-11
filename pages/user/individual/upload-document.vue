@@ -50,7 +50,7 @@ export default {
   computed: {
     accountTypeLabel() {
       const response = this.$cookies.get('accountType')
-      console.log(response, 'SOME RESPONSE')
+
       if (response === 'CURRENT') {
         return 'Reference Form 1'
       }
@@ -58,7 +58,7 @@ export default {
     },
     accountTypeLabel2() {
       const response = this.$cookies.get('accountType')
-      console.log(response, 'SOME RESPONSE')
+
       if (response === 'CURRENT') {
         return 'Reference Form 2'
       }
@@ -128,7 +128,7 @@ export default {
         this.loading = false
       } catch (err) {
         this.loading = false
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

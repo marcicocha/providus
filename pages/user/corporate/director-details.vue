@@ -61,7 +61,7 @@ export default {
       } catch (err) {
         this.loading = false
         this.message = err.response.data.errorMessage
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response
@@ -102,7 +102,6 @@ export default {
           requestId,
           key: Date.now(),
         }
-        console.log(obj, 'OBJECT')
         this.directorList.push(obj)
       } else {
         this.$toast.open({
@@ -120,7 +119,6 @@ export default {
         (director) => director.key !== obj.key
       )
       this.directorList = newArray
-      console.log(this.directorList)
     },
   },
 }
