@@ -1,24 +1,25 @@
 <template>
   <div class="child-container">
     <div style="margin-top: -15px; width: 70%">
-      <div>
+      <div v-if="typeof accountNo === 'number'">
         <img src="@/assets/images/fire-cracker.svg" />
       </div>
-      <h1>Congratulations</h1>
-      <p>
+
+      <h1 v-if="typeof accountNo === 'number'">Congratulations</h1>
+      <h1 v-else>Session Completed</h1>
+
+      <p v-if="typeof accountNo === 'number'">
         Please Check your Email and SMS for your new Account Details and Next
         Steps
       </p>
-      <div>
+      <p v-else>
+        {{ accountNo }}
+      </p>
+
+      <div v-if="typeof accountNo === 'number'">
         <hr />
-
-        <div v-if="typeof accountNo === 'number'">
+        <div>
           <span> Account Number</span>
-          <p>{{ accountNo }}</p>
-        </div>
-
-        <div v-else>
-          <span> Success Message</span>
           <p>{{ accountNo }}</p>
         </div>
       </div>
