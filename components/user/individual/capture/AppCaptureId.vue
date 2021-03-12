@@ -177,11 +177,18 @@ export default {
     },
     loadScript() {
       this.loading = false
-      this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js')
+      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
         .then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {
-            const target = document.querySelector('#restartvideo')
-            if (target) target.click()
+          this.loading = false
+          this.$loadScript('/daon/daon.js').then(() => {
+            this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
+              () => {
+                this.$loadScript('/daon/doc/app.js').then(() => {
+                  const target = document.querySelector('#restartvideo')
+                  if (target) target.click()
+                })
+              }
+            )
           })
         })
         .catch((err) => {
@@ -280,7 +287,6 @@ export default {
 input {
   width: 90%;
 }
-
 label {
   display: block;
   font-family: 'GothamThin', sans-serif;
@@ -291,22 +297,18 @@ label {
   opacity: 0.7;
   padding: 2px 1px;
 }
-
 .container {
   position: relative;
   width: 100%;
 }
-
 .form_field {
   visibility: hidden;
   position: absolute;
   top: 0;
 }
-
 img {
   width: 100%;
 }
-
 #url-container,
 #url {
   width: 90%;
@@ -352,12 +354,6 @@ div {
   height: auto;
   display: inline-block;
   font-size: 10px;
-}
-
-.select,
-p,
-pre,
-img {
   width: 100%;
 }
 
