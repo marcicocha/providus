@@ -11,8 +11,14 @@
       </p>
       <div>
         <hr />
-        <div>
+
+        <div v-if="typeof accountNo === 'number'">
           <span> Account Number</span>
+          <p>{{ accountNo }}</p>
+        </div>
+
+        <div v-else>
+          <span> Success Message</span>
           <p>{{ accountNo }}</p>
         </div>
       </div>

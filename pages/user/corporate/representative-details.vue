@@ -117,7 +117,7 @@ export default {
         )
         this.$cookies.set('requestId', response.requestId)
       } catch (err) {
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Error Message from Backend
         // eslint-disable-next-line no-prototype-builtins
@@ -161,7 +161,7 @@ export default {
       } catch (err) {
         this.isLoading = false
 
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Network Error
         if (String(err).includes('Network')) {

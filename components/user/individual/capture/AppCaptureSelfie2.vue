@@ -74,7 +74,7 @@ export default {
       .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Error Message from Backend
         // eslint-disable-next-line no-prototype-builtins
@@ -97,15 +97,13 @@ export default {
       .then(() => {
         this.loading = false
         this.$unloadScript('/daon/face/faceCapture.min.js').then(() => {
-          this.$unloadScript('/daon/face/auto.js').then(() => {
-            console.log('All Scripts Unloaded')
-          })
+          this.$unloadScript('/daon/face/auto.js').then(() => {})
         })
       })
       .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Error Message from Backend
         // eslint-disable-next-line no-prototype-builtins

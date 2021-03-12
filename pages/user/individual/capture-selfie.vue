@@ -53,11 +53,32 @@ export default {
         this.$router.replace('/user/individual/personal-information')
       } catch (err) {
         this.formLoading = false
-        let errorMessage
+        let errorMessage = 'Network Error'
+        if (err && !err.response) {
+          errorMessage = String(err) + '...please try again'
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
         // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
+        if (err && err.hasOwnProperty('response')) {
           const res = err.response
-          errorMessage = res.data.errorMessage
+          // eslint-disable-next-line no-prototype-builtins
+          if (res.hasOwnProperty('data')) {
+            errorMessage = res.data.errorMessage
+            if (!errorMessage) {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
+          } else {
+            errorMessage =
+              'No response was received from the server...please try again'
+          }
+
           this.$toast.open({
             message: `<p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',

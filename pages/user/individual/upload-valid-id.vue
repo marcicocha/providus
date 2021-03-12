@@ -106,12 +106,10 @@ export default {
       }
       try {
         this.message = ''
-        console.log(this.identityFile, 'IDENTITY FILE')
+
         const reader = new FileReader()
         reader.readAsDataURL(this.identityFile)
-        reader.onload = function () {
-          console.log(reader.result)
-        }
+        reader.onload = function () {}
         const response = this.$cookies.get('requestId')
         const formData = new FormData()
         formData.append('file', this.identityFile)
@@ -122,7 +120,7 @@ export default {
         await this.$axios.$post('/individual/idCardUpload', formData, config)
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
-        let errorMessage
+        let errorMessage = 'Network Error'
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

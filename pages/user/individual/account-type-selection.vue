@@ -223,7 +223,7 @@ export default {
         )
         this.$cookies.set('requestId', response.requestId)
       } catch (err) {
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Error Message from Backend
         // eslint-disable-next-line no-prototype-builtins
@@ -290,7 +290,7 @@ export default {
         this.isLoading = false
         this.fetching = false
 
-        let errorMessage = ''
+        let errorMessage = 'Network Error'
 
         // Network Error
         if (String(err).includes('Network')) {

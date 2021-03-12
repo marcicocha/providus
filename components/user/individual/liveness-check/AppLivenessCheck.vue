@@ -124,81 +124,63 @@ export default {
     },
   },
   mounted() {
+    this.loading = false
     this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
       .then(() => {
         this.loading = false
-        this.$loadScript('/daon/3dfl/labels.js').then(() => {
-          this.$loadScript('/daon/3dfl/Daon.FaceLiveness3D.min.js').then(() => {
-            this.$loadScript('/daon/3dfl/animation.js').then(() => {
-              this.$loadScript('/daon/3dfl/ui.js').then(() => {
-                this.$loadScript('/daon/3dfl/3dflClient_withlib.js').then(
-                  () => {
-                    setTimeout(() => {
-                      const el = document.querySelector('#liveness-result')
-                      el.addEventListener('click', this.getLivenessResult)
-                    }, 1000)
-                  }
-                )
-              })
-            })
+        this.$loadScript('/daon/daon.js').then(() => {
+          this.$loadScript('/daon/3dfl/labels.js').then(() => {
+            this.$loadScript('/daon/3dfl/Daon.FaceLiveness3D.min.js').then(
+              () => {
+                this.$loadScript('/daon/3dfl/animation.js').then(() => {
+                  this.$loadScript('/daon/3dfl/ui.js').then(() => {
+                    this.$loadScript('/daon/3dfl/3dflClient_withlib.js').then(
+                      () => {
+                        setTimeout(() => {
+                          const el = document.querySelector('#liveness-result')
+                          el.addEventListener('click', this.getLivenessResult)
+                        }, 1500)
+                      }
+                    )
+                  })
+                })
+              }
+            )
           })
         })
       })
       .catch((err) => {
         // Failed to fetch script
         this.loading = false
-        let errorMessage = ''
-
+        let errorMessage = 'Network Error'
         // Error Message from Backend
-        // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
-          const res = err.response
-          errorMessage = res.data.errorMessage
-
+        if (err && !err.response) {
+          errorMessage = String(err)
           this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,
           })
+          return
         }
-      })
-  },
-  beforeDestroy() {
-    this.$unloadScript('https://webrtc.github.io/adapter/adapter-latest.js')
-      .then(() => {
-        this.loading = false
-        this.$unloadScript('/daon/3dfl/labels.js').then(() => {
-          this.$unloadScript('/daon/3dfl/Daon.FaceLiveness3D.min.js').then(
-            () => {
-              this.$unloadScript('/daon/3dfl/animation.js').then(() => {
-                this.$unloadScript('/daon/3dfl/ui.js').then(() => {
-                  this.$unloadScript('/daon/3dfl/3dflClient_withlib.js').then(
-                    () => {
-                      console.log('All Scripts Unloaded')
-                    }
-                  )
-                })
-              })
-            }
-          )
-        })
-      })
-      .catch((err) => {
-        // Failed to fetch script
-        this.loading = false
-        let errorMessage = ''
-
-        // Error Message from Backend
         // eslint-disable-next-line no-prototype-builtins
-        if (err.hasOwnProperty('response')) {
+        if (err && err.hasOwnProperty('response')) {
           const res = err.response
-          errorMessage = res.data.errorMessage
+          // eslint-disable-next-line no-prototype-builtins
+          if (res.hasOwnProperty('data')) {
+            errorMessage = res.data.errorMessage
+            if (!errorMessage) {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
+          } else {
+            errorMessage =
+              'No response was received from the server...please try again'
+          }
 
           this.$toast.open({
-            message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,
@@ -208,10 +190,10 @@ export default {
   },
   methods: {
     livenessCheckHandler() {
-      //  this.$emit('submitCapturehandler')
+      document.getElementById('videocontainer').style.opacity = '1'
+      document.getElementById('videocontainer').style.color = '#000000'
       document.querySelector('#btn-start-session').click()
     },
-    getImage(data) {},
     getLivenessResult() {
       this.livenessCapture = document.querySelector('#liveness-result').value
     },
@@ -221,6 +203,7 @@ export default {
         base64Video: this.livenessCapture,
       }
       this.accountCreation = true
+      let errorMessage = 'Network Error'
       try {
         const { response } = await this.$axios.$post(
           '/individual/videoFaceEvaluation',
@@ -230,12 +213,39 @@ export default {
         this.$router.replace('/user/individual/weldone')
       } catch (err) {
         this.accountCreation = false
-        const res = err.response
-        const errorMessage = res.data.errorMessage
-        const hasError = res.data.hasError
-        // eslint-disable-next-line no-prototype-builtins
 
-        if (hasError) {
+        if (err && !err.response) {
+          errorMessage = String(err)
+          const customMessage =
+            'please click the start session button to try again'
+          this.$toast.open({
+            message: `<p class="toast-title">${errorMessage} </p>
+                    <p class="toast-msg"> ${customMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          document.getElementById('videocontainer').style.opacity = '0.04'
+          document.getElementById('videocontainer').style.color = '#ed143d'
+          document.getElementById('instructions').innerHTML =
+            '3D-Liveness check failed. Please try again'
+          return
+        }
+        // eslint-disable-next-line no-prototype-builtins
+        if (err && err.hasOwnProperty('response')) {
+          const res = err.response
+          // eslint-disable-next-line no-prototype-builtins
+          if (res.hasOwnProperty('data')) {
+            errorMessage = res.data.errorMessage
+            if (!errorMessage) {
+              errorMessage =
+                'No response was received from the server...please try again'
+            }
+          } else {
+            errorMessage =
+              'No response was received from the server...please try again'
+          }
+
           this.$toast.open({
             message: `<p class="toast-msg"> ${errorMessage} </p>`,
             type: 'error',
@@ -245,31 +255,6 @@ export default {
         }
       }
     },
-    // async createAccount() {
-    //   const id = this.$cookies.get('requestId')
-    //   const createUrl = `/individual/accountNumber?requestId=${String(id)}`
-
-    //   try {
-    //     const response = await this.$axios.$get(createUrl)
-
-    //     if (response.hasError === false) {
-    //       this.accountNumberHandler(response.response)
-    //       this.$router.replace('/user/individual/weldone')
-    //     }
-    //   } catch (err) {
-    //     // eslint-disable-next-line no-prototype-builtins
-    //     if (err.hasOwnProperty('response')) {
-    //       const errorMessage = err.response.data.errorMessage
-    //       this.$toast.open({
-    //         message: `<p class="toast-title">Error Message</p>
-    //                 <p class="toast-msg"> ${errorMessage} </p>`,
-    //         type: 'error',
-    //         duration: 4000,
-    //         dismissible: true,
-    //       })
-    //     }
-    //   }
-    // },
     ...mapActions({
       accountNumberHandler: 'individualModule/SAVE_ACCOUNT_NUMBER',
     }),
@@ -305,6 +290,7 @@ body {
 }
 
 .video {
+  background: transparent !important;
   width: 100%;
   height: auto;
   position: absolute;
@@ -336,19 +322,23 @@ select {
   width: calc(var(--cam-width) + 2px);
   height: calc(var(--cam-height) + 2px);
   margin: 0 auto;
+  background: transparent !important;
 }
 
 video {
+  background: transparent !important;
   border: none !important;
   position: relative;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100% !important;
   height: var(--cam-height);
   transform: rotateY(180deg);
+  object-fit: cover;
 }
 
 .displaycanvas {
+  background: transparent !important;
   border: none !important;
   position: absolute;
   top: 0px;
@@ -356,6 +346,7 @@ video {
   width: 100%;
   height: var(--cam-height);
   pointer-events: none;
+  object-fit: cover;
   transform: rotateY(180deg);
 }
 .displaycanvas label {
@@ -537,6 +528,7 @@ pre {
   left: 0;
   z-index: 5;
   transform: scaleX(-1);
+  background: transparent !important;
 }
 
 #controls {
