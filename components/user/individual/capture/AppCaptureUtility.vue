@@ -168,11 +168,18 @@ export default {
     },
     loadScript() {
       this.loading = false
-      this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js')
+      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
         .then(() => {
-          this.$loadScript('/daon/doc/app.js').then(() => {
-            const target = document.querySelector('#restartvideo')
-            if (target) target.click()
+          this.loading = false
+          this.$loadScript('/daon/daon.js').then(() => {
+            this.$loadScript('/daon/doc/Daon.DocumentCapture.min.js').then(
+              () => {
+                this.$loadScript('/daon/doc/utility.js').then(() => {
+                  const target = document.querySelector('#restartvideo')
+                  if (target) target.click()
+                })
+              }
+            )
           })
         })
         .catch((err) => {
@@ -220,7 +227,7 @@ export default {
     unloadScript() {
       this.$unloadScript('/daon/doc/Daon.DocumentCapture.min.js')
         .then(() => {
-          this.$unloadScript('/daon/doc/app.js').then(() => {})
+          this.$unloadScript('/daon/doc/utility.js').then(() => {})
         })
         .catch((err) => {
           // Failed to fetch script
@@ -343,12 +350,6 @@ div {
   height: auto;
   display: inline-block;
   font-size: 10px;
-}
-
-.select,
-p,
-pre,
-img {
   width: 100%;
 }
 
