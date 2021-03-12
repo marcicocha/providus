@@ -103,13 +103,19 @@ export default {
   methods: {
     loadScript() {
       this.loading = false
-      this.$loadScript('/daon/face/faceCapture.min.js')
+      this.$loadScript('https://webrtc.github.io/adapter/adapter-latest.js')
         .then(() => {
-          this.$loadScript('/daon/face/auto.js').then(() => {
-            document.querySelector('.startcam').click()
-            document.querySelector('#find-face').click()
+          this.loading = false
+          this.$loadScript('/daon/daon.js').then(() => {
+            this.$loadScript('/daon/face/faceCapture.min.js').then(() => {
+              this.$loadScript('/daon/face/auto.js').then(() => {
+                document.querySelector('.startcam').click()
+                document.querySelector('#find-face').click()
+              })
+            })
           })
         })
+
         .catch((err) => {
           // Failed to fetch script
           this.loading = false
