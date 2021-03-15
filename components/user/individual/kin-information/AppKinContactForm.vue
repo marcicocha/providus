@@ -191,15 +191,17 @@ export default {
         return
       }
       if (
-        this.kinInfoObject.residentState === undefined ||
-        this.kinInfoObject.residentState === ''
+        this.kinInfoObject.residentCountry === 'NIGERIA' &&
+        (this.kinInfoObject.residentState === undefined ||
+          this.kinInfoObject.residentState === '')
       ) {
         this.$emit('errorMessageHandler', 'State')
         return
       }
       if (
-        this.kinInfoObject.residentLga === undefined ||
-        this.kinInfoObject.residentLga === ''
+        this.kinInfoObject.residentCountry === 'NIGERIA' &&
+        (this.kinInfoObject.residentLga === undefined ||
+          this.kinInfoObject.residentLga === '')
       ) {
         this.$emit('errorMessageHandler', 'LGA')
         return
