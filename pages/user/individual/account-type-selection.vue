@@ -38,7 +38,7 @@
         </div>
         <p class="notification">
           A reference form is required to open a Current Account,
-          <a :href="url + `/forms/download/referenceForm`" download
+          <a :href="baseUrl + `/forms/download/referenceForm`" download
             >click here</a
           >
           to download, fill and make ready for upload.
@@ -160,7 +160,7 @@ export default {
       bvnDetails: {},
       message: '',
       fetching: false,
-      url: process.env.BASE_URL,
+      baseUrl: process.env.BASE_URL,
     }
   },
   methods: {
