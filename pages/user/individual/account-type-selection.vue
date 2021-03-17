@@ -191,6 +191,7 @@ export default {
         this.accountInformation = {
           accountCategory: 'INDIVIDUAL',
         }
+        console.log(this.baseUrl, 'BASE URL')
       }
       if (value === 'Corporate') {
         // Disable Coperate until we're ready
@@ -533,7 +534,7 @@ export default {
   }
   .notification {
     position: absolute;
-    bottom: 2%;
+    bottom: 13%;
     font-size: 12px;
   }
   .back-button {
