@@ -48,12 +48,18 @@ export default {
       brightness(105%) contrast(99%);
   }
 }
+@media only screen and (max-width: 321px) {
+  .card {
+    padding: 10px;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .card {
     height: 185px;
     p {
       margin-top: 20px;
-      font-size: 17px;
+      font-size: 15px;
       font-family: 'GothamLight', sans-serif;
       font-weight: bold;
     }
