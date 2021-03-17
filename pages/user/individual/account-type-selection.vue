@@ -37,7 +37,7 @@
           </div>
         </div>
         <p class="notification">
-          Two Reference forms is required to open a Current Account,
+          Two Reference forms are required to open a Current Account,
           <a :href="baseUrl + `/forms/download/referenceForm`" download
             >click here</a
           >
