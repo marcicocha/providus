@@ -9,7 +9,7 @@
       :type="inputType"
       :placeholder="placeholder"
       :disabled="disabled"
-      :max-lenght="maxLength"
+      :max-length="maxLength"
       @blur="blurHandler"
     />
   </div>
