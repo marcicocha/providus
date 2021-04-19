@@ -8,7 +8,11 @@
       @blur="open = false"
       @click="searchHandler"
     >
-      <div class="selected" :class="{ open: open }" @click="open = !open">
+      <div
+        class="selected"
+        :class="{ open: open, disabled: disabled }"
+        @click="changeOpenHandler"
+      >
         <span>{{ setSelected }}</span>
       </div>
       <div v-if="remote" class="items" :class="{ selectHide: !open }">
@@ -170,6 +174,12 @@ export default {
     blurHandler(e) {
       this.$emit('blur', e.target.value)
     },
+    changeOpenHandler() {
+      if (this.disabled) {
+        return
+      }
+      this.open = !this.open
+    },
     clickHandler(option) {
       this.$emit('input', option)
       this.changeHandler(option)
@@ -248,7 +258,9 @@ export default {
   margin-bottom: 10px;
   height: 60px;
 }
-
+.disabled {
+  background-color: rgba(239, 239, 239, 0.3) !important;
+}
 .custom-select {
   position: relative;
   width: 100%;
@@ -335,6 +347,7 @@ export default {
   .custom-select .selected {
     padding-top: 0 !important;
     font-size: 13px !important;
+    min-height: 1rem;
   }
 }
 @media only screen and (max-width: 600px) {

@@ -223,6 +223,11 @@ export default {
           `/individual/getRequestIdByBvn?bvn=${value}`
         )
         this.$cookies.set('requestId', response.requestId)
+
+        const individualResponse = await this.$axios.$get(
+          `/individual/requestId?requestId=${response.requestId}`
+        )
+        this.$cookies.set('personalDetails', individualResponse.response)
       } catch (err) {
         let errorMessage = 'Network Error'
 
@@ -280,7 +285,7 @@ export default {
           '/individual',
           this.accountInformation
         )
-        await this.submitBvnInfoHandler(this.accountInformation)
+        await this.submitBvnInfoHandler(response)
         this.getRequestId(this.accountInformation.BVN)
         this.bvnDetails = { ...response }
         this.isBvn = false

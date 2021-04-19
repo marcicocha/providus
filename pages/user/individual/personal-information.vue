@@ -55,6 +55,36 @@ export default {
       message: '',
     }
   },
+  mounted() {
+    const {
+      title,
+      firstName,
+      middleName,
+      surname,
+      maritalStatus,
+      gender,
+      dateOfBirth,
+      foreignNationality,
+      stateOfOrigin,
+      lga,
+    } = this.$cookies.get('personalDetails')
+    this.personalInfoObject = {
+      ...this.personalInfoObject,
+      title,
+      firstName,
+      middleName,
+      surname,
+      maritalStatus,
+      gender,
+      dateOfBirth,
+    }
+    this.nationalityObject = {
+      ...this.nationalityObject,
+      nationality: foreignNationality === 'NO' ? 'LOCAL' : 'FOREIGN',
+      stateOfOrigin: foreignNationality === 'NO' ? stateOfOrigin : undefined,
+      lga: foreignNationality === 'NO' ? lga : undefined,
+    }
+  },
   methods: {
     nationalityHandler() {
       this.isNationalityInfo = false
@@ -107,17 +137,21 @@ export default {
       if (!this.personalInfoObject) {
         return
       }
-      const response = this.$cookies.get('requestId')
+      const requestId = this.$cookies.get('requestId')
       const personalInfoObject = {
         ...this.personalInfoObject,
         ...this.nationalityObject,
-        requestId: response,
+        requestId,
         foreignNationality:
           this.nationalityObject.nationality === 'FOREIGN' ? 'YES' : 'NO',
       }
       try {
         await this.$axios.$put('/individual/personalInfo', personalInfoObject)
         await this.submitPersonalInfoHandler(personalInfoObject)
+        const { response } = await this.$axios.$get(
+          `/individual/contact/requestId?requestId=${requestId}`
+        )
+        this.$cookies.set('contactDetails', response)
         this.$router.replace('/user/individual/contact-information')
       } catch (err) {
         this.message = err.response.data.errorMessage

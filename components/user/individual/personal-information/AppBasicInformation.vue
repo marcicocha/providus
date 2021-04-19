@@ -24,6 +24,7 @@
             placeholder="Type Surname"
             is-text
             max-length="30"
+            disabled
           />
         </div>
       </div>
@@ -35,6 +36,7 @@
             placeholder="First Name"
             is-text
             max-length="30"
+            disabled
           />
         </div>
         <div class="column is-6 small-left-padding">
@@ -74,6 +76,7 @@
                 value: resp,
               })
             "
+            disabled
           />
         </div>
       </div>
@@ -92,6 +95,7 @@
             label="Date of Birth"
             placeholder="Select Date"
             input-type="date"
+            disabled
           />
         </div>
       </div>
