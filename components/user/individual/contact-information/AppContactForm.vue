@@ -32,14 +32,14 @@
         </div>
       </div>
       <div class="columns is-mobile">
-        <div class="column is-4 small-right-padding">
+        <!-- <div class="column is-4 small-right-padding">
           <AppInput
             v-model="contactDetails.houseNo"
             label="House No."
             placeholder="Enter No."
           />
-        </div>
-        <div class="column is-8 small-left-padding">
+        </div> -->
+        <div class="column is-12 small-left-padding">
           <AppInput
             v-model="contactDetails.landmark"
             label="Closest Landmark"
@@ -49,22 +49,21 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column small-right-padding">
+        <div class="column is-12 small-right-padding">
           <AppInput
-            v-model="contactDetails.streetName"
-            label="Street Name"
-            placeholder="Enter Street Name"
-            is-text
+            v-model="contactDetails.residentialAddress"
+            label="Residential Address"
+            placeholder="Enter Residential Address"
           />
         </div>
-        <div class="column small-left-padding">
+        <!-- <div class="column small-left-padding">
           <AppInput
             v-model="contactDetails.residentCity"
             label="City/Town"
             placeholder="Enter City or Town"
             is-text
           />
-        </div>
+        </div> -->
       </div>
       <div class="columns is-mobile">
         <div class="column small-right-padding">
@@ -131,6 +130,13 @@ export default {
       contactDetails: {},
     }
   },
+  mounted() {
+    const contactObject = this.$cookies.get('contactDetails')
+    this.contactDetails = {
+      ...this.contactDetails,
+      ...contactObject,
+    }
+  },
   methods: {
     async contactDetailsHandler() {
       if (
@@ -148,13 +154,6 @@ export default {
         return
       }
       if (
-        this.contactDetails.houseNo === '' ||
-        this.contactDetails.houseNo === undefined
-      ) {
-        this.errorHandler('House Number')
-        return
-      }
-      if (
         this.contactDetails.landmark === '' ||
         this.contactDetails.landmark === undefined
       ) {
@@ -162,17 +161,10 @@ export default {
         return
       }
       if (
-        this.contactDetails.streetName === '' ||
-        this.contactDetails.streetName === undefined
+        this.contactDetails.residentialAddress === '' ||
+        this.contactDetails.residentialAddress === undefined
       ) {
-        this.errorHandler('Street Name')
-        return
-      }
-      if (
-        this.contactDetails.residentCity === '' ||
-        this.contactDetails.residentCity === undefined
-      ) {
-        this.errorHandler('Resident City')
+        this.errorHandler('Resident Address')
         return
       }
       if (
@@ -189,10 +181,10 @@ export default {
         this.errorHandler('Resident Lga')
         return
       }
-      const response = this.$cookies.get('requestId')
+      const requestId = this.$cookies.get('requestId')
       const contactDetails = {
         ...this.contactDetails,
-        requestId: response,
+        requestId,
       }
       try {
         await this.$axios.$put('/individual/contactDetails', contactDetails)

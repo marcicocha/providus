@@ -7,6 +7,7 @@
         label="Nationality"
         placeholder="Select Nationality"
         :data="['LOCAL', 'FOREIGN']"
+        disabled
         @change="changeNationalityHandler"
       />
 
@@ -24,6 +25,7 @@
                   value: resp,
                 })
               "
+              disabled
               @change="changeStateHandler"
             />
           </div>
@@ -40,6 +42,7 @@
                   value: resp,
                 })
               "
+              disabled
             />
           </div>
         </div>
