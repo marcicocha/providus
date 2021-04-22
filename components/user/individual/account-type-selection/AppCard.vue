@@ -50,13 +50,13 @@ export default {
 }
 @media only screen and (max-width: 321px) {
   .card {
-    padding: 10px;
+    padding: 20px;
   }
 }
 
 @media only screen and (max-width: 767px) {
   .card {
-    height: 185px;
+    height: 150px;
     p {
       margin-top: 20px;
       font-size: 15px;
