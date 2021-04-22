@@ -539,7 +539,7 @@ export default {
   }
   .notification {
     position: absolute;
-    bottom: 13%;
+    bottom: 2%;
     font-size: 12px;
   }
   .back-button {
