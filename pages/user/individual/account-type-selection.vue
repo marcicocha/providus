@@ -303,7 +303,7 @@ export default {
           errorMessage = err
           this.$toast.open({
             message: `<p class="toast-title">Error Message</p>
-                    <p class="toast-msg"> ${errorMessage} </p>`,
+                    <p class="toast-msg"> Network Error </p>`,
             type: 'error',
             duration: 4000,
             dismissible: true,

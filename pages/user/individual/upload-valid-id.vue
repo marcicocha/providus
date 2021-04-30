@@ -121,6 +121,17 @@ export default {
         this.$router.replace('/user/individual/upload-utility')
       } catch (err) {
         let errorMessage = 'Network Error'
+        if (String(err).includes('Network')) {
+          errorMessage = err
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> Network Error </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
         // eslint-disable-next-line no-prototype-builtins
         if (err.hasOwnProperty('response')) {
           const res = err.response

@@ -80,7 +80,29 @@ export default {
         )
         this.$router.replace('/user/individual/upload-document')
       } catch (err) {
+        let errorMessage = ''
         // this.message = err.response.data.errorMessage
+        if (String(err).includes('Network')) {
+          this.$toast.open({
+            message: `<p class="toast-title">Error Message</p>
+                    <p class="toast-msg"> Network Error </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+          return
+        }
+        // eslint-disable-next-line no-prototype-builtins
+        if (err.hasOwnProperty('response')) {
+          const res = err.response
+          errorMessage = res.data.errorMessage
+          this.$toast.open({
+            message: `<p class="toast-msg"> ${errorMessage} </p>`,
+            type: 'error',
+            duration: 4000,
+            dismissible: true,
+          })
+        }
       }
     },
     capturePageHandler() {
