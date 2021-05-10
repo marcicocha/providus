@@ -189,7 +189,13 @@ export default {
         this.$emit('errorMessageHandler', 'Date of Birth')
         return
       }
-
+      // const year = this.kinInfoObject.dateOfBirth.substring(0, 4)
+      const newDate = new Date()
+      const currentDate = new Date(this.kinInfoObject.dateOfBirth)
+      if (currentDate > newDate) {
+        this.$emit('errorMessageHandler', 'year')
+        return
+      }
       if (this.kinInfoObject.bvn) {
         if (this.kinInfoObject.bvn.length < 11) {
           this.message =

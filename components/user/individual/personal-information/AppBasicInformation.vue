@@ -154,6 +154,7 @@ export default {
   methods: {
     submitBasicInformationHandler() {
       if (
+        !this.personalInfoObject.title ||
         this.personalInfoObject.title === '' ||
         this.personalInfoObject.title === undefined
       ) {
