@@ -243,7 +243,7 @@ export default {
         this.nationalityObject.religion === '' ||
         this.nationalityObject.religion === undefined
       ) {
-        this.$emit('errorMessageHandler', 'religion')
+        this.$emit('errorMessageHandler', 'Religion')
         return
       }
       this.$emit('nationalityHandler')

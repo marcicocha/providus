@@ -144,7 +144,9 @@ export default {
     },
     errorMessageHandler(message) {
       this.message =
-        message === 'Year' ? `Must be 18 and Above` : `${message} is compulsory`
+        message === 'Year'
+          ? `Must not be future date`
+          : `${message} is compulsory`
       this.$toast.open({
         message: `<p class="toast-msg"> ${this.message}</p>`,
         type: 'error',

@@ -122,6 +122,7 @@ export default {
     basicInfoHandler() {
       this.isBasicInformation = false
       this.isNationalityInfo = true
+      console.log(this.personalInfoObject.title, 'title')
     },
     errorMessageHandler(message) {
       this.message =
