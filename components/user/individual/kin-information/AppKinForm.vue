@@ -193,7 +193,7 @@ export default {
       const newDate = new Date()
       const currentDate = new Date(this.kinInfoObject.dateOfBirth)
       if (currentDate > newDate) {
-        this.$emit('errorMessageHandler', 'year')
+        this.$emit('errorMessageHandler', 'Year')
         return
       }
       if (this.kinInfoObject.bvn) {
